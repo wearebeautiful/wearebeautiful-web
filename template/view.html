@@ -8,7 +8,7 @@
         <div id="progress" class="col-6">
         </div>
         <div id="info" class="col-6 text-right">
-           {% if model.body_party != "anatomical" %}
+           {% if model.body_part != "anatomical" %}
              {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body. 
            {% else %}
               anatomical model
@@ -23,7 +23,7 @@
 <script src="{{url_for('static', filename='js/stl_viewer/stl_viewer.min.js')}}"></script>
 <script>
 
-var default_color = "#FF6000";
+var default_color = "#AAAAAA";
 
 $("body").css("overflow-y", "hidden");
 $("#top-container").toggleClass("h-100");
@@ -53,7 +53,7 @@ function on_model_loaded(id)
 
 function on_all_loaded() 
 {
-    $("#progress").text("{{ code }}");
+    $("#progress").text("{{ model.model_id }}-{{ model.code }}");
 }
 
 function load_progress(load_status, load_session)
