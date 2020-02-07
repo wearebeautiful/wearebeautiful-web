@@ -109,7 +109,7 @@ def contact():
     return render_template("contact.html")
 
 @bp.route('/support')
-def donate():
+def support():
     return render_template("support.html", base_url = request.base_url)
 
 @bp.route('/donate')
