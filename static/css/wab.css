@@ -83,6 +83,10 @@ h2 {
   font-size: 15pt;
 }
 
+.navlink {
+  color: white;
+}
+
 .one {
     opacity: 0;
     -webkit-animation: dot 1.3s infinite;
