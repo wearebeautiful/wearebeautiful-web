@@ -81,13 +81,14 @@
   <script type="text/javascript">
 
     function send_to_stripe(sku) {
+        // This is the publishable API key, it is safe to be in github and here on this page.
         stripe = Stripe('pk_live_8CMSl3zujoNodtkD0KxgHxcS000WC16oza');
         stripe.redirectToCheckout({
           items: [
               {sku: sku, quantity: 1}
           ],
-          successUrl: 'https://wearebeautiful.info/donate/success',
-          cancelUrl: 'https://wearebeautiful.info/donate/cancel',
+          successUrl: 'https://wearebeautiful.info/support/success',
+          cancelUrl: 'https://wearebeautiful.info/support/cancel',
         }).then(function (result) {
           // TODO
           // If `redirectToCheckout` fails due to a browser or network
