@@ -7,7 +7,6 @@ import config
 import json
 from wearebeautiful.auth import init_auth
 from wearebeautiful.redis import init_redis
-from wearebeautiful.bundles import bundle_setup, load_bundle_data_into_redis
 
 
 STATIC_PATH = "/static"
@@ -26,13 +25,7 @@ Bootstrap(app)
 app.redis = init_redis()
 
 from wearebeautiful.views import bp as index_bp
-from wearebeautiful.admin import bp as admin_bp
 app.register_blueprint(index_bp)
-app.register_blueprint(admin_bp, url_prefix='/admin')
-
-bundle_setup(config.BUNDLE_DIR)
-num = load_bundle_data_into_redis(app)
-print("read %d bundles." % num)
 
 @app.errorhandler(404)
 def page_not_found(message):

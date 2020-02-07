@@ -1,7 +1,6 @@
 from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint
 from wearebeautiful.auth import _auth as auth
-from wearebeautiful.bundles import get_bundle_id_list, get_bundle, get_model_id_list, parse_code
 import config
 
 bp = Blueprint('index', __name__)
@@ -22,7 +21,7 @@ def soon():
 @bp.route('/browse')
 @auth.login_required
 def browse():
-    bundles = get_bundle_id_list(current_app.redis)
+    bundles = [] # et_bundle_id_list(current_app.redis)
 
     sections = { }
     order = sorted(list(set([ x['body_part'] for x in bundles])))
