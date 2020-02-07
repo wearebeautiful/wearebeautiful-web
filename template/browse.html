@@ -38,7 +38,7 @@
 {% macro list_models(models, name) -%}
   <div class="browse-section">{{ name }}</div>
   {% for model in models %}
-        <div class="browse-model"><a href="/view/{{ model.code }}">{{ model.code }}</a>:
+        <div class="browse-model"><a href="/view/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
         </div>
         <div>
           {{ model.pose }} in a  

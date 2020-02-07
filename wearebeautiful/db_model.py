@@ -33,4 +33,4 @@ class DBModel(Model):
     comment = TextField(null = False)
 
     def __repr__(self):
-        return "<DBModel(%s-%s)>" % (self.code, str(self.processed))
+        return "<DBModel(%s-%s)>" % (self.model_id, self.code)

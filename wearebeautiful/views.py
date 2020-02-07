@@ -1,10 +1,15 @@
 from werkzeug.exceptions import NotFound
-from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
+from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_from_directory
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
 bp = Blueprint('index', __name__)
+
+@bp.route('/model/<path:filename>')
+def model(filename):
+    return send_from_directory(current_app.config['MODEL_ARCHIVE'], filename)
+
 
 @bp.route('/')
 def index():
@@ -73,26 +78,33 @@ def view(model):
         return render_template("view.html", manifest = {'id':''})
 
     if model.isdigit() and len(model) == 6:
-        model_list = get_model_id_list(current_app.redis)
-        if model not in model_list:
+        models = DBModel.select(DBModel.model_id, DBModel.code).where(DBModel.model_id == model)
+        model_list = [ "%s-%s" % (m.model_id, m.code) for m in models ]
+        if not model_list:
             raise NotFound("Model %s does not exist." % model)
+
+        if len(model_list) == 1:
+            return redirect(url_for("index.view", model=model_list[0]))
         else:
-            if len(model_list[model]) == 1:
-                return redirect(url_for("index.view", model=model_list[model][0]['code']))
-            else:
-                return render_template("bundle-disambig.html", model=model, model_list=model_list[model])
+            model_list = [ m for m in models ]
+            print(model_list)
+            return render_template("model-disambig.html", model=model, model_list=model_list)
 
     try:
-        (id, part, pose, arrangement, excited) = parse_code(model)
-        
+        id, code = model.split('-')
     except ValueError as err:
-        raise NotFound(err)
-        
-    bundle = get_bundle(current_app.redis, id, part, pose, arrangement, excited)
-    if not bundle:
-        raise NotFound("Model %s not found, when it should've been found. Oops, this is bad. " % model)
+        raise NotFound("Invalid model id/code.")
 
-    return render_template("view.html", manifest = bundle, code=model)
+    model = DBModel.get(DBModel.model_id == id, DBModel.code == code)
+    if not model:
+        raise NotFound("model %s does not exist." % model)
+
+    id = model.model_id
+    code = model.code
+    processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
+    model_file = "/model/%s/%s-%s/%s-%s-%s-surface-med.stl" % (id, id, code, id, code, processed)
+
+    return render_template("view.html", model = model, model_file=model_file)
 
     
 @bp.route('/company')

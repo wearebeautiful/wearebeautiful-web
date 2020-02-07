@@ -4,13 +4,13 @@
     <div class="col">
     </div>
     <div class="col-11 text-div">
-      <h2>Model disambiguation page</h2>
+      <h2>Model {{ model }} disambiguation page</h2>
       <p>
           We have more than one model for the ID {{ model }}. Please select one below:
       </p>
       <ul>
-        {% for model in model_list %}
-          <li><a href="{{ url_for('index.view', model=model['code']) }}">{{ model['body_part'] }}, {{ model['pose'] }}, {{ model['excited'] }}</a></li>
+        {% for m in model_list %}
+          <li><a href="{{ url_for('index.view', model=m.model_id+'-'+m.code) }}">{{ m.body_part }}, {{ m.pose }}, {{ m.excited }}</a></li>
         {% endfor %}
       </ul>
     </div>

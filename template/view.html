@@ -8,13 +8,11 @@
         <div id="progress" class="col-6">
         </div>
         <div id="info" class="col-6 text-right">
-        {% if manifest.id %}
-           {% if manifest.id != "000000" %}
-             {{ manifest.body_part }} of a {{ manifest.gender }} with a {{ manifest.body_type }} body. 
-          {% else %}
-             anatomical model
-          {% endif %}
-        {% endif %}
+           {% if model.body_party != "anatomical" %}
+             {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body. 
+           {% else %}
+              anatomical model
+           {% endif %}
         </div>
     </div>
   </div>
@@ -37,14 +35,14 @@ var options =
   all_loaded_callback : on_all_loaded,
   loading_progress_callback : load_progress,
 };
-if ("{{ manifest.id }}")
+if ("{{ model.model_id }}")
 {
-    options['models'] = [ { id:0, filename:"/static/bundle/{{ code }}/surface-medium.stl"} ];
+    options['models'] = [ { id:0, filename:"{{model_file}}" } ];
     $("#progress").text("loading ...");
 }
 
 var viewer=new StlViewer(document.getElementById("stl_div"), options);
-if (!"{{ manifest.id }}")
+if (!"{{ model.model_id }}")
     viewer.set_drag_and_drop(true);
 
 
