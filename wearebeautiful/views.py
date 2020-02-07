@@ -1,6 +1,7 @@
 from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
 from wearebeautiful.auth import _auth as auth
+from wearebeautiful.db_model import DBModel
 import config
 
 bp = Blueprint('index', __name__)
@@ -21,25 +22,19 @@ def soon():
 @bp.route('/browse')
 @auth.login_required
 def browse():
-    bundles = [] # et_bundle_id_list(current_app.redis)
 
-    sections = { }
-    order = sorted(list(set([ x['body_part'] for x in bundles])))
-    for section in order:
-        sections[section] = { 
-            'name' : section[0].upper() + section[1:],
-            'bundles' : []
-        }                  
-    sections['other'] =  { 'name' : "Other", 'bundles' : [] }
-    order.append('other')
+    body_parts = DBModel.select(DBModel.body_part).distinct()
+    body_parts = [ part.body_part for part in body_parts ]
+    body_parts = sorted(body_parts, reverse=True)
 
-    for bundle in bundles:
-        if bundle['id'] == '000000':
-            sections['other']['bundles'].append(bundle)
-        else:
-            sections[bundle['body_part']]['bundles'].append(bundle)
+    models = DBModel.select().order_by(DBModel.body_part)
+    sections = {}
+    for model in models:
+        if not model.body_part in sections:
+            sections[model.body_part] = { 'name' : model.body_part, 'models' : [] }
+        sections[model.body_part]['models'].append(model)
 
-    return render_template("browse.html", order = order, sections = sections)
+    return render_template("browse.html", order = body_parts, sections = sections)
 
 
 @bp.route('/team')

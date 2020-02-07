@@ -14,7 +14,7 @@
       </p>
 
       {% for section in order %}
-        {{ list_bundles(sections[section].bundles, sections[section].name) }}
+        {{ list_models(sections[section].models, sections[section].name) }}
       {% endfor %}
 
       <br/>
@@ -35,20 +35,15 @@
   </div>
 {% endblock%}
 
-{% macro list_bundles(bundles, name, anatomical = False) -%}
+{% macro list_models(models, name) -%}
   <div class="browse-section">{{ name }}</div>
-  {% for bundle in bundles %}
-        <div class="browse-model"><a href="/view/{{ bundle['code'] }}">{{ bundle['code'] }}</a>:
-        {% if bundle['id'] != "000000" %}
-            {{ bundle['gender'] }} with a {{ bundle['body_type'] }} body. 
-        {% else %}
-            anatomical model
-        {% endif %}
+  {% for model in models %}
+        <div class="browse-model"><a href="/view/{{ model.code }}">{{ model.code }}</a>:
         </div>
         <div>
-          {{bundle['pose'] }} in a  
-          {{bundle['arrangement'] }} arrangement,
-          {{bundle['excited'] }}
+          {{ model.pose }} in a  
+          {{ model.arrangement }} arrangement,
+          {{ model.excited }}
         </div>
     {% endfor %}
 {%- endmacro %}

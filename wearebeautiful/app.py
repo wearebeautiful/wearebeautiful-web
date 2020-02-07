@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 import config
 import json
+from wearebeautiful.db_model import db
 from wearebeautiful.auth import init_auth
 from wearebeautiful.redis import init_redis
 
@@ -23,6 +24,8 @@ app.secret_key = config.SECRET_KEY
 
 Bootstrap(app)
 app.redis = init_redis()
+
+db.init(config.DB_FILE)
 
 from wearebeautiful.views import bp as index_bp
 app.register_blueprint(index_bp)
