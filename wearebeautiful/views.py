@@ -110,7 +110,15 @@ def contact():
 
 @bp.route('/support')
 def support():
-    return render_template("support.html", base_url = request.base_url)
+    return render_template("support.html")
+
+@bp.route('/support/success')
+def support_success():
+    return render_template("support-success.html")
+
+@bp.route('/support/cancel')
+def support_cancel():
+    return render_template("support-cancel.html")
 
 @bp.route('/donate')
 def donate():
