@@ -26,7 +26,7 @@ app.config.from_object('config')
 Bootstrap(app)
 app.redis = init_redis()
 
-db.init(config.DB_FILE)
+db.init(os.path.join(config.MODEL_DIR, "wab-models.db"))
 
 from wearebeautiful.views import bp as index_bp
 app.register_blueprint(index_bp)

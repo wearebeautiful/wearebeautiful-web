@@ -1,8 +1,6 @@
-BUNDLE_DIR="[bundle dir location]"
 SECRET_KEY = "add your key here"
 
-DB_FILE = "wab.db"
-MODEL_ARCHIVE = ""
+MODEL_DIR = "<path to model git>"
 
 USE_SITE_AUTH=False
 SITE_USERNAME="test"

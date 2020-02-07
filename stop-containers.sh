@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker rm -f wearebeautiful.info-beta
+docker rm -f wearebeautiful-web

@@ -8,7 +8,7 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/model/<path:filename>')
 def model(filename):
-    return send_from_directory(current_app.config['MODEL_ARCHIVE'], filename)
+    return send_from_directory(current_app.config['MODEL_DIR'], filename)
 
 
 @bp.route('/')
