@@ -1,5 +1,5 @@
 from werkzeug.exceptions import NotFound
-from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint
+from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
 from wearebeautiful.auth import _auth as auth
 import config
 
@@ -101,12 +101,17 @@ def view(model):
 
     
 @bp.route('/company')
-@auth.login_required
 def company():
     return render_template("company.html")
 
+@bp.route('/contact')
+def contact():
+    return render_template("contact.html")
+
+@bp.route('/support')
+def donate():
+    return render_template("support.html", base_url = request.base_url)
 
 @bp.route('/donate')
-@auth.login_required
 def donate():
-    return render_template("donate.html")
+    return redirect(url_for("index.support"))

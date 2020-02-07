@@ -4,45 +4,90 @@
     <div class="col">
     </div>
     <div class="col-11 text-div">
-        <h2>Donate</h2>
+        <h2>Support us! (Donate!)</h2>
+
         <p>
-           Quatsch und Unfug ÖU is a for-profit company that is run as a non-profit company. 
+          Support us with your credit card, Google Pay or Apple Pay:
         </p>
+
+        <h6>One time</h6>
+        <div class="row">
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('sku_GgwblTrgccDB36')">€10</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('sku_Ggwb8HkKIfUhx1')">€25</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('sku_Ggwc2WXG2ZthMd')">€50</button>
+           </div>
+        </div>
+        <div class="row">
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('sku_GgwcjjNbCKvh8N')">€100</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('sku_GgwcGD0G4w3SeD')">€500</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('sku_GgwdaQXcebyIom')">€1,000</button>
+           </div>
+        </div>
+
+        <br/>
+
+        <h6>Recurring</h6>
+        <div class="row">
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('plan_Ggwh2lQSb00BEs')">€1/month</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('plan_Ggwhappo3gknWx')">€2/month</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('plan_Ggwg0NyZjWqfuN')">€5/month</button>
+           </div>
+        </div>
+        <div class="row">
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('plan_GgwgXEI7ijZYkQ')">€10/month</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('plan_GgwhiOiVL7DNAc')">€25/month</button>
+           </div>
+           <div class="col-sm">
+             <button type="button" class="btn btn-outline-success btn-lg donate-btn" onclick="send_to_stripe('plan_GgwhURY1780nzx')">€50/month</button>
+           </div>
+        </div>
+
+        <br/>
+
         <p>
-           We plan to only raise enough funds to cover our costs for operating the
-           site, creating 3D models and providing us the tools to do this. We
-           will never take dividends or otherwise profit from operating this site.
-        </p>
-        <p>
-           However, we do have costs to take pictures of human models,
-           sign modeling release contracts, make 3D models, provide human models
-           with one printed 3D model of their own genitalia (as a thank you) and
-           a host of other small costs.
-        </p>
-        <p>
-           If you appreciate what we do with this site, we would appreciate a small
-           support payment. Since we are a for profit company masquerading as a 
-           non-profit, we cannot really call them donations and these payments are
-           also not tax deductible.
-        </p>
-        <p>
-           Each year we raise funds to cover our operational cost for the next year.
-           Once our budget has been met, we will redirect visitors to donate to
-           other sex-positive non-profits rathen than to us.
-        </p>
-        <p>
-           This budget for this year has not been met. Please consider making
-           a small support payment:
-        </p>
-        <ul>
-           <li>Via SEPA bank transfer: IBAN BE80 9670 4813 2877 (BIC TRWIBEB1XXX), only for EUR donations from the EU.</li>
-           <li>By Credit Card via Stripe</li>
-        </ul>
-        <p>
-           Thank you for your support!
+           Alternatively, you may also make a direct SEPA bank transfer in EUR from a European country, using
+           <b>IBAN</b> <code>BE80 9670 4813 2877</code>
+           <b>BIC</b> <code>TRWIBEB1XXX</code>.
         </p>
     </div>
     <div class="col">
     </div>
   </div>
+  <script src="https://js.stripe.com/v3/"></script>
+  <script type="text/javascript">
+
+    function send_to_stripe(sku) {
+        stripe = Stripe('pk_live_8CMSl3zujoNodtkD0KxgHxcS000WC16oza');
+        stripe.redirectToCheckout({
+          items: [
+              {sku: sku, quantity: 1}
+          ],
+          successUrl: 'https://wearebeautiful.info/donate/success',
+          cancelUrl: 'https://wearebeautiful.info/donate/cancel',
+        }).then(function (result) {
+          // TODO
+          // If `redirectToCheckout` fails due to a browser or network
+          // error, display the localized error message to your customer
+          // using `result.error.message`.
+        });
+    }
+  </script>
 {% endblock%}

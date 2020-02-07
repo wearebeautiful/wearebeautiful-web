@@ -73,6 +73,11 @@ h2 {
     z-index: 2;
 }
 
+.donate-btn {
+    margin-top: 10px;
+    width: 70%;
+}
+
 .navbar {
   z-index: 3;
   font-size: 15pt;
