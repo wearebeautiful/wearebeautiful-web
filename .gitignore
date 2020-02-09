@@ -106,3 +106,4 @@ venv.bak/
 config.py
 *.swp
 *.db
+static/js
