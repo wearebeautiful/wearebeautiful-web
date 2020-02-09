@@ -11,7 +11,7 @@
         import { OrbitControls } from '/static/js/node_modules/three/examples/jsm/controls/OrbitControls.js';
 
        	var container;
-       	var camera, cameraTarget, scene, renderer, controls;
+       	var camera, scene, renderer, controls;
 
        	init();
        	animate();
@@ -24,22 +24,22 @@
        		camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
 
-       		cameraTarget = new THREE.Vector3( 0, 0, 0 );
-
        		scene = new THREE.Scene();
        		scene.background = new THREE.Color( 0xEEEEEE );
 
        		var material = new THREE.MeshPhongMaterial( { color: 0x6A0080, specular: 0x111111, shininess: 50 } );
+                material.side = THREE.DoubleSide;
 
                 var loader = new STLLoader();
        		loader.load( '{{ model_file }}', function ( geometry ) {
 
                         geometry.computeFaceNormals();
                         geometry.computeVertexNormals();
+                        geometry.computeBoundingBox();
+                        var scale_factor = 1.0 / geometry.boundingBox.max.y;
 
        			var mesh = new THREE.Mesh( geometry, material );
-
-       			mesh.scale.set( .01, .01, .01 );
+       			mesh.scale.set(scale_factor, scale_factor, scale_factor);
 
        			mesh.castShadow = false;
        			mesh.receiveShadow = false;
