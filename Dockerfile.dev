@@ -6,9 +6,6 @@ RUN apt-get update \
          npm \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /code
-WORKDIR /code
-
 RUN pip3.6 install setuptools uwsgi
 
 RUN mkdir /js
@@ -16,20 +13,21 @@ WORKDIR /js
 RUN npm install && \
     npm i three
 
-RUN mkdir /code/wearebeautiful.info
+RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
 
 RUN apt-get purge -y build-essential && \
     apt-get autoremove -y && \
     apt-get clean -y
 
-COPY . /code/wearebeautiful.info
-RUN pip3.6 install -r requirements.txt
-RUN ln -s /js /code/wearebeautiful.info/static/
+COPY requirements.txt /code
+RUN pip3.6 install -r /code/requirements.txt
+#RUN ln -s /js /code/wearebeautiful.info/static/
 
 ENV FLASK_APP=wearebeautiful/app.py
 ENV FLAK_ENV=development
 ENV FLASK_DEBUG=1
 ENV FLASK_RUN_HOST=0.0.0.0
 
-CMD flask run
+CMD /code/wearebeautiful.info/dev-server.sh
+
