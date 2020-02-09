@@ -39,10 +39,12 @@
   <div class="browse-section">{{ name }}</div>
   {% for model in models %}
         <div class="browse-model"><a href="/view/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
-        </div>
-        <div>
-          {{ model.pose }} in a  
-          {{ model.arrangement }} arrangement,
+          {{ model.gender }}, {{ model.pose }},
+          {% if model.arrangement == "natural" %}
+            naturally arranged,
+          {% else %}
+            {{ model.arrangement }},
+          {% endif %}
           {{ model.excited }}
         </div>
     {% endfor %}
