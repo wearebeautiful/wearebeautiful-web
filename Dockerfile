@@ -21,6 +21,7 @@ RUN mkdir -p js && \
     npm install && \
     npm i three
 
+WORKDIR /code/wearebeautiful.info
 COPY . /code/wearebeautiful.info
 RUN pip3.6 install -r requirements.txt
 

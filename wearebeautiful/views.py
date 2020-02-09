@@ -1,5 +1,6 @@
+import os
 from werkzeug.exceptions import NotFound
-from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_from_directory
+from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
@@ -8,7 +9,7 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/model/<path:filename>')
 def model(filename):
-    return send_from_directory(current_app.config['MODEL_DIR'], filename)
+    return send_file(os.path.join(current_app.config['MODEL_DIR'], filename), "model/stl")
 
 
 @bp.route('/')

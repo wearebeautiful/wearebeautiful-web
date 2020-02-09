@@ -2,13 +2,6 @@
 
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-
-
-docker run \
-    --name wab-redis \
-    --network=website-network \
-    -d redis
-
 docker run -d \
     --expose 3031 \
     --name wearebeautiful-web \
