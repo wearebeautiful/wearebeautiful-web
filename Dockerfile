@@ -6,20 +6,20 @@ RUN apt-get update \
          npm \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir /code
-WORKDIR /code
-
 RUN pip3.6 install setuptools uwsgi
 
-RUN mkdir /code/wearebeautiful.info
+RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
 
 RUN apt-get purge -y build-essential && \
     apt-get autoremove -y && \
     apt-get clean -y
 
-# install xeokit and its dependencies
-npm i @xeokit/xeokit-sdk
+WORKDIR /code/wearebeautiful.info/static
+RUN mkdir -p js && \
+    cd js && \
+    npm install && \
+    npm i three
 
 COPY . /code/wearebeautiful.info
 RUN pip3.6 install -r requirements.txt
