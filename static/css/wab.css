@@ -87,6 +87,14 @@ h2 {
   color: white;
 }
 
+#canvas {
+    background: #eeeeee;
+    cursor: default;
+    pointer-events: all;
+    margin: 0;
+    position: relative;
+}
+
 .one {
     opacity: 0;
     -webkit-animation: dot 1.3s infinite;

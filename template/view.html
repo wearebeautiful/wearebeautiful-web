@@ -2,7 +2,7 @@
 {%- block content -%}
   <div class="row h-100">
     <div class="col-12">
-       <div id="stl_div" class="h-100"></div>
+       <canvas id="canvas" width="1400" height="1000"></canvas>
     </div>
     <div class="row" id="info-row">
         <div id="progress" class="col-6">
@@ -20,57 +20,32 @@
 
 {% block scripts %}
 {{ bootstrap.load_js() }}
-<script src="{{url_for('static', filename='js/stl_viewer/stl_viewer.min.js')}}"></script>
-<script>
+<script src="{{url_for('static', filename='js/')}}"></script>
+<script type="module">
 
-var default_color = "#AAAAAA";
+    import {Viewer} from "/static/js/node_modules/@xeokit/xeokit-sdk/src/viewer/Viewer.js";
+    import {STLLoaderPlugin} from "/static/js/node_modules/@xeokit/xeokit-sdk/src/plugins/STLLoaderPlugin/STLLoaderPlugin.js";
 
-$("body").css("overflow-y", "hidden");
-$("#top-container").toggleClass("h-100");
-
-var options =
-{ 
-  load_three_files : '{{url_for('static', filename='js/stl_viewer/')}}' ,
-  model_loaded_callback : on_model_loaded,
-  all_loaded_callback : on_all_loaded,
-  loading_progress_callback : load_progress,
-};
-if ("{{ model.model_id }}")
-{
-    options['models'] = [ { id:0, filename:"{{model_file}}" } ];
-    $("#progress").text("loading ...");
-}
-
-var viewer=new StlViewer(document.getElementById("stl_div"), options);
-if (!"{{ model.model_id }}")
-    viewer.set_drag_and_drop(true);
-
-
-function on_model_loaded(id)
-{
-    viewer.set_color(id, default_color);
-}
-
-function on_all_loaded() 
-{
-    $("#progress").text("{{ model.model_id }}-{{ model.code }}");
-}
-
-function load_progress(load_status, load_session)
-{
-    Object.keys(load_status).forEach(function(model_id)
-    {
-        if (load_status[model_id].load_session==load_session)
-        {
-            if (load_status[model_id].loaded == load_status[model_id].total)
-               $("#progress").html('rendering<span class="one">.</span><span class="two">.</span><span class="three">.</span>');
-            else
-            {
-                percent = Math.trunc(load_status[model_id].loaded * 100.0 / load_status[model_id].total)
-                $("#progress").html("loading " + percent + '%');
-            }
-        }
+    const viewer = new Viewer({
+        canvasId: "canvas"
     });
-}
+
+    const stlLoader = new STLLoaderPlugin(viewer);
+
+    const model = stlLoader.load({
+        id: "{{ model }}",
+        src: "{{ model_file }}",
+        smoothNormals: true,
+        backfaces : true
+    });
+
+    model.on("loaded", () => {
+        $("#progress").text("{{ model.model_id }}-{{ model.code }}");
+        model.highlight = [1,0,0];
+        viewer.cameraFlight.jumpTo(model);
+        viewer.scene.on("tick", () => {
+            viewer.camera.orbitYaw(0.4);
+        })
+    });
 </script>
 {% endblock %}

@@ -11,6 +11,11 @@ WORKDIR /code
 
 RUN pip3.6 install setuptools uwsgi
 
+RUN mkdir /js
+WORKDIR /js
+RUN npm install && \
+    npm i @xeokit/xeokit-sdk
+
 RUN mkdir /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
 
@@ -18,12 +23,13 @@ RUN apt-get purge -y build-essential && \
     apt-get autoremove -y && \
     apt-get clean -y
 
-# install xeokit and its dependencies
-npm i @xeokit/xeokit-sdk
-
 COPY . /code/wearebeautiful.info
 RUN pip3.6 install -r requirements.txt
+RUN ln -s /js /code/wearebeautiful.info/static/
 
-CMD uwsgi --gid=www-data --uid=www-data --http-socket :3031 \
-          --vhost --module=wearebeautiful.app --callable=app --chdir=/code/wearebeautiful.info \
-          --enable-threads --processes=10
+ENV FLASK_APP=wearebeautiful/app.py
+ENV FLAK_ENV=development
+ENV FLASK_DEBUG=1
+ENV FLASK_RUN_HOST=0.0.0.0
+
+CMD flask run
