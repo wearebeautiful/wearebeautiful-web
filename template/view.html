@@ -8,9 +8,10 @@
 
        	import * as THREE from '/static/js/node_modules/three/build/three.module.js';
        	import { STLLoader } from '/static/js/node_modules/three/examples/jsm/loaders/STLLoader.js';
+        import { OrbitControls } from '/static/js/node_modules/three/examples/jsm/controls/OrbitControls.js';
 
        	var container;
-       	var camera, cameraTarget, scene, renderer;
+       	var camera, cameraTarget, scene, renderer, controls;
 
        	init();
        	animate();
@@ -23,12 +24,12 @@
        		camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
 
-       		cameraTarget = new THREE.Vector3( 0, - 0.25, 0 );
+       		cameraTarget = new THREE.Vector3( 0, 0, 0 );
 
        		scene = new THREE.Scene();
        		scene.background = new THREE.Color( 0xEEEEEE );
 
-       		var material = new THREE.MeshPhongMaterial( { color: 0xAA00AA, specular: 0x111111, shininess: 50 } );
+       		var material = new THREE.MeshPhongMaterial( { color: 0x6A0080, specular: 0x111111, shininess: 50 } );
 
                 var loader = new STLLoader();
        		loader.load( '{{ model_file }}', function ( geometry ) {
@@ -38,7 +39,6 @@
 
        			var mesh = new THREE.Mesh( geometry, material );
 
-       			mesh.position.set( 0, - 0.37, - 0.6 );
        			mesh.scale.set( .01, .01, .01 );
 
        			mesh.castShadow = false;
@@ -47,20 +47,25 @@
        			scene.add( mesh );
        		} );
 
-
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
 
        		addShadowedLight( 1, 1, 1, 0xffffff, 1.35 );
        		addShadowedLight( 0.5, 1, - 1, 0xffaa00, 1 );
-       		// renderer
 
+       		// renderer
        		renderer = new THREE.WebGLRenderer( { antialias: true } );
        		renderer.setPixelRatio( window.devicePixelRatio );
        		renderer.setSize( window.innerWidth, window.innerHeight );
        		renderer.outputEncoding = THREE.sRGBEncoding;
 
        		renderer.shadowMap.enabled = true;
+
+                controls = new OrbitControls( camera, renderer.domElement );
+                controls.autoRotateSpeed = 3.0;
+                controls.autoRotate = true;
+		controls.enableDamping = true;
+		controls.dampingFactor = 0.05;
 
       		container.appendChild( renderer.domElement );
 
@@ -90,33 +95,19 @@
        	}
 
        	function onWindowResize() {
-
        		camera.aspect = window.innerWidth / window.innerHeight;
        		camera.updateProjectionMatrix();
-
        		renderer.setSize( window.innerWidth, window.innerHeight );
-
        	}
 
        	function animate() {
-
        		requestAnimationFrame( animate );
-
        		render();
-
        	}
 
        	function render() {
-
-       		var timer = Date.now() * 0.0005;
-
-       		camera.position.x = Math.cos( timer ) * 3;
-       		camera.position.z = Math.sin( timer ) * 3;
-
-       		camera.lookAt( cameraTarget );
-
+                controls.update();
        		renderer.render( scene, camera );
-
        	}
 
        </script>
