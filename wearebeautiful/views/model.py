@@ -1,36 +1,17 @@
 import os
-from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
-bp = Blueprint('index', __name__)
+bp = Blueprint('model', __name__)
 
-@bp.route('/model/<path:filename>')
-def model(filename):
+@bp.route('/m/<path:filename>')
+def send_model(filename):
     return send_file(os.path.join(current_app.config['MODEL_DIR'], filename), "model/stl")
 
 
-@bp.route('/')
-def index():
-    if auth.username():
-        return render_template("index.html")
-    else:
-        return redirect(url_for("index.soon"))
-
-
-@bp.route('/soon')
-def soon():
-    return render_template("coming-soon.html", bare=True)
-
-
-@bp.route('/browse')
-def browse():
-    return redirect(url_for("index.browse_by_part"))
-
-
-@bp.route('/browse/by-part')
+@bp.route('/by-part')
 @auth.login_required
 def browse_by_part():
 
@@ -47,51 +28,45 @@ def browse_by_part():
 
     return render_template("browse-by-part.html", order = body_parts, sections = sections)
 
-@bp.route('/browse/by-model')
+
+@bp.route('/by-model')
 @auth.login_required
 def browse_by_model():
-    return render_template("browse-by-model.html")
+
+    models = {}
+    for model in DBModel.select().order_by(DBModel.model_id, DBModel.code):
+        if not model.model_id in models:
+            models[model.model_id] = []
+
+        models[model.model_id].append(model)
+
+    model_list = sorted(models.keys())
+
+    return render_template("browse-by-model.html", models=models, model_list=model_list)
 
 
-@bp.route('/browse/model-diversity')
+@bp.route('/model-diversity')
 @auth.login_required
-def browse_model_diversity():
+def diversity():
     return render_template("model-diversity.html")
 
-@bp.route('/team')
+
+@bp.route('/')
 @auth.login_required
-def team():
-    return render_template("team.html")
-
-
-@bp.route('/about')
-@auth.login_required
-def about():
-    return render_template("about.html")
-
-
-@bp.route('/view/')
-@auth.login_required
-def view_root():
-    flash('You need to provide a model id to view.')
+def model_root():
+    flash('You need to provide a model id to view the model.')
     return render_template("error.html")
 
-
-@bp.route('/view')
-@auth.login_required
-def view_simple():
-    return redirect(url_for("index.browse"))
 
 @bp.route('/statistics')
 @auth.login_required
 def statistics():
     return render_template("statistics.html")
 
-@bp.route('/view/<model>')
+
+@bp.route('/<model>')
 @auth.login_required
-def view(model):
-    if model == '-':
-        return render_template("view.html", manifest = {'id':''})
+def model(model):
 
     if model.isdigit() and len(model) == 6:
         models = DBModel.select(DBModel.model_id, DBModel.code).where(DBModel.model_id == model)
@@ -118,35 +93,6 @@ def view(model):
     id = model.model_id
     code = model.code
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
-    model_file = "/model/%s/%s-%s/%s-%s-%s-surface-med.stl" % (id, id, code, id, code, processed)
+    model_file = "/model/m/%s/%s-%s/%s-%s-%s-surface-med.stl" % (id, id, code, id, code, processed)
 
     return render_template("view.html", model = model, model_file=model_file)
-
-    
-@bp.route('/company')
-def company():
-    return render_template("company.html")
-
-@bp.route('/contact')
-def contact():
-    return render_template("contact.html")
-
-@bp.route('/support')
-def support():
-    return render_template("support.html")
-
-@bp.route('/support/success')
-def support_success():
-    return render_template("support-success.html")
-
-@bp.route('/support/cancel')
-def support_cancel():
-    return render_template("support-cancel.html")
-
-@bp.route('/donate')
-def donate():
-    return redirect(url_for("index.support"))
-
-@bp.route('/privacy')
-def privacy():
-    return render_template("privacy.html")

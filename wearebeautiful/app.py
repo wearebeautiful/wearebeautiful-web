@@ -28,8 +28,10 @@ app.redis = init_redis()
 
 db.init(os.path.join(config.MODEL_DIR, "wab-models.db"))
 
-from wearebeautiful.views import bp as index_bp
+from wearebeautiful.views.index import bp as index_bp
+from wearebeautiful.views.model import bp as model_bp
 app.register_blueprint(index_bp)
+app.register_blueprint(model_bp, url_prefix='/model')
 
 @app.errorhandler(404)
 def page_not_found(message):

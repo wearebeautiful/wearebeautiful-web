@@ -4,17 +4,14 @@
     <div class="col">
     </div>
     <div class="col-11 text-div">
-      <h2>Browse</h2>
+      <h2>Browse by model</h2>
       <p>
-      We aim to provide models for a wide range of ages, ethnicities and geographic origin. We do not
-      publish this information, but we do provide a <a href="/statistics">summary statistics</a> of our models.
-      </p>
-      <p>
-      We have the following models available:
+      To find out more about our selection of models, please read our <a href="{{ url_for("model.diversity") }}">model diversity
+      statement</a>. We also have <a href="{{ url_for("model.statistics") }}">model statistics</a>.  We have the following models available:
       </p>
 
-      {% for section in order %}
-        {{ list_models(sections[section].models, sections[section].name) }}
+      {% for model in model_list %}
+        {{ list_models(model, models[model]) }}
       {% endfor %}
 
     </div>
@@ -23,17 +20,34 @@
   </div>
 {% endblock%}
 
-{% macro list_models(models, name) -%}
-  <div class="browse-section">{{ name }}</div>
+{% macro list_models(id, models) -%}
+  <div class="browse-section">{{ id }}</div>
+  <p>{{ models[0].gender }}, {{ models[0].body_type }}
+     {% if models[0].mother != "no" %}
+       , mother: {{ models[0].mother }}
+      {% endif %}
+  </p>
+  <p>
+      {% if models[0].modification %}
+         {{ models[0].modification }}
+      {% endif %}
+      {% if models[0].tags %}
+         {{ models[0].tags }}
+      {% endif %}
+      {% if models[0].comment %}
+         <b>Model comment:</b> {{ models[0].comment }}
+      {% endif %}
+  </p>
+
   {% for model in models %}
-        <div class="browse-model"><a href="/view/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
-          {{ model.gender }}, {{ model.pose }},
+        <p class="browse-model"><a href="/model/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
+          {{ model.pose }},
           {% if model.arrangement == "natural" %}
             naturally arranged,
           {% else %}
             {{ model.arrangement }},
           {% endif %}
           {{ model.excited }}
-        </div>
+        </p>
     {% endfor %}
 {%- endmacro %}

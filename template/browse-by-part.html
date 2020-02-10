@@ -4,12 +4,10 @@
     <div class="col">
     </div>
     <div class="col-11 text-div">
-      <h2>Browse</h2>
+      <h2>Browse by body parte</h2>
       <p>
-      To find out more about our selection of models, please read 
-      </p>
-      <p>
-      We have the following models available:
+      To find out more about our selection of models, please read our <a href="{{ url_for("model.diversity") }}">model diversity
+      statement</a>. We also have <a href="{{ url_for("model.statistics") }}">model statistics</a>.  We have the following models available:
       </p>
 
       {% for section in order %}
@@ -25,7 +23,7 @@
 {% macro list_models(models, name) -%}
   <div class="browse-section">{{ name }}</div>
   {% for model in models %}
-        <div class="browse-model"><a href="/view/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
+        <div class="browse-model"><a href="/model/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
           {{ model.gender }}, {{ model.pose }},
           {% if model.arrangement == "natural" %}
             naturally arranged,
