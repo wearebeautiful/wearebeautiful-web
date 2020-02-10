@@ -50,8 +50,11 @@
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
 
-       		addShadowedLight( 1, 1, 1, 0xffffff, 1.35 );
-       		addShadowedLight( 0.5, 1, - 1, 0xffaa00, 1 );
+       		addShadowedLight( 2, 2, 2, 0xffffff, .5 );
+       		addShadowedLight( 2, 2, -2, 0xffffff, .5 );
+       		addShadowedLight( -2, 2, 2, 0xffffff, .5 );
+       		addShadowedLight( -2, 2, -2, 0xffffff, .5 );
+       		addShadowedLight( 0, -2, 0, 0xffffff, .2 );
 
        		// renderer
        		renderer = new THREE.WebGLRenderer( { antialias: true } );
