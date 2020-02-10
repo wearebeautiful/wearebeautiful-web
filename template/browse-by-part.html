@@ -1,0 +1,38 @@
+{%- extends 'base.html' -%}
+{%- block content -%}
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col-11 text-div">
+      <h2>Browse</h2>
+      <p>
+      To find out more about our selection of models, please read 
+      </p>
+      <p>
+      We have the following models available:
+      </p>
+
+      {% for section in order %}
+        {{ list_models(sections[section].models, sections[section].name) }}
+      {% endfor %}
+
+    </div>
+    <div class="col">
+    </div>
+  </div>
+{% endblock%}
+
+{% macro list_models(models, name) -%}
+  <div class="browse-section">{{ name }}</div>
+  {% for model in models %}
+        <div class="browse-model"><a href="/view/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
+          {{ model.gender }}, {{ model.pose }},
+          {% if model.arrangement == "natural" %}
+            naturally arranged,
+          {% else %}
+            {{ model.arrangement }},
+          {% endif %}
+          {{ model.excited }}
+        </div>
+    {% endfor %}
+{%- endmacro %}

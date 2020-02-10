@@ -26,8 +26,13 @@ def soon():
 
 
 @bp.route('/browse')
-@auth.login_required
 def browse():
+    return redirect(url_for("index.browse_by_part"))
+
+
+@bp.route('/browse/by-part')
+@auth.login_required
+def browse_by_part():
 
     body_parts = DBModel.select(DBModel.body_part).distinct()
     body_parts = [ part.body_part for part in body_parts ]
@@ -40,8 +45,18 @@ def browse():
             sections[model.body_part] = { 'name' : model.body_part, 'models' : [] }
         sections[model.body_part]['models'].append(model)
 
-    return render_template("browse.html", order = body_parts, sections = sections)
+    return render_template("browse-by-part.html", order = body_parts, sections = sections)
 
+@bp.route('/browse/by-model')
+@auth.login_required
+def browse_by_model():
+    return render_template("browse-by-model.html")
+
+
+@bp.route('/browse/model-diversity')
+@auth.login_required
+def browse_model_diversity():
+    return render_template("model-diversity.html")
 
 @bp.route('/team')
 @auth.login_required
