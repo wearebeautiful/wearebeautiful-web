@@ -131,3 +131,7 @@ def support_cancel():
 @bp.route('/donate')
 def donate():
     return redirect(url_for("index.support"))
+
+@bp.route('/privacy')
+def privacy():
+    return render_template("privacy.html")
