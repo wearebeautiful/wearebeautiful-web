@@ -1,3 +1,7 @@
+body {
+    background: #EEEEEE;
+}
+
 h2 { 
     font-size: 17pt; 
     margin-top: .5em;
@@ -63,13 +67,20 @@ h2 {
     background: #EEE; 
 }
 
-#info-row {
+#view-info {
     font-size: 18pt;
-    color: #BBB;
+    color: #AAA;
     position: absolute;
     width: 100%;
-    right: 25px;
-    top: 75px;
+    right: 5px;
+    z-index: 2;
+}
+
+#progress {
+    font-size: 18pt;
+    color: #AAA;
+    position: absolute;
+    width: 100%;
     z-index: 2;
 }
 
@@ -81,18 +92,6 @@ h2 {
 .navbar {
   z-index: 3;
   font-size: 15pt;
-}
-
-.navlink {
-  color: white;
-}
-
-#canvas {
-    background: #eeeeee;
-    cursor: default;
-    pointer-events: all;
-    margin: 0;
-    position: relative;
 }
 
 .one {

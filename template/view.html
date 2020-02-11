@@ -1,10 +1,11 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
     <div class="row" id="info-row">
+        <div id="model" class="h-100"></div>
         <div id="progress" class="col-6">
            Loading ...
         </div>
-        <div id="info" class="col-6 text-right">
+        <div id="view-info" class="col-6 text-right">
            {% if model.body_part != "anatomical" %}
              {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body.
            {% else %}
@@ -24,14 +25,15 @@
 
        	var container;
        	var camera, scene, renderer, controls;
+        var v_offset;
 
        	init();
        	animate();
 
        	function init() {
 
-		container = document.createElement( 'div' );
-		document.body.appendChild( container );
+                // I have no idea how to compute the correct size so that the whole div area is taken and no scroll bars appear.
+                v_offset = 87; //$("#model").position().top;
 
        		camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
@@ -63,16 +65,16 @@
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
 
-       		addShadowedLight( 2, 2, 2, 0xffffff, .5 );
-       		addShadowedLight( 2, 2, -2, 0xffffff, .5 );
-       		addShadowedLight( -2, 2, 2, 0xffffff, .5 );
-       		addShadowedLight( -2, 2, -2, 0xffffff, .5 );
+       		addShadowedLight( 2, 2, 2, 0xffffff, .4 );
+       		addShadowedLight( 2, 2, -2, 0xffffff, .4 );
+       		addShadowedLight( -2, 2, 2, 0xffffff, .4 );
+       		addShadowedLight( -2, 2, -2, 0xffffff, .4 );
        		addShadowedLight( 0, -2, 0, 0xffffff, .2 );
 
        		// renderer
        		renderer = new THREE.WebGLRenderer( { antialias: true } );
        		renderer.setPixelRatio( window.devicePixelRatio );
-       		renderer.setSize( window.innerWidth, window.innerHeight );
+       		renderer.setSize( window.innerWidth, window.innerHeight - v_offset );
        		renderer.outputEncoding = THREE.sRGBEncoding;
 
        		renderer.shadowMap.enabled = true;
@@ -83,7 +85,7 @@
 		controls.enableDamping = true;
 		controls.dampingFactor = 0.05;
 
-      		container.appendChild( renderer.domElement );
+      		$("#model").append( renderer.domElement );
 
        		window.addEventListener( 'resize', onWindowResize, false );
 
@@ -113,7 +115,7 @@
        	function onWindowResize() {
        		camera.aspect = window.innerWidth / window.innerHeight;
        		camera.updateProjectionMatrix();
-       		renderer.setSize( window.innerWidth, window.innerHeight );
+      		renderer.setSize( window.innerWidth, window.innerHeight - v_offset );
        	}
 
        	function animate() {
