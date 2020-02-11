@@ -93,6 +93,6 @@ def model(model):
     id = model.model_id
     code = model.code
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
-    model_file = "/model/m/%s/%s-%s/%s-%s-%s-surface-med.stl" % (id, id, code, id, code, processed)
+    model_file = "/model/m/%s/%s-%s/%s-%s-%s-surface-low.stl" % (id, id, code, id, code, processed)
 
     return render_template("view.html", model = model, model_file=model_file)
