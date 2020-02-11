@@ -1,5 +1,17 @@
-{%- extends 'base-view.html' -%}
+{%- extends 'base.html' -%}
 {%- block content -%}
+    <div class="row" id="info-row">
+        <div id="progress" class="col-6">
+           Loading ...
+        </div>
+        <div id="info" class="col-6 text-right">
+           {% if model.body_part != "anatomical" %}
+             {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body.
+           {% else %}
+              anatomical model
+           {% endif %}
+        </div>
+    </div>
 {% endblock%}
 
 {% block scripts %}
@@ -45,6 +57,7 @@
        			mesh.receiveShadow = false;
 
        			scene.add( mesh );
+                        $("#progress").text("{{ model.model_id }}-{{ model.code }}");
        		} );
 
        		// Lights
