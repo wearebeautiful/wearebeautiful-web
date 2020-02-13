@@ -1,18 +1,39 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
-    <div class="row" id="info-row">
-        <div id="model" class="h-100"></div>
-        <div id="progress" class="col-6">
-           Loading ...
-        </div>
-        <div id="view-info" class="col-6 text-right">
-           {% if model.body_part != "anatomical" %}
-             {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body.
-           {% else %}
-              anatomical model
-           {% endif %}
-        </div>
+<div class="row">
+
+    <div class="col" id="view-left-col">
     </div>
+
+    <div class="col-11" id="view-center-col">
+
+        <div id="model"></div>
+
+        <div class="distract-mode">
+
+          {% if model.body_part != "anatomical" %}
+            {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body.
+          {% else %}
+             anatomical model
+          {% endif %}
+
+          <div class="dropdown show">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Download model files (STL files)
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">solid.stl</a>
+              <a class="dropdown-item" href="#">surface.stl</a>
+            </div>
+          </div>
+        </div>
+
+    </div>
+
+    <div class="col" id="view-right-col">
+    </div>
+
+</div>
 {% endblock%}
 
 {% block scripts %}
@@ -25,21 +46,29 @@
 
        	var container;
        	var camera, scene, renderer, controls;
-        var v_offset;
 
-       	init();
-       	animate();
+        $(document).ready(function() {
+            init();
+            animate();
+        });
+
+        function get_aspect_ratio() {
+            return window.innerHeight * .75 / window.innerWidth;
+        }
 
        	function init() {
 
-                // I have no idea how to compute the correct size so that the whole div area is taken and no scroll bars appear.
-                v_offset = 87; //$("#model").position().top;
+                var width = $("#model").innerWidth();
+                var height = width * get_aspect_ratio();
 
-       		camera = new THREE.PerspectiveCamera( 35, window.innerWidth / window.innerHeight, 1, 15 );
+                // resize the div according to the aspect ratio
+                $("#model").height(height);
+
+       		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
 
        		scene = new THREE.Scene();
-       		scene.background = new THREE.Color( 0xEEEEEE );
+       		scene.background = new THREE.Color( 0xEECCDD );
 
        		var material = new THREE.MeshPhongMaterial( { color: 0x6A0080, specular: 0x111111, shininess: 50 } );
                 material.side = THREE.DoubleSide;
@@ -74,7 +103,7 @@
        		// renderer
        		renderer = new THREE.WebGLRenderer( { antialias: true } );
        		renderer.setPixelRatio( window.devicePixelRatio );
-       		renderer.setSize( window.innerWidth, window.innerHeight - v_offset );
+       		renderer.setSize( width, height );
        		renderer.outputEncoding = THREE.sRGBEncoding;
 
        		renderer.shadowMap.enabled = true;
@@ -113,9 +142,14 @@
        	}
 
        	function onWindowResize() {
-       		camera.aspect = window.innerWidth / window.innerHeight;
+
+                var width = $("#model").innerWidth();
+                var height = width * get_aspect_ratio();
+
+                $("#model").height(height);
+      		renderer.setSize(width, height);
+       		camera.aspect = width / height; 
        		camera.updateProjectionMatrix();
-      		renderer.setSize( window.innerWidth, window.innerHeight - v_offset );
        	}
 
        	function animate() {
