@@ -7,12 +7,6 @@ h2 {
     margin-bottom: .5em;
 }
 
-.model-desc { 
-    font-size: 17pt; 
-    font-width: bold;
-    padding-bottom: .5em;
-}
-
 .text-div {
     max-width: 700px;
     margin-top: 1em;
@@ -72,21 +66,19 @@ h2 {
     background: #EEE; 
 }
 
-#view-info {
-    font-size: 18pt;
-    color: #AAA;
-    position: absolute;
-    width: 100%;
-    right: 5px;
-    z-index: 2;
+.model-desc { 
+    font-size: 17pt; 
+    font-width: bold;
+    padding-bottom: .5em;
 }
 
-#progress {
-    font-size: 18pt;
-    color: #AAA;
+#model-overlay {
     position: absolute;
-    width: 100%;
-    z-index: 2;
+    z-index: 1;
+    color: #333;
+}
+
+#model {
 }
 
 .donate-btn {

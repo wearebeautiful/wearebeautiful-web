@@ -7,9 +7,10 @@
 
     <div class="col-11" id="view-center-col">
 
+        <div id="model-overlay">boo!</div>
         <div id="model"></div>
 
-        <div id="distract-mode">
+        <div id="distract-mode" class="d-none">
 
           <div class="model-desc float-right">
             {{ model.model_id}}-{{model.code}} 
@@ -87,6 +88,9 @@
 
                 // resize the div according to the aspect ratio
                 $("#model").height(height);
+                var pos = $("#model").position();
+                $("#model-overlay").css('top', pos.top);
+                $("#model-overlay").css('left', pos.left + width - $("#model-overlay").width());
 
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
@@ -141,7 +145,7 @@
       		$("#model").append( renderer.domElement );
 
        		window.addEventListener( 'resize', onWindowResize, false );
-
+                $("#distract-mode").toggleClass("d-none")
        	}
 
        	function addShadowedLight( x, y, z, color, intensity ) {
@@ -179,6 +183,10 @@
                 var height = width * get_aspect_ratio();
 
                 $("#model").height(height);
+                var pos = $("#model").position();
+                $("#model-overlay").css('top', pos.top);
+                $("#model-overlay").css('left', pos.left + width - $("#model-overlay").width());
+
       		renderer.setSize(width, height);
        		camera.aspect = width / height; 
        		camera.updateProjectionMatrix();
