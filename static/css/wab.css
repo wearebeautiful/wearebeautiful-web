@@ -3,11 +3,16 @@ body {
 }
 
 h2 { 
-    font-size: 17pt; 
     margin-top: .5em;
     margin-bottom: .5em;
 }
- 
+
+.model-desc { 
+    font-size: 17pt; 
+    font-width: bold;
+    padding-bottom: .5em;
+}
+
 .text-div {
     max-width: 700px;
     margin-top: 1em;
