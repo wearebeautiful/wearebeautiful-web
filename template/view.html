@@ -1,13 +1,16 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
-<div class="row">
+<div class="row" id="top-row">
 
     <div class="col" id="view-left-col">
     </div>
 
     <div class="col-11" id="view-center-col">
 
-        <div id="model-overlay">boo!</div>
+        <div id="model-overlay">
+           <a href="#"><i id="close-focus" class="fas fa-times-circle d-none" style="color: #888"></i></a>
+           <a href="#"><i id="open-focus" class="fas fa-expand" style="color: #888"></i></a>
+        </div>
         <div id="model"></div>
 
         <div id="distract-mode" class="d-none">
@@ -68,18 +71,23 @@
             return window.innerHeight * .75 / window.innerWidth;
         }
 
-        $('#focus-button').on('click', function(event) {
+        $('#close-focus').on('click', toggle_focus_mode);
+        $('#open-focus').on('click', toggle_focus_mode);
+        $('#focus-button').on('click', toggle_focus_mode);
+
+        function toggle_focus_mode() {
             focus_mode = !focus_mode;
 
-            console.log("toggle");
             $("#view-left-col").toggleClass("d-none")
             $("#view-center-col").toggleClass("col-11")
             $("#view-center-col").toggleClass("col-12")
             $("#view-center-col").toggleClass("p-0")
             $("#view-right-col").toggleClass("d-none")
-            //$("#distract-mode").toggleClass("d-none")
+            $("#open-focus").toggleClass("d-none")
+            $("#close-focus").toggleClass("d-none")
+            $("#distract-mode").toggleClass("d-none")
             onWindowResize();
-        });
+        }
 
        	function init() {
 
@@ -89,8 +97,8 @@
                 // resize the div according to the aspect ratio
                 $("#model").height(height);
                 var pos = $("#model").position();
-                $("#model-overlay").css('top', pos.top);
-                $("#model-overlay").css('left', pos.left + width - $("#model-overlay").width());
+                $("#model-overlay").css('top', pos.top + 3);
+                $("#model-overlay").css('left', pos.left + width - $("#model-overlay").width() - 10);
 
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
@@ -171,21 +179,23 @@
 
        	function onWindowResize() {
 
-                var width;
+                var width, height;
                 
                 if (focus_mode) {
                     width = window.innerWidth;
+                    // TODO: get rid of this hack!
+                    height = window.innerHeight - $("#navbar").outerHeight() - 10;
                 }
                 else {
                     width = $("#model").innerWidth();
+                    height = width * get_aspect_ratio();
                 }
                 
-                var height = width * get_aspect_ratio();
 
                 $("#model").height(height);
                 var pos = $("#model").position();
-                $("#model-overlay").css('top', pos.top);
-                $("#model-overlay").css('left', pos.left + width - $("#model-overlay").width());
+                $("#model-overlay").css('top', pos.top + 3);
+                $("#model-overlay").css('left',pos.left + width - $("#model-overlay").width() - 10);
 
       		renderer.setSize(width, height);
        		camera.aspect = width / height; 

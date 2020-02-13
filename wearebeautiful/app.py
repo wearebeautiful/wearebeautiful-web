@@ -1,6 +1,7 @@
 import os
 from flask import Flask, render_template, flash, url_for, current_app, redirect
 from flask_httpauth import HTTPBasicAuth
+from flask_fontawesome import FontAwesome
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 import config
@@ -24,6 +25,7 @@ app.secret_key = config.SECRET_KEY
 app.config.from_object('config')
 
 Bootstrap(app)
+fa = FontAwesome(app)
 app.redis = init_redis()
 
 db.init(os.path.join(config.MODEL_DIR, "wab-models.db"))
