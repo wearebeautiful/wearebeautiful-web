@@ -18,6 +18,12 @@ h2 {
     margin-top: .5em;
 }
 
+.team-nickname {
+    font-size: 10pt;
+    font-weight: italic;
+    margin-top: .5em;
+}
+
 .team-title {
     font-style: italic;
     margin-top: -15px;
