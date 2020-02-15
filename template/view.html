@@ -7,16 +7,19 @@
 
     <div class="col-11" id="view-center-col">
 
-        <div id="model-overlay">
+        <div id="focus-overlay">
            <a href="#"><i id="close-focus" class="fas fa-times-circle d-none" style="color: #888"></i></a>
            <a href="#"><i id="open-focus" class="fas fa-expand" style="color: #888"></i></a>
+        </div>
+        <div id="code-overlay">
+          {{ model.model_id }}-{{ model.code }}
         </div>
         <div id="model"></div>
 
         <div id="distract-mode" class="d-none">
 
           <div class="model-desc float-right">
-            {{ model.model_id}}-{{model.code}} 
+            We can put more guff here.
           </div>
 
           <div class="model-desc">
@@ -93,8 +96,11 @@
                 // resize the div according to the aspect ratio
                 $("#model").height(height);
                 var pos = $("#model").position();
-                $("#model-overlay").css('top', pos.top + 3);
-                $("#model-overlay").css('left', pos.left + width - $("#model-overlay").width() - 10);
+                $("#focus-overlay").css('top', pos.top + 3);
+                $("#focus-overlay").css('left', pos.left + width - $("#focus-overlay").width() - 10);
+
+                $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
+                $("#code-overlay").css('left', pos.left);
 
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
@@ -190,8 +196,10 @@
 
                 $("#model").height(height);
                 var pos = $("#model").position();
-                $("#model-overlay").css('top', pos.top + 3);
-                $("#model-overlay").css('left',pos.left + width - $("#model-overlay").width() - 10);
+                $("#focus-overlay").css('top', pos.top + 3);
+                $("#focus-overlay").css('left',pos.left + width - $("#focus-overlay").width() - 10);
+                $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
+                $("#code-overlay").css('left', pos.left);
 
       		renderer.setSize(width, height);
        		camera.aspect = width / height; 
