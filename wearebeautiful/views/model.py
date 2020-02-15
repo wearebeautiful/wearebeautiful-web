@@ -95,4 +95,5 @@ def model(model):
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
     model_file = "/model/m/%s/%s-%s/%s-%s-%s-surface-low.stl" % (id, id, code, id, code, processed)
 
-    return render_template("view.html", model = model, model_file=model_file)
+    return render_template("view.html", model = model, model_file=model_file,
+        color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d")

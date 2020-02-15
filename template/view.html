@@ -14,6 +14,11 @@
         <div id="code-overlay">
           {{ model.model_id }}-{{ model.code }}
         </div>
+        <div id="nav-overlay" class="d-inline">
+           <div class="color-well rounded" id="color-well-1" style="background-color: #{{ color_1 }}"></div>
+           <div class="color-well rounded" id="color-well-2" style="background-color: #{{ color_2 }}"></div>
+           <div class="color-well rounded" id="color-well-3" style="background-color: #{{ color_3 }}"></div>
+        </div>
         <div id="model"></div>
 
         <div id="distract-mode" class="d-none">
@@ -57,7 +62,7 @@
        	import { STLLoader } from '/static/js/node_modules/three/examples/jsm/loaders/STLLoader.js';
         import { OrbitControls } from '/static/js/node_modules/three/examples/jsm/controls/OrbitControls.js';
 
-       	var container;
+       	var container, mesh = null;
        	var camera, scene, renderer, controls;
         var focus_mode = false;
 
@@ -73,6 +78,9 @@
         $('#close-focus').on('click', toggle_focus_mode);
         $('#open-focus').on('click', toggle_focus_mode);
         $('#focus-button').on('click', toggle_focus_mode);
+        $('#color-well-1').on('click', function() { color_well_click("{{ color_1 }}") });
+        $('#color-well-2').on('click', function() { color_well_click("{{ color_2 }}") });
+        $('#color-well-3').on('click', function() { color_well_click("{{ color_3 }}") });
 
         function toggle_focus_mode() {
             focus_mode = !focus_mode;
@@ -86,6 +94,11 @@
             $("#close-focus").toggleClass("d-none")
             $("#distract-mode").toggleClass("d-none")
             onWindowResize();
+        }
+
+        function color_well_click(color) {
+            mesh.material = new THREE.MeshPhongMaterial( { color: '#' + color, specular: 0x111111, shininess: 50 } );
+            mesh.material.side = THREE.DoubleSide;
         }
 
        	function init() {
@@ -102,13 +115,16 @@
                 $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
                 $("#code-overlay").css('left', pos.left);
 
+                $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
+                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 10);
+
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
 
        		scene = new THREE.Scene();
        		scene.background = new THREE.Color( 0xEECCDD );
 
-       		var material = new THREE.MeshPhongMaterial( { color: 0x9A1085, specular: 0x111111, shininess: 50 } );
+       		var material = new THREE.MeshPhongMaterial( { color: 0x{{ color_1 }}, specular: 0x111111, shininess: 50 } );
                 material.side = THREE.DoubleSide;
 
                 var loader = new STLLoader();
@@ -119,7 +135,7 @@
                         geometry.computeBoundingBox();
                         var scale_factor = 1.0 / geometry.boundingBox.max.y;
 
-       			var mesh = new THREE.Mesh( geometry, material );
+       			mesh = new THREE.Mesh( geometry, material );
        			mesh.scale.set(scale_factor, scale_factor, scale_factor);
 
        			mesh.castShadow = false;
@@ -200,6 +216,9 @@
                 $("#focus-overlay").css('left',pos.left + width - $("#focus-overlay").width() - 10);
                 $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
                 $("#code-overlay").css('left', pos.left);
+                $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
+                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 10);
+
 
       		renderer.setSize(width, height);
        		camera.aspect = width / height; 
