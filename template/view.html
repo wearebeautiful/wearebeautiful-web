@@ -14,7 +14,7 @@
         <div id="code-overlay">
           {{ model.model_id }}-{{ model.code }}
         </div>
-        <div id="nav-overlay d-none">
+        <div id="nav-overlay">
            <div class="color-well rounded d-inline-flex" id="color-well-1" style="background-color: #{{ color_1 }}"></div>
            <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_2 }}"></div>
            <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_3 }}"></div>
@@ -117,7 +117,6 @@
 
                 $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
                 $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 10);
-                $("#nav-overlay").toggleClass("d-none");
 
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
