@@ -32,5 +32,9 @@ class DBModel(Model):
     modification = TextField(null = False)
     comment = TextField(null = False)
 
+    def parse_data(self):
+        self.tags_list = self.tags.split(",")
+        self.mods_list = self.modification.split(",")
+
     def __repr__(self):
         return "<DBModel(%s-%s)>" % (self.model_id, self.code)

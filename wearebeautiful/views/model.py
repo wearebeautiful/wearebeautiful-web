@@ -22,6 +22,7 @@ def browse_by_part():
     models = DBModel.select().order_by(DBModel.body_part)
     sections = {}
     for model in models:
+        model.parse_data()
         if not model.body_part in sections:
             sections[model.body_part] = { 'name' : model.body_part, 'models' : [] }
         sections[model.body_part]['models'].append(model)
@@ -35,6 +36,7 @@ def browse_by_model():
 
     models = {}
     for model in DBModel.select().order_by(DBModel.model_id, DBModel.code):
+        model.parse_data()
         if not model.model_id in models:
             models[model.model_id] = []
 
@@ -90,6 +92,7 @@ def model(model):
     if not model:
         raise NotFound("model %s does not exist." % model)
 
+    model.parse_data()
     id = model.model_id
     code = model.code
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)

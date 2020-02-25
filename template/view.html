@@ -14,7 +14,7 @@
         <div id="code-overlay">
           {{ model.model_id }}-{{ model.code }}
         </div>
-        <div id="nav-overlay">
+        <div id="nav-overlay" class="d-inline-flex">
            <div class="color-well rounded d-inline-flex" id="color-well-1" style="background-color: #{{ color_1 }}"></div>
            <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_2 }}"></div>
            <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_3 }}"></div>
@@ -52,7 +52,7 @@
                      <tr><td>arangement type</td><td>{{ model.arrangement }}</td></tr>
                      <tr><td>excited</td><td>{{ model.excited }}</td></tr>
                      <tr><td>mother</td><td>{{ model.mother }}</td></tr>
-                     <tr><td>modifications</td><td>{{ model.modifications }}</td></tr>
+                     <tr><td>modifications</td><td>{{ model.modification }}</td></tr>
                      <tr><td>created</td><td>{{ model.created }}</td></tr>
                      <tr><td>processed</td><td>{{ model.processed }}</td></tr>
                      <tr><td>released</td><td>{{ model.released }}</td></tr>
@@ -181,7 +181,7 @@
                 $("#code-overlay").css('left', pos.left);
 
                 $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
-                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 10);
+                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 13);
 
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
        		camera.position.set( 3, 0.15, 3 );
@@ -282,7 +282,7 @@
                 $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
                 $("#code-overlay").css('left', pos.left);
                 $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
-                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 10);
+                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 13);
 
 
       		renderer.setSize(width, height);
