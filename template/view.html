@@ -35,14 +35,79 @@
             {% endif %}
           </div>
 
-          <div class="dropdown show">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Download model files (STL files)
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">solid.stl</a>
-              <a class="dropdown-item" href="#">surface.stl</a>
+          <div id="accordion">
+            <div class="card">
+              <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    3D model information
+                  </button>
+                </h5>
+              </div>
+
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                  <table class="table table-striped table-bordered">
+                     <tr><td>body part</td><td>{{ model.body_part }}</td></tr>
+                     <tr><td>pose</td><td>{{ model.pose }}</td></tr>
+                     <tr><td>arangement type</td><td>{{ model.arrangement }}</td></tr>
+                     <tr><td>excited</td><td>{{ model.excited }}</td></tr>
+                     <tr><td>mother</td><td>{{ model.mother }}</td></tr>
+                     <tr><td>modifications</td><td>{{ model.modifications }}</td></tr>
+                     <tr><td>created</td><td>{{ model.created }}</td></tr>
+                     <tr><td>processed</td><td>{{ model.processed }}</td></tr>
+                     <tr><td>released</td><td>{{ model.released }}</td></tr>
+                  </table>
+                </div>
+              </div>
             </div>
+
+            <div class="card">
+              <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    Human model information
+                  </button>
+                </h5>
+              </div>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                  <table class="table table-striped table-bordered">
+                     <tr><td>id</td><td>{{ model.model_id }}</td></tr>
+                     <tr><td>gender</td><td>{{ model.gender }}</td></tr>
+                     <tr><td>body type</td><td>{{ model.body_type }}<t/d></tr>
+                     <tr><td>tags</td><td>{{ model.tags }}</td></tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            {% if model.comment %}
+              <div class="card">
+                <div class="card-header" id="heading-comment">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">
+                      Model comment
+                    </button>
+                  </h5>
+                </div>
+                <div id="collapse-comment" class="collapse" aria-labelledby="heading-comment" data-parent="#accordion">
+                  <div class="card-body">
+                    {{ model.comment }}
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+
+        </div>
+
+        <div class="dropdown show">
+          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Download model files (STL files)
+          </a>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">solid.stl</a>
+            <a class="dropdown-item" href="#">surface.stl</a>
           </div>
         </div>
 
