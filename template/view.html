@@ -22,7 +22,6 @@
         <div id="model"></div>
 
         <div id="distract-mode" class="d-none">
-
           <div class="model-desc float-right">
             We can put more guff here.
           </div>
@@ -98,17 +97,18 @@
                 </div>
               </div>
             {% endif %}
-
-        </div>
-
-        <div class="dropdown show">
-          <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Download model files (STL files)
-          </a>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <a class="dropdown-item" href="#">solid.stl</a>
-            <a class="dropdown-item" href="#">surface.stl</a>
           </div>
+
+          <div class="dropdown show" id="download">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Download model files (STL files)
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <a class="dropdown-item" href="#">solid.stl</a>
+              <a class="dropdown-item" href="#">surface.stl</a>
+            </div>
+          </div>
+
         </div>
 
     </div>
