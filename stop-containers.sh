@@ -1,3 +1,3 @@
 #!/bin/bash
 
-docker rm -f wearebeautiful-web
+docker rm -f wab-web wab-comp
