@@ -41,3 +41,7 @@ app.register_blueprint(model_bp, url_prefix='/model')
 @app.errorhandler(404)
 def page_not_found(message):
     return render_template('errors/404.html', message=message), 404
+
+@app.errorhandler(403)
+def page_not_found(message):
+    return render_template('errors/403.html', message=message), 403

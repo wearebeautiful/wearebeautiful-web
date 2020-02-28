@@ -6,7 +6,7 @@ docker run -d \
     --expose 3031 \
     --name wab-web \
     --network=website-network \
-    -v wab-models:/archive \
+    -v /home/website/wearebeautiful-models:/archive \
     wearebeautiful.info:prod
 
 #    --env "VIRTUAL_HOST=wab-dev" \
@@ -15,6 +15,7 @@ docker run -d \
     --name wab-comp \
     -v wab-cache:/cache \
     -v $SRC_DIR/admin/nginx/cache/cache.conf:/etc/nginx/conf.d/cache.conf:ro \
+    -v $SRC_DIR/admin/nginx/vhost.d/wearebeautiful.info:/etc/nginx/vhost.d/wearebeautiful.info:ro \
     -v $SRC_DIR/admin/nginx/compressor/compressor-nginx.conf:/etc/nginx/nginx.conf:ro \
     --network=website-network \
     --env "LETSENCRYPT_HOST=wearebeautiful.info" \
