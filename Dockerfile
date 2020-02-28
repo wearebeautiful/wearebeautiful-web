@@ -10,20 +10,22 @@ RUN pip3.6 install setuptools uwsgi
 
 RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
+COPY requirements.txt /code/wearebeautiful.info
+RUN pip3.6 install -r requirements.txt
 
 RUN apt-get purge -y build-essential && \
     apt-get autoremove -y && \
     apt-get clean -y
 
+WORKDIR /code/wearebeautiful.info
+COPY . /code/wearebeautiful.info
+
 WORKDIR /code/wearebeautiful.info/static
-RUN mkdir -p js && \
+RUN rm -rf js && \
+    mkdir js && \
     cd js && \
     npm install && \
     npm i three
-
-WORKDIR /code/wearebeautiful.info
-COPY . /code/wearebeautiful.info
-RUN pip3.6 install -r requirements.txt
 
 CMD uwsgi --gid=www-data --uid=www-data --http-socket :3031 \
           --vhost --module=wearebeautiful.app --callable=app --chdir=/code/wearebeautiful.info \
