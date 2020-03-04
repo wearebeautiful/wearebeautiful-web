@@ -9,7 +9,6 @@ import config
 import json
 from wearebeautiful.db_model import db
 from wearebeautiful.auth import init_auth
-from wearebeautiful.redis import init_redis
 
 
 STATIC_PATH = "/static"
@@ -29,7 +28,6 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 Bootstrap(app)
 fa = FontAwesome(app)
-app.redis = init_redis()
 
 db.init(os.path.join(config.MODEL_DIR, "wab-models.db"))
 

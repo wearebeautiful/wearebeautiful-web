@@ -1,26 +1,31 @@
 #!/bin/bash
 
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+LOGDIR=/tmp/
+MODELS=/home/website/wearebeautiful-models
 
 docker run -d \
     --expose 3031 \
     --name wab-web \
     --network=website-network \
-    -v /home/website/wearebeautiful-models:/archive \
+    -v $MODELS:/archive \
     wearebeautiful.info:prod
 
 #    --env "VIRTUAL_HOST=wab-dev" \
+
 docker run -d \
     --expose 8080 \
     --name wab-comp \
     -v wab-cache:/cache \
+    -v $MODELS:/models:ro \
     -v $SRC_DIR/admin/nginx/cache/cache.conf:/etc/nginx/conf.d/cache.conf:ro \
-    -v $SRC_DIR/admin/nginx/vhost.d/wearebeautiful.info:/etc/nginx/vhost.d/wearebeautiful.info:ro \
-    -v $SRC_DIR/admin/nginx/compressor/compressor-nginx.conf:/etc/nginx/nginx.conf:ro \
+    -v $SRC_DIR/admin/nginx/vhost.d/wearebeautiful.info:/etc/nginx/vhost.d/silly.wearebeautiful.info:ro \
+    -v $SRC_DIR/admin/nginx/compressor/compressor-nginx.conf:/etc/nginx/nginx.conf:rw \
+    -v $LOGDIR:/var/log/nginx:rw \
     --network=website-network \
-    --env "LETSENCRYPT_HOST=wearebeautiful.info" \
+    --env "LETSENCRYPT_HOST=silly.wearebeautiful.info" \
     --env "LETSENCRYPT_EMAIL=mayhem@gmail.com" \
-    --env "VIRTUAL_HOST=wearebeautiful.info" \
+    --env "VIRTUAL_HOST=silly.wearebeautiful.info" \
     nginx:1.17.8
 
 

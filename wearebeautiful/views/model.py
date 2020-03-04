@@ -1,4 +1,5 @@
 import os
+from werkzeug.exceptions import BadRequest
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
@@ -8,7 +9,13 @@ bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
-    return send_file(os.path.join(current_app.config['MODEL_DIR'], filename), "model/stl")
+    if filename.lower().endswith(".stl"):
+        return send_file(os.path.join(current_app.config['MODEL_DIR'], filename + ".gz"), "model/stl")
+    elif filename.lower().endswith(".stl.gz"):
+        return send_file(os.path.join(current_app.config['MODEL_DIR'], filename), "gzip")
+    else:
+        return BadRequest("Invalid STL file requested. Supported formats: .stl and .stl.gz")
+        
 
 
 @bp.route('/by-part')
@@ -80,7 +87,6 @@ def model(model):
             return redirect(url_for("index.view", model=model_list[0]))
         else:
             model_list = [ m for m in models ]
-            print(model_list)
             return render_template("model-disambig.html", model=model, model_list=model_list)
 
     try:
