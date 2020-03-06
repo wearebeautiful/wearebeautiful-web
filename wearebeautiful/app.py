@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, flash, url_for, current_app, redirect
 from flask_httpauth import HTTPBasicAuth
 from flask_fontawesome import FontAwesome
+from flask_static_digest import FlaskStaticDigest
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
@@ -16,6 +17,7 @@ STATIC_FOLDER = "../static"
 TEMPLATE_FOLDER = "../template"
 
 auth = init_auth()
+flask_static_digest = FlaskStaticDigest()
 
 app = Flask(__name__,
             static_url_path = STATIC_PATH,
@@ -29,6 +31,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 
 Bootstrap(app)
 fa = FontAwesome(app)
+flask_static_digest.init_app(app)
 
 db.init(os.path.join(config.MODEL_DIR, "wab-models.db"))
 
