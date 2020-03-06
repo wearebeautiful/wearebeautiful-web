@@ -121,6 +121,7 @@
 
 {% block scripts %}
 {{ bootstrap.load_js() }}
+<script type="text/javascript" src="/static/js/node_modules/pako/dist/pako.min.js"></script>
 <script type="module">
 
        	import * as THREE from '/static/js/node_modules/three/build/three.module.js';
@@ -136,6 +137,7 @@
             animate();
         });
 
+        
         function get_aspect_ratio() {
             return window.innerHeight * .75 / window.innerWidth;
         }
@@ -193,6 +195,12 @@
                 material.side = THREE.DoubleSide;
 
                 var loader = new STLLoader();
+                var saved_parse = loader.parse;
+
+                loader.parse = function( data ) {
+                    return saved_parse(pako.inflate(data).buffer);
+                };
+
        		loader.load( '{{ model_file }}', function ( geometry ) {
 
                         geometry.computeFaceNormals();
@@ -208,7 +216,10 @@
 
        			scene.add( mesh );
                         $("#progress").text("{{ model.model_id }}-{{ model.code }}");
-       		} );
+       		}, function ( prog ) {
+                }, function ( err ) {
+                   console.log(err.message);
+                });
 
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
