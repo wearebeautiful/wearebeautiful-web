@@ -9,9 +9,6 @@ bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
-    if filename.lower().endswith(".stl"):
-        return send_file(os.path.join(current_app.config['MODEL_DIR'], filename + ".gz"), "gzip")
-
     return send_file(os.path.join(current_app.config['MODEL_DIR'], filename))
 
 
