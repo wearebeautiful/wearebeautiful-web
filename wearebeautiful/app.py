@@ -12,7 +12,12 @@ from wearebeautiful.auth import init_auth
 
 
 STATIC_PATH = "/static"
-STATIC_FOLDER = "../static"
+
+if config.STATIC_SUBDOMAIN:
+    STATIC_FOLDER = None
+else:
+    STATIC_FOLDER = "../static"
+
 TEMPLATE_FOLDER = "../template"
 
 auth = init_auth()
@@ -35,6 +40,10 @@ from wearebeautiful.views.index import bp as index_bp
 from wearebeautiful.views.model import bp as model_bp
 app.register_blueprint(index_bp)
 app.register_blueprint(model_bp, url_prefix='/model')
+
+if config.STATIC_SUBDOMAIN:
+    app.add_url_rule('/<path:filename>', endpoint='static',
+        view_func=app.send_static_file, subdomain='static')
 
 @app.errorhandler(404)
 def page_not_found(message):

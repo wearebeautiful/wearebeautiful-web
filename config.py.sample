@@ -5,5 +5,8 @@ MODEL_DIR = "<path to model git>"
 USE_SITE_AUTH=False
 SITE_USERNAME="test"
 SITE_PASSWORD="test"
-REDIS_HOST="localhost"
-REDIS_PORT=6379
+
+# Without trailing /
+STATIC_BASE_URL = ""
+IMAGE_BASE_URL = ""
+STL_BASE_URL = ""
