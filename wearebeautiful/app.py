@@ -23,6 +23,7 @@ app = Flask(__name__,
             template_folder = TEMPLATE_FOLDER)
 app.secret_key = config.SECRET_KEY
 app.config.from_object('config')
+app.config['FONTAWESOME_SERVE_LOCAL'] = False
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
