@@ -12,19 +12,14 @@ from wearebeautiful.auth import init_auth
 
 
 STATIC_PATH = "/static"
-
-if config.STATIC_SUBDOMAIN:
-    STATIC_FOLDER = None
-else:
-    STATIC_FOLDER = "../static"
-
+STATIC_FOLDER = "../static"
 TEMPLATE_FOLDER = "../template"
 
 auth = init_auth()
 
 app = Flask(__name__,
             static_url_path = STATIC_PATH,
-            static_folder = STATIC_FOLDER,
+            static_folder = STATIC_FOLDER, 
             template_folder = TEMPLATE_FOLDER)
 app.secret_key = config.SECRET_KEY
 app.config.from_object('config')
@@ -41,9 +36,12 @@ from wearebeautiful.views.model import bp as model_bp
 app.register_blueprint(index_bp)
 app.register_blueprint(model_bp, url_prefix='/model')
 
-if config.STATIC_SUBDOMAIN:
-    app.add_url_rule('/<path:filename>', endpoint='static',
-        view_func=app.send_static_file, subdomain='static')
+def static_url(filename):
+    o = config.STATIC_BASE_URL + filename
+    print(o)
+    return o
+
+app.jinja_env.globals.update(static_url=static_url)
 
 @app.errorhandler(404)
 def page_not_found(message):

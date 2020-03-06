@@ -121,12 +121,12 @@
 
 {% block scripts %}
 {{ bootstrap.load_js() }}
-<script type="text/javascript" src="/static/js/node_modules/pako/dist/pako.min.js"></script>
+<script type="text/javascript" src="{{ static_url('/js/node_modules/pako/dist/pako.min.js') }}"></script>
 <script type="module">
 
-       	import * as THREE from '/static/js/node_modules/three/build/three.module.js';
-       	import { STLLoader } from '/static/js/node_modules/three/examples/jsm/loaders/STLLoader.js';
-        import { OrbitControls } from '/static/js/node_modules/three/examples/jsm/controls/OrbitControls.js';
+       	import * as THREE from '{{ static_url("/js/node_modules/three/build/three.module.js") }}';
+       	import { STLLoader } from '{{ static_url("/js/node_modules/three/examples/jsm/loaders/STLLoader.js") }}';
+        import { OrbitControls } from '{{ static_url("/js/node_modules/three/examples/jsm/controls/OrbitControls.js") }}';
 
        	var container, mesh = null;
        	var camera, scene, renderer, controls;
@@ -197,9 +197,9 @@
                 var loader = new STLLoader();
                 var saved_parse = loader.parse;
 
-                loader.parse = function( data ) {
-                    return saved_parse(pako.inflate(data).buffer);
-                };
+                //loader.parse = function( data ) {
+                //    return saved_parse(pako.inflate(data).buffer);
+                //};
 
        		loader.load( '{{ model_file }}', function ( geometry ) {
 
@@ -218,7 +218,7 @@
                         $("#progress").text("{{ model.model_id }}-{{ model.code }}");
        		}, function ( prog ) {
                 }, function ( err ) {
-                   console.log(err.message);
+                   console.log("Cannot load model. Are source model files gzipped?");
                 });
 
        		// Lights
