@@ -37,9 +37,7 @@ app.register_blueprint(index_bp)
 app.register_blueprint(model_bp, url_prefix='/model')
 
 def static_url(filename):
-    o = config.STATIC_BASE_URL + filename
-    print(o)
-    return o
+    return config.STATIC_BASE_URL + filename
 
 app.jinja_env.globals.update(static_url=static_url)
 

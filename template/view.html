@@ -121,7 +121,6 @@
 
 {% block scripts %}
 {{ bootstrap.load_js() }}
-<script type="text/javascript" src="{{ static_url('/js/node_modules/pako/dist/pako.min.js') }}"></script>
 <script type="module">
 
        	import * as THREE from '{{ static_url("/js/node_modules/three/build/three.module.js") }}';
@@ -195,12 +194,6 @@
                 material.side = THREE.DoubleSide;
 
                 var loader = new STLLoader();
-                var saved_parse = loader.parse;
-
-                //loader.parse = function( data ) {
-                //    return saved_parse(pako.inflate(data).buffer);
-                //};
-
        		loader.load( '{{ model_file }}', function ( geometry ) {
 
                         geometry.computeFaceNormals();

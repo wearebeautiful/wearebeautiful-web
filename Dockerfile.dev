@@ -11,7 +11,7 @@ RUN pip3.6 install setuptools uwsgi
 RUN mkdir /js
 WORKDIR /js
 RUN npm install && \
-    npm i three pako
+    npm i three
 
 RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info

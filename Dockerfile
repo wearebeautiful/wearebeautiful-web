@@ -32,6 +32,6 @@ RUN rm -rf js && \
     mkdir js && \
     cd js && \
     npm install && \
-    npm i three pako
+    npm i three
 
 CMD uwsgi --ini /code/wearebeautiful.info/admin/uwsgi/uwsgi.ini
