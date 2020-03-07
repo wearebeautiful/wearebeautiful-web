@@ -123,9 +123,9 @@
 {{ bootstrap.load_js() }}
 <script type="module">
 
-       	import * as THREE from '{{ static_url("/js/node_modules/three/build/three.module.js") }}';
-       	import { STLLoader } from '{{ static_url("/js/node_modules/three/examples/jsm/loaders/STLLoader.js") }}';
-        import { OrbitControls } from '{{ static_url("/js/node_modules/three/examples/jsm/controls/OrbitControls.js") }}';
+       	import * as THREE from '{{ static_url_for('static', filename="js/node_modules/three/build/three.module.js") }}';
+       	import { STLLoader } from '{{ static_url_for('static', filename="js/node_modules/three/examples/jsm/loaders/STLLoader.js") }}';
+        import { OrbitControls } from '{{ static_url_for('static', filename="js/node_modules/three/examples/jsm/controls/OrbitControls.js") }}';
 
        	var container, mesh = null;
        	var camera, scene, renderer, controls;

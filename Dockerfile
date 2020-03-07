@@ -34,4 +34,11 @@ RUN rm -rf js && \
     npm install && \
     npm i three
 
+WORKDIR /code/wearebeautiful.info
+ENV FLASK_APP=wearebeautiful.app
+ENV FLASK_ENV=production
+ENV LC_ALL=C.UTF-8
+ENV LANG=C.UTF-8
+RUN flask digest compile
+
 CMD uwsgi --ini /code/wearebeautiful.info/admin/uwsgi/uwsgi.ini
