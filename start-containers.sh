@@ -10,9 +10,7 @@ docker run -d \
     --name wab-web \
     --network=wab-network \
     -v $MODELS:/archive \
-    wearebeautiful.info:prod
-
-#    --env "VIRTUAL_HOST=wab-dev" \
+    wearebeautiful.info:prod uwsgi --ini /code/wearebeautiful.info/admin/uwsgi/uwsgi.ini
 
 docker run -d \
     --expose 8080 \
@@ -27,6 +25,4 @@ docker run -d \
     --env "LETSENCRYPT_HOST=$DOMAIN" \
     --env "LETSENCRYPT_EMAIL=rob@wearebeautiful.info" \
     --env "VIRTUAL_HOST=$DOMAIN" \
-    nginx:1.17.8
-
-
+    wearebeautiful.info:prod
