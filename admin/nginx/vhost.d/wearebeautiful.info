@@ -1,2 +1,0 @@
-sendfile               on;
-sendfile_max_chunk     1m;
