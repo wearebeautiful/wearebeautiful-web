@@ -2,10 +2,10 @@
 {%- block content -%}
 <div class="row" id="top-row">
 
-    <div class="col" id="view-left-col">
+    <div class="col-1" id="view-left-col">
     </div>
 
-    <div class="col-11" id="view-center-col">
+    <div class="col-10" id="view-center-col">
 
         <div id="focus-overlay">
            <a href="#"><i id="close-focus" class="fas fa-times-circle d-none focus-button"></i></a>
@@ -113,7 +113,7 @@
 
     </div>
 
-    <div class="col" id="view-right-col">
+    <div class="col-1" id="view-right-col">
     </div>
 
 </div>
@@ -136,8 +136,9 @@
             animate();
         });
 
-        
         function get_aspect_ratio() {
+            if ({{ screenshot }})
+                return 1.0;
             return window.innerHeight * .75 / window.innerWidth;
         }
 
@@ -152,7 +153,7 @@
             focus_mode = !focus_mode;
 
             $("#view-left-col").toggleClass("d-none")
-            $("#view-center-col").toggleClass("col-11")
+            $("#view-center-col").toggleClass("col-10")
             $("#view-center-col").toggleClass("col-12")
             $("#view-center-col").toggleClass("p-0")
             $("#view-right-col").toggleClass("d-none")
@@ -171,21 +172,19 @@
 
                 var width = $("#model").innerWidth();
                 var height = width * get_aspect_ratio();
+                var scale_factor;
 
-                // resize the div according to the aspect ratio
-                $("#model").height(height);
-                var pos = $("#model").position();
-                $("#focus-overlay").css('top', pos.top + 3);
-                $("#focus-overlay").css('left', pos.left + width - $("#focus-overlay").width() - 10);
 
-                $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
-                $("#code-overlay").css('left', pos.left);
-
-                $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
-                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 13);
+                position_elements(width, height);
 
        		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
-       		camera.position.set( 3, 0.15, 3 );
+                if ({{ screenshot }}) {
+                    scale_factor = .85;
+                    camera.position.set( 0, .5, 3 );
+                } else {
+                    scale_factor = 1.20;
+                    camera.position.set( 3, .5, 3 );
+                }
 
        		scene = new THREE.Scene();
        		scene.background = new THREE.Color( 0xEECCDD );
@@ -199,7 +198,11 @@
                         geometry.computeFaceNormals();
                         geometry.computeVertexNormals();
                         geometry.computeBoundingBox();
-                        var scale_factor = 1.0 / geometry.boundingBox.max.y;
+
+                        if (geometry.boundingBox.max.x < geometry.boundingBox.max.y)
+                            scale_factor /= geometry.boundingBox.max.y;
+                        else
+                            scale_factor /= geometry.boundingBox.max.x;
 
        			mesh = new THREE.Mesh( geometry, material );
        			mesh.scale.set(scale_factor, scale_factor, scale_factor);
@@ -208,8 +211,12 @@
        			mesh.receiveShadow = false;
 
        			scene.add( mesh );
-                        $("#progress").text("{{ model.model_id }}-{{ model.code }}");
+                        if ({{ screenshot }}) {
+                            screenshot();
+                        }
+
        		}, function ( prog ) {
+                   // prog.total, prod.loaded
                 }, function ( err ) {
                    console.log("Cannot load model. Are source model files gzipped?");
                 });
@@ -224,7 +231,10 @@
        		addShadowedLight( 0, -2, 0, 0xffffff, .2 );
 
        		// renderer
-       		renderer = new THREE.WebGLRenderer( { antialias: true } );
+                var flags = { antialias: true };
+                if ({{ screenshot }})
+                    flags['preserveDrawingBuffer'] = true;
+                renderer = new THREE.WebGLRenderer(flags);
        		renderer.setPixelRatio( window.devicePixelRatio );
        		renderer.setSize( width, height );
        		renderer.outputEncoding = THREE.sRGBEncoding;
@@ -232,10 +242,12 @@
        		renderer.shadowMap.enabled = true;
 
                 controls = new OrbitControls( camera, renderer.domElement );
-                controls.autoRotateSpeed = 3.0;
-                controls.autoRotate = true;
-		controls.enableDamping = true;
-		controls.dampingFactor = 0.05;
+                if (!{{ screenshot }}) {
+                    controls.autoRotateSpeed = 3.0;
+                    controls.autoRotate = true;
+                    controls.enableDamping = true;
+                    controls.dampingFactor = 0.05;
+                }
 
       		$("#model").append( renderer.domElement );
 
@@ -264,6 +276,22 @@
 
        	}
 
+        function position_elements(width, height) {
+
+                // resize the div according to the aspect ratio
+                $("#model").height(height);
+                var pos = $("#model").position();
+
+                $("#focus-overlay").css('top', pos.top + 3);
+                $("#focus-overlay").css('left', pos.left + width - $("#focus-overlay").width() - 10);
+
+                $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
+                $("#code-overlay").css('left', pos.left);
+
+                $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
+                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 13);
+        }
+
        	function onWindowResize() {
 
                 var width, height;
@@ -278,16 +306,9 @@
                     height = width * get_aspect_ratio();
                 }
                 
-
                 $("#model").height(height);
                 var pos = $("#model").position();
-                $("#focus-overlay").css('top', pos.top + 3);
-                $("#focus-overlay").css('left',pos.left + width - $("#focus-overlay").width() - 10);
-                $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
-                $("#code-overlay").css('left', pos.left);
-                $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
-                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 13);
-
+                position_elements(width, height);
 
       		renderer.setSize(width, height);
        		camera.aspect = width / height; 
@@ -303,6 +324,23 @@
                 controls.update();
        		renderer.render( scene, camera );
        	}
+
+        function screenshot() {
+                var mime = "image/jpeg";
+
+                $("#model").width(1024);
+                $("#model").height(1024);
+                onWindowResize();
+                render();
+
+                var img_data = renderer.domElement.toDataURL(mime);
+
+                $.ajax({
+                  type: "POST",
+                  url: "http://localhost/model/{{ model.model_id }}-{{ model.code }}/screenshot",
+                  data: img_data
+                });
+         }
 
        </script>
 </script>

@@ -1,3 +1,4 @@
+import base64
 import os
 from werkzeug.exceptions import BadRequest
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
@@ -70,6 +71,29 @@ def statistics():
 @bp.route('/<model>')
 @auth.login_required
 def model(model):
+    return prepare_model(model, current_app.config["SEND_SNAPSHOTS"])
+
+@bp.route('/<model>/screenshot', methods = ['GET', 'POST'])
+@auth.login_required
+def model_screenshot_get(model):
+
+    if request.method == 'GET':
+        return prepare_model(model, True)
+
+    try:
+        os.mkdir("screenshot")
+    except OSError:
+        pass
+
+    data = base64.b64decode(request.get_data()[23:])
+    fn = os.path.join("screenshot", "%s.jpg" % model)
+    with open(fn, "wb") as f:
+        f.write(data)
+
+    return ""
+
+
+def prepare_model(model, screenshot):
 
     if model.isdigit() and len(model) == 6:
         models = DBModel.select(DBModel.model_id, DBModel.code).where(DBModel.model_id == model)
@@ -98,5 +122,5 @@ def model(model):
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
     model_file = config.STL_BASE_URL + "/model/m/%s/%s-%s/%s-%s-%s-surface-low.stl" % (id, id, code, id, code, processed)
 
-    return render_template("view.html", model = model, model_file=model_file,
+    return render_template("view.html", model = model, model_file=model_file, screenshot = int(screenshot),
         color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d")
