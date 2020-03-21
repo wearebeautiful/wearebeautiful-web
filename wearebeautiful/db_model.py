@@ -3,6 +3,7 @@ import dateutil.parser
 
 # This file is duplicate in the -tools repo. :(
 
+DB_FILE = "wab-models.db"
 db = SqliteDatabase(None)
 
 class DBModel(Model):

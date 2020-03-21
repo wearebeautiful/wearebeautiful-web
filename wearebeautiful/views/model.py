@@ -80,13 +80,14 @@ def model_screenshot_get(model):
     if request.method == 'GET':
         return prepare_model(model, True)
 
-    try:
-        os.mkdir("screenshot")
-    except OSError:
-        pass
+    id, code = model.split("-")
 
     data = base64.b64decode(request.get_data()[23:])
-    fn = os.path.join("screenshot", "%s.jpg" % model)
+    fn = os.path.join(config.MODEL_DIR, id, code, "screenshot.jpg")
+    with open(fn, "wb") as f:
+        f.write(data)
+
+    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "screenshot.jpg")
     with open(fn, "wb") as f:
         f.write(data)
 
@@ -120,7 +121,7 @@ def prepare_model(model, screenshot):
     id = model.model_id
     code = model.code
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
-    model_file = config.STL_BASE_URL + "/model/m/%s/%s-%s/%s-%s-%s-surface-low.stl" % (id, id, code, id, code, processed)
+    model_file = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%s-surface-med.stl" % (id, code, id, code, processed)
 
     return render_template("view.html", model = model, model_file=model_file, screenshot = int(screenshot),
         color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d")

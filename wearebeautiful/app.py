@@ -7,7 +7,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_bootstrap import Bootstrap
 import config
 import json
-from wearebeautiful.db_model import db
+from wearebeautiful.db_model import db, DB_FILE
 from wearebeautiful.auth import init_auth
 
 
@@ -29,7 +29,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 Bootstrap(app)
 fa = FontAwesome(app)
 
-db.init(os.path.join(config.MODEL_DIR, "wab-models.db"))
+db.init(os.path.join(config.MODEL_DIR, DB_FILE))
 
 from wearebeautiful.views.index import bp as index_bp
 from wearebeautiful.views.model import bp as model_bp

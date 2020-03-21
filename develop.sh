@@ -6,5 +6,5 @@ docker run -it \
     --rm --name wab-web \
     -p 80:5000 \
     -v `pwd`:/code/wearebeautiful.info \
-    -v ~/wearebeautiful/wearebeautiful-models:/archive \
+    -v /Users/robert/Google\ Drive/production-models:/archive \
     wab-web

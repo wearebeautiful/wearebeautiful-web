@@ -21,6 +21,12 @@
         </div>
         <div id="model"></div>
 
+        {% if screenshot %}
+           <div style="margin-top: 10px">
+               <button type="button" class="btn btn-warning" id="screenshot">Take screenshot</button>
+           </div>
+        {% endif %}
+
         <div id="distract-mode" class="d-none">
           <div class="model-desc float-right">
             We can put more guff here.
@@ -148,6 +154,7 @@
         $('#color-well-1').on('click', function() { color_well_click("{{ color_1 }}") });
         $('#color-well-2').on('click', function() { color_well_click("{{ color_2 }}") });
         $('#color-well-3').on('click', function() { color_well_click("{{ color_3 }}") });
+        $('#screenshot').on('click', function() { screenshot() });
 
         function toggle_focus_mode() {
             focus_mode = !focus_mode;
@@ -195,6 +202,7 @@
                 var loader = new STLLoader();
        		loader.load( '{{ model_file }}', function ( geometry ) {
 
+                        geometry.rotateZ(1.57079);
                         geometry.computeFaceNormals();
                         geometry.computeVertexNormals();
                         geometry.computeBoundingBox();
@@ -211,8 +219,12 @@
        			mesh.receiveShadow = false;
 
        			scene.add( mesh );
-                        if ({{ screenshot }}) {
-                            screenshot();
+
+                        if ({{screenshot}}) {
+                            $("#model").width(1024);
+                            $("#model").height(1024);
+                            onWindowResize();
+                            render();
                         }
 
        		}, function ( prog ) {
@@ -327,12 +339,6 @@
 
         function screenshot() {
                 var mime = "image/jpeg";
-
-                $("#model").width(1024);
-                $("#model").height(1024);
-                onWindowResize();
-                render();
-
                 var img_data = renderer.domElement.toDataURL(mime);
 
                 $.ajax({
