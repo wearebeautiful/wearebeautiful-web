@@ -71,7 +71,7 @@ def statistics():
 @bp.route('/<model>')
 @auth.login_required
 def model(model):
-    return prepare_model(model, current_app.config["SEND_SNAPSHOTS"])
+    return prepare_model(model, current_app.config["SUBMIT_SCREENSHOTS"])
 
 @bp.route('/<model>/screenshot', methods = ['GET', 'POST'])
 @auth.login_required
@@ -79,6 +79,9 @@ def model_screenshot_get(model):
 
     if request.method == 'GET':
         return prepare_model(model, True)
+
+    if not config.SUBMIT_SCREENSHOTS:
+        raise NotFound()
 
     id, code = model.split("-")
 

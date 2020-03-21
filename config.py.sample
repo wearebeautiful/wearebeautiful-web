@@ -1,7 +1,7 @@
 SECRET_KEY = "add your key here"
 
 MODEL_DIR = "<path to model git>"
-SEND_SNAPSHOTS = False
+SUBMIT_SCREENSHOTS = False
 
 USE_SITE_AUTH=False
 SITE_USERNAME="test"
