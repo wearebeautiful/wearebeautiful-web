@@ -10,10 +10,11 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/')
 def index():
-    if auth.username():
-        return render_template("index.html")
-    else:
-        return redirect(url_for("index.soon"))
+#    if auth.username():
+#        return render_template("index.html")
+#    else:
+#        return redirect(url_for("index.soon"))
+     return render_template("index.html")
 
 
 @bp.route('/browse')

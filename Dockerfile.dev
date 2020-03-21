@@ -6,7 +6,7 @@ RUN apt-get update \
          npm \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip3.6 install setuptools uwsgi
+RUN pip3.6 install setuptools uwsgi wheel
 
 RUN mkdir /js
 WORKDIR /js
