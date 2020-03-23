@@ -28,8 +28,16 @@
         {% endif %}
 
         <div id="distract-mode" class="d-none">
-          <div class="model-desc float-right">
-            We can put more guff here.
+          <div class="jump-to float-right">
+             Jump to:
+             <a href="#model-info">model info.</a> |
+             <a href="#human">human info.</a> |
+             <a href="#model-info" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
+             <a href="#human" data-toggle="collapse" data-target="#collapse-human" aria-expanded="false" aria-controls="collapse-human">human information</a> |
+             {% if model.comment %}
+               <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
+            {% endif %}
+             <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a>
           </div>
 
           <div class="model-desc">
@@ -42,15 +50,16 @@
 
           <div id="accordion">
             <div class="card">
-              <div class="card-header" id="headingOne">
+              <a id="model-info"></a>
+              <div class="card-header" id="heading-info">
                 <h5 class="mb-0">
-                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="true" aria-controls="collapseOne">
                     3D model information
                   </button>
                 </h5>
               </div>
 
-              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div id="collapse-info" class="collapse show" aria-labelledby="heading-info" data-parent="#accordion">
                 <div class="card-body">
                   <table class="table table-striped table-bordered table-condensed">
                      <tr><td>body part</td><td>{{ model.body_part }}</td></tr>
@@ -68,14 +77,15 @@
             </div>
 
             <div class="card">
-              <div class="card-header" id="headingTwo">
+              <a id="human"></a>
+              <div class="card-header" id="heading-human">
                 <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-human" aria-expanded="false" aria-controls="collapseTwo">
                     Human model information
                   </button>
                 </h5>
               </div>
-              <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div id="collapse-human" class="collapse" aria-labelledby="heading-human" data-parent="#accordion">
                 <div class="card-body">
                   <table class="table table-striped table-bordered table-condensed">
                      <tr><td>id</td><td>{{ model.model_id }}</td></tr>
@@ -89,6 +99,7 @@
 
             {% if model.comment %}
               <div class="card">
+                <a id="comment"></a>
                 <div class="card-header" id="heading-comment">
                   <h5 class="mb-0">
                     <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">
@@ -103,17 +114,38 @@
                 </div>
               </div>
             {% endif %}
+
+            <div class="card">
+              <a id="download"></a>
+              <div class="card-header" id="heading-download">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">
+                    Download model files
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse-download" class="collapse" aria-labelledby="heading-download" data-parent="#accordion">
+                <div class="card-body">
+                   <p>
+                      For informaton on how to 3D print or order 3D prints of these models, please read our <a href="/docs/printing-guide">
+                      model printing guidelines</a>. To download the models, select a file below:
+                   </p>
+                   <table class="table table-striped table-bordered table-condensed">
+                      <tr>
+                        <td><a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> ({{ downloads['solid'][0] }})</td>
+                        <td>STL file format, ready for 3D printing</td>
+                      </tr>
+                      <tr>
+                        <td><a href="{{ downloads['surface'][1] }}">{{ downloads['surface'][2] }}</a> ({{ downloads['surface'][0] }})</td>
+                        <td>STL file format, suited for 3D modeling</td>
+                      </tr>
+                   </table>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div class="dropdown show" id="download">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Download model files (STL files)
-            </a>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-              <a class="dropdown-item" href="#">solid.stl</a>
-              <a class="dropdown-item" href="#">surface.stl</a>
-            </div>
-          </div>
 
         </div>
 

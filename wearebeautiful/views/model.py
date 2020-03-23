@@ -2,6 +2,7 @@ import base64
 import os
 from werkzeug.exceptions import BadRequest
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
+from hurry.filesize import size, alternative
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
@@ -126,5 +127,26 @@ def prepare_model(model, screenshot):
     processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
     model_file = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%s-surface-med.stl" % (id, code, id, code, processed)
 
-    return render_template("view.html", model = model, model_file=model_file, screenshot = int(screenshot),
-        color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d")
+    solid_file = "%s-%s-%s-solid.stl" % (id, code, processed)
+    solid_path = "/%s/%s/%s" % (id, code, solid_file)
+    surface_file = "%s-%s-%s-surface.stl" % (id, code, processed)
+    surface_path = "/%s/%s/%s" % (id, code, surface_file)
+
+    if not current_app.debug:
+        solid_path += ".gz"
+        surface_path += ".gz"
+
+    solid_size = os.path.getsize(config.MODEL_DIR + solid_path)
+    surface_size = os.path.getsize(config.MODEL_DIR + surface_path)
+
+    downloads = {
+        'solid' : (size(solid_size, system=alternative), config.STL_BASE_URL + "/model/m" + solid_path, solid_file),
+        'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/m" + surface_path, surface_file)
+    }
+
+    return render_template("view.html", 
+        model = model, 
+        model_file=model_file, 
+        screenshot = int(screenshot),
+        color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d",
+        downloads = downloads)
