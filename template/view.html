@@ -31,9 +31,9 @@
           <p class="jump-to text-right">
              Jump to:
              <a href="#model-info">model info.</a> |
-             <a href="#human">human info.</a> |
+             <a href="#person">person info.</a> |
              <a href="#model-info" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
-             <a href="#human" data-toggle="collapse" data-target="#collapse-human" aria-expanded="false" aria-controls="collapse-human">human information</a> |
+             <a href="#person" data-toggle="collapse" data-target="#collapse-person" aria-expanded="false" aria-controls="collapse-person">person information</a> |
              {% if model.comment %}
                <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
@@ -91,15 +91,15 @@
             </div>
 
             <div class="card">
-              <a id="human"></a>
-              <div class="card-header" id="heading-human">
+              <a id="person"></a>
+              <div class="card-header" id="heading-person">
                 <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-human" aria-expanded="false" aria-controls="collapseTwo">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-person" aria-expanded="false" aria-controls="collapseTwo">
                     Human model information
                   </button>
                 </h5>
               </div>
-              <div id="collapse-human" class="collapse" aria-labelledby="heading-human" data-parent="#accordion">
+              <div id="collapse-person" class="collapse" aria-labelledby="heading-person" data-parent="#accordion">
                 <div class="card-body">
                   <table class="table table-striped table-bordered table-condensed">
                      <tr><td>id</td><td>{{ model.model_id }}</td></tr>
@@ -160,6 +160,17 @@
 
           </div>
 
+          {% if related.models %}
+            <h4 style="padding-top: 25px">{{ related.desc }}</h4>
+            <div id="related" class="row">
+               {% for m in related.models %}
+                 <div class="col-4">
+                     <p style="margin-bottom: 1px"><a href="/model/{{ m.model_id }}-{{ m.code }}">{{ m.model_id }}-{{m.code}}</a></p>
+                     <a href="/model/{{ m.model_id }}-{{ m.code }}"><img src="{{ url_for_screenshot(m) }}" class="screenshot"></a>
+                 </div>
+               {% endfor %}
+            </div>
+          {% endif %}
 
         </div>
 

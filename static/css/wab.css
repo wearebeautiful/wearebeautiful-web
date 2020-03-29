@@ -35,9 +35,9 @@ h2 {
     margin-left: 25px;
 }
 
-#index-img-div {
-    overflow-y: scroll;
-    height: 100%; 
+.screenshot {
+    width: 80%;
+    border-radius: 15px;
 }
 
 .scale {

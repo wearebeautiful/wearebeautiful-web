@@ -1,5 +1,6 @@
 import base64
 import os
+import random
 from werkzeug.exceptions import BadRequest
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from hurry.filesize import size, alternative
@@ -11,6 +12,7 @@ bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
+    print(filename)
     return send_file(os.path.join(current_app.config['MODEL_DIR'], filename))
 
 
@@ -87,15 +89,38 @@ def model_screenshot_get(model):
     id, code = model.split("-")
 
     data = base64.b64decode(request.get_data()[23:])
-    fn = os.path.join(config.MODEL_DIR, id, code, "screenshot.jpg")
+
+    processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
+    fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (model.model_id, model.code, processed))
     with open(fn, "wb") as f:
         f.write(data)
 
-    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "screenshot.jpg")
+    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (model.model_id, model.code, processed))
     with open(fn, "wb") as f:
         f.write(data)
 
     return ""
+
+
+def get_related_models(model):
+
+    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.model_id == model.model_id,
+                                                                                                        DBModel.code != model.code).limit(3)
+    models = [ m for m in models ]
+    if len(models) > 1:
+        return { "desc" : "more models from the same person", "models" : models }
+
+    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.body_part == model.body_part,
+                                                                                                        DBModel.model_id != model.model_id)
+    models = [ m for m in models ]
+#    models = []
+#    for m in DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.body_part == model.body_part):
+#        print(m.model_id, model.model_id, m.code, model.code)
+#        if m.model_id != model.model_id and m.code != model.code:
+#            models.append(m)
+
+    random.shuffle(models)
+    return { "desc" : "more %s models" % model.body_part, "models" : models[0:3] }
 
 
 def prepare_model(model, screenshot):
@@ -149,4 +174,5 @@ def prepare_model(model, screenshot):
         model_file=model_file, 
         screenshot = int(screenshot),
         color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d",
-        downloads = downloads)
+        downloads = downloads,
+        related = get_related_models(model))
