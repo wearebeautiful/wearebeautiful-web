@@ -55,6 +55,9 @@
                 {% for tag in model.tags_list %}
                   <span class="badge badge-secondary">{{ tag }}</span>
                 {% endfor %}
+                {% for info in model.info_list %}
+                  <span class="badge badge-info">{{ info }}</span>
+                {% endfor %}
               </span>
             {% endif %}
           </div>

@@ -34,6 +34,9 @@ class DBModel(Model):
     comment = TextField(null = False)
 
     def parse_data(self):
+        self.info_list = []
+        if self.comment:
+            self.info_list.append("comment")
         self.tags_list = self.tags.split(",")
         self.mods_list = self.modification.split(",")
         if self.mother != "no":
