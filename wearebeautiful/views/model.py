@@ -1,6 +1,5 @@
 import base64
 import os
-import random
 from werkzeug.exceptions import BadRequest
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from hurry.filesize import size, alternative
@@ -145,11 +144,7 @@ def prepare_model(model, screenshot):
         'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/m" + surface_path, surface_file)
     }
 
-    logos = ["wab-4.svg", "wab-5.svg", "wab-6.svg", "wab-7.svg"]
-    logo = logos[random.randint(0, len(logos)-1)]
-    print(logo)
     return render_template("view.html", 
-        logo = logo,
         model = model, 
         model_file=model_file, 
         screenshot = int(screenshot),

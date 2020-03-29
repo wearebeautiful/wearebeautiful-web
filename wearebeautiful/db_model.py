@@ -36,6 +36,10 @@ class DBModel(Model):
     def parse_data(self):
         self.tags_list = self.tags.split(",")
         self.mods_list = self.modification.split(",")
+        if self.mother != "no":
+            self.mods_list.append(self.mother + " birth")
+        if self.excited != "not excited":
+            self.mods_list.append(self.excited)
 
     def __repr__(self):
         return "<DBModel(%s-%s)>" % (self.model_id, self.code)

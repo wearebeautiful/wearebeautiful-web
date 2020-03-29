@@ -28,7 +28,7 @@
         {% endif %}
 
         <div id="distract-mode" class="d-none">
-          <div class="jump-to float-right">
+          <p class="jump-to text-right">
              Jump to:
              <a href="#model-info">model info.</a> |
              <a href="#human">human info.</a> |
@@ -38,13 +38,24 @@
                <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
              <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a>
-          </div>
+          </p>
+
 
           <div class="model-desc">
             {% if model.body_part != "anatomical" %}
               {{ model.body_part }} of a {{ model.gender }} with a {{ model.body_type }} body.
             {% else %}
                anatomical model
+            {% endif %}
+            {% if model.tag_list or model.mods_list %}
+              <span class="model-tags">
+                {% for mod in model.mods_list %}
+                  <span class="badge badge-primary">{{ mod }}</span>
+                {% endfor %}
+                {% for tag in model.tags_list %}
+                  <span class="badge badge-secondary">{{ tag }}</span>
+                {% endfor %}
+              </span>
             {% endif %}
           </div>
 
