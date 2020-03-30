@@ -400,7 +400,7 @@
 
                 $.ajax({
                   type: "POST",
-                  url: "http://localhost/model/{{ model.model_id }}-{{ model.code }}/screenshot",
+                  url: "http://localhost/model/{{ model.model_id }}-{{ model.code }}/screenshot/{{ model.processed }}",
                   data: img_data
                 });
          }

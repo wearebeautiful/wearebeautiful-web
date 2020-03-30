@@ -48,9 +48,8 @@ def static_url(filename):
 
 
 def url_for_screenshot(model):
-    return config.IMAGE_BASE_URL + "/model/m/%s/%s/screenshot.jpg" % (model.model_id, model.code)
-#    processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
-#    return config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%s-screenshot.jpg" % (model.model_id, model.code, model.model_id, model.code, processed)
+    processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
+    return config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%s-screenshot.jpg" % (model.model_id, model.code, model.model_id, model.code, processed)
 
 app.jinja_env.globals.update(static_url=static_url)
 app.jinja_env.globals.update(url_for_screenshot=url_for_screenshot)

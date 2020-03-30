@@ -76,26 +76,25 @@ def statistics():
 def model(model):
     return prepare_model(model, current_app.config["SUBMIT_SCREENSHOTS"])
 
-@bp.route('/<model>/screenshot', methods = ['GET', 'POST'])
+@bp.route('/<model>/screenshot')
 @auth.login_required
 def model_screenshot_get(model):
+    return prepare_model(model, True)
 
-    if request.method == 'GET':
-        return prepare_model(model, True)
-
+@bp.route('/<model>/screenshot/<processed>', methods = ['POST'])
+@auth.login_required
+def model_screenshot_post(model, processed):
     if not config.SUBMIT_SCREENSHOTS:
         raise NotFound()
 
     id, code = model.split("-")
 
     data = base64.b64decode(request.get_data()[23:])
-
-    processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
-    fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (model.model_id, model.code, processed))
+    fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (id, code, processed))
     with open(fn, "wb") as f:
         f.write(data)
 
-    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (model.model_id, model.code, processed))
+    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (id, code, processed))
     with open(fn, "wb") as f:
         f.write(data)
 
@@ -113,12 +112,6 @@ def get_related_models(model):
     models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.body_part == model.body_part,
                                                                                                         DBModel.model_id != model.model_id)
     models = [ m for m in models ]
-#    models = []
-#    for m in DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.body_part == model.body_part):
-#        print(m.model_id, model.model_id, m.code, model.code)
-#        if m.model_id != model.model_id and m.code != model.code:
-#            models.append(m)
-
     random.shuffle(models)
     return { "desc" : "more %s models" % model.body_part, "models" : models[0:3] }
 
