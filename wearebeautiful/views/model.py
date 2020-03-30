@@ -8,11 +8,12 @@ from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
+MAX_NUM_RELATED_MODELS = 3
+
 bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
-    print(filename)
     return send_file(os.path.join(current_app.config['MODEL_DIR'], filename))
 
 
@@ -103,17 +104,28 @@ def model_screenshot_post(model, processed):
 
 def get_related_models(model):
 
-    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.model_id == model.model_id,
-                                                                                                        DBModel.code != model.code).limit(3)
+    desc = ""
+    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed) \
+                    .where(DBModel.model_id == model.model_id, DBModel.code != model.code).limit(3)
     models = [ m for m in models ]
-    if len(models) > 1:
-        return { "desc" : "more models from the same person", "models" : models }
 
-    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed).where(DBModel.body_part == model.body_part,
-                                                                                                        DBModel.model_id != model.model_id)
-    models = [ m for m in models ]
-    random.shuffle(models)
-    return { "desc" : "more %s models" % model.body_part, "models" : models[0:3] }
+    if len(models):
+        desc = "more models from the same person"
+    if len(models) >= MAX_NUM_RELATED_MODELS:
+        return { "desc" : desc, "models" : models[0:MAX_NUM_RELATED_MODELS] }
+
+    same_part_models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed) \
+                              .where(DBModel.body_part == model.body_part, DBModel.model_id != model.model_id)
+    same_part_models = [ m for m in same_part_models ]
+    random.shuffle(same_part_models)
+
+    if len(same_part_models):
+        if len(models):
+            desc += " and "
+        models.extend(same_part_models)
+
+    desc += "more %s models" % model.body_part
+    return { "desc" : desc, "models" : models[0:MAX_NUM_RELATED_MODELS] }
 
 
 def prepare_model(model, screenshot):
