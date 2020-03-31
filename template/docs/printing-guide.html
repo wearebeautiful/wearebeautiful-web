@@ -1,16 +1,86 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
   <div class="row">
-    <div class="col-1">
+    <div class="col">
     </div>
-    <div class="col-10 text-div">
+    <div class="col-11 text-div">
+        <h2>What we offer</h2>
+
+        <p>
+          From this web-site you may download an utilize these three resources:
+        </p>
+
+        <ul>
+            <li>
+                <p> 
+                   <b>solids</b>:
+                   These solid files are in the STL file format, a common format used to distribute 3D files that are
+                   intended to be printed on your own 3D filement of SLA printer. Ideally these files should require no
+                   more work than to print any other STL file you might download and print. Each solid file contains the solid
+                   itself, marked with the URL of this site as a <a href="/docs/codes">model code</a> that clearly
+                   identifies the human model. Our goal is to make it so that every 3D printed model in the world remains
+                   easy to look up and that anyone wishing to find out more about a model can use the code on the physical
+                   model to find the information about the human model here on our site.
+                </p> 
+            </li>
+            <li>
+                <p>
+                   <b>surfaces</b>: 
+                   Surface files are also in the STL file format, but are not printable. These files are provided for
+                   people to use in any way they see fit. You can import these files into 3D modeling software with the goal
+                   of creating a new model/surface. What you end up doing with these files, is entirely up to you! We encourage
+                   creators who uses one of our surfaces to still include the <a href="/docs/codes">model code</a> so that users may 
+                   still look up the information about the model on our site.
+                </p>
+                <p>
+                   If you create something fun with one of our surfaces, please <a href="/contact">contact us</a> and share a 
+                   picture or STL files with us!
+                </p>
+            </li>
+            <li>
+                <p>
+                   <b>screenshots</b>: 
+                   Each of our 3D models has a screenshot image that we use to display previews on our site. These images are
+                   useful for sharing links and communicating about this project online.
+                </p>
+            </li>
+        </ul>
+
+        <p>
+           All of these files are released under the <a href="https://creativecommons.org/share-your-work/public-domain/cc0/">
+           Creative Commons CC0 (public domain) dedication</a>. This means we reserve <i>no rights</i> and <b>you may do
+           anything you wish with these files</b>. We kindly ask that you do nice things with these files and ideally link back
+           to this site as the original source of the solid/surface/screenshot.
+        </p>
+
         <h2>How to print our models</h2>
+  
+        <p>
+           We work hard to create models that are ready for printing. However, the process is still a bit of an artistic 
+           undertaking and prone to massive amounts of errors at every step in turn. A lot of our solid files are not perfect,
+           but they are good enough. If you feel that the errors that remain in our files are unacceptable, we'd love to 
+           received improved models from our users. You can find our <a href="https://github.com/wearebeautiful/wearebeautiful-models">
+           model repository at GitHub</a> and if you have an improved solid/surface, please open a pull request there.
+        </p>
 
-        <p>Add loads of drivel here. 1unit in STL = 1mm.
+        <p>
+           Printing our models should be pretty straightforward -- the solid files are ready to print. The units of the solid
+           files are in millimeters (mm) and we work hard to ensure that the scale of the models is correct. If you print one of
+           our solids at 100% (e.g. without scaling it before printing) it should print life-size just like the original human
+           model.
+        </p>
+
+        <p>
+           Most of our models should be ready to import into your favorite slicing/printing software and not need any rotations
+           in order to print correctly. Some may need rotations and quite a few will likely need to be scaled down, unless you
+           have a very large printer. When printing breast models you may want to consider standing the model up (as they are shown on 
+           our site) in order to avoid unsightly countour lines. Some experimentation might be needed to get a clean print, but
+           overall it should not be very hard.
+        </p>
 
 
     </div>
-    <div class="col-1">
+    <div class="col">
     </div>
   </div>
 {% endblock%}
