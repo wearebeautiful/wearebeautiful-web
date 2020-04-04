@@ -23,12 +23,14 @@ following keys:
     "released":       "2019-07-09",
     "gender":         "female",
     "gender_comment": "",
+    "sex":         "female",
+    "sex_comment": "",
     "body_type":      "thin",
     "body_part":      "bust",
     "pose":           "normal",
     "mother":         "vaginal",
     "tags":           ["post_pregnancy"],
-    "modification":   ["pregnancy", "breastfed"],
+    "history":        ["pregnancy", "breastfed"],
     "comment":        "Model was breastfeeding at the time.",       
     "other":          {}
 }
@@ -56,16 +58,29 @@ gender
 
 | Allowable values |
 | --------- |
-| female |
-| male |
-| trans-mtf |
-| trans-ftm |
+| man |
+| woman |
+| non-binary |
+| transgender |
+| cisgender |
 | other |
 
 If other is given for gender, a command giving more information must be present in
 the "gender_comment" field.
 
 
+sex
+---
+
+| Allowable values |
+| --------- |
+| female |
+| male |
+| intersex |
+| other |
+
+If other is given for sex, a command giving more information must be present in
+the "sex_comment" field.
 
 body_type
 ---------
@@ -73,8 +88,7 @@ body_type
 | Allowable values |
 | --------- |
 | thin |
-| fit |
-| full |
+| average |
 | overweight |
 
 
@@ -146,10 +160,10 @@ Is the model a mother? If so, how was/were the child/children delivered?
 | caesarean |
 
 
-modification
+body_history
 ------------
 
-Indicates modifciation of the model. One of more of the following may be allowed:
+Indicates the body history of the model. One of more of the following may be allowed:
 
 | Allowable values |
 | --------- |

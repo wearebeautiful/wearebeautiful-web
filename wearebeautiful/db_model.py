@@ -17,32 +17,39 @@ class DBModel(Model):
 
     id = AutoField()
     model_id = TextField()
+    version = IntegerField()
     code = TextField()
     created = DateField()
     released = DateField()
-    processed = DateField()
     gender = TextField()
     gender_comment = TextField(null = False)
+    sex = TextField()
+    sex_comment = TextField(null = False)
     body_type = TextField()
     body_part = TextField()
     pose = TextField()
-    mother = TextField()
+    given_birth = TextField()
     arrangement = TextField()
     excited = TextField()
     tags = TextField(null = False)
-    modification = TextField(null = False)
+    history = TextField(null = False)
     comment = TextField(null = False)
 
     def parse_data(self):
         self.info_list = []
         if self.comment:
             self.info_list.append("comment")
-        self.tags_list = self.tags.split(",")
-        self.mods_list = self.modification.split(",")
-        if self.mother != "no":
-            self.mods_list.append(self.mother + " birth")
+        self.tags_list = (self.tags or "").split(",")
+        self.history_list = (self.history or "").split(",")
+        if self.given_birth != "no":
+            self.history_list.append((self.given_birth or "") + " birth")
         if self.excited != "not excited":
-            self.mods_list.append(self.excited)
+            self.history_list.append(self.excited)
+
+        if self.version == 1:
+            self.display_code = "%s-%s" % (self.model_id, self.code)
+        else:
+            self.display_code = "%s-%s-%d" % (self.model_id, self.code, self.version)
 
     def __repr__(self):
         return "<DBModel(%s-%s)>" % (self.model_id, self.code)

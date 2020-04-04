@@ -1,7 +1,7 @@
 import base64
 import os
 import random
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from hurry.filesize import size, alternative
 from wearebeautiful.auth import _auth as auth
@@ -82,20 +82,20 @@ def model(model):
 def model_screenshot_get(model):
     return prepare_model(model, True)
 
-@bp.route('/<model>/screenshot/<processed>', methods = ['POST'])
+@bp.route('/<model>/screenshot/<int:version>', methods = ['POST'])
 @auth.login_required
-def model_screenshot_post(model, processed):
+def model_screenshot_post(model, version):
     if not config.SUBMIT_SCREENSHOTS:
         raise NotFound()
 
     id, code = model.split("-")
 
     data = base64.b64decode(request.get_data()[23:])
-    fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (id, code, processed))
+    fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
     with open(fn, "wb") as f:
         f.write(data)
 
-    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "%s-%s-%s-screenshot.jpg" % (id, code, processed))
+    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
     with open(fn, "wb") as f:
         f.write(data)
 
@@ -105,16 +105,17 @@ def model_screenshot_post(model, processed):
 def get_related_models(model):
 
     desc = ""
-    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed) \
+    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
                     .where(DBModel.model_id == model.model_id, DBModel.code != model.code).limit(3)
     models = [ m for m in models ]
 
     if len(models):
         desc = "more models from the same person"
     if len(models) >= MAX_NUM_RELATED_MODELS:
+        [ m.parse_data() for m in models ]
         return { "desc" : desc, "models" : models[0:MAX_NUM_RELATED_MODELS] }
 
-    same_part_models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.processed) \
+    same_part_models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
                               .where(DBModel.body_part == model.body_part, DBModel.model_id != model.model_id)
     same_part_models = [ m for m in same_part_models ]
     random.shuffle(same_part_models)
@@ -125,6 +126,7 @@ def get_related_models(model):
         models.extend(same_part_models)
 
     desc += "more %s models" % model.body_part
+    [ m.parse_data() for m in models ]
     return { "desc" : desc, "models" : models[0:MAX_NUM_RELATED_MODELS] }
 
 
@@ -143,23 +145,28 @@ def prepare_model(model, screenshot):
             return render_template("model-disambig.html", model=model, model_list=model_list)
 
     try:
-        id, code = model.split('-')
+        parts = model.split('-')
+        if len(parts) == 3:
+            id, code, version = parts
+        else:
+            id, code = parts
+            version = 1
     except ValueError as err:
         raise NotFound("Invalid model id/code.")
 
-    model = DBModel.get(DBModel.model_id == id, DBModel.code == code)
+    model = DBModel.get(DBModel.model_id == id, DBModel.code == code, DBModel.version == version)
     if not model:
         raise NotFound("model %s does not exist." % model)
 
     model.parse_data()
     id = model.model_id
     code = model.code
-    processed = "%d-%02d-%02d" % (model.processed.year, model.processed.month, model.processed.day)
-    model_file = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%s-surface-med.stl" % (id, code, id, code, processed)
+    version = model.version
+    model_file = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-med.stl" % (id, code, id, code, version)
 
-    solid_file = "%s-%s-%s-solid.stl" % (id, code, processed)
+    solid_file = "%s-%s-%d-solid.stl" % (id, code, version)
     solid_path = "/%s/%s/%s" % (id, code, solid_file)
-    surface_file = "%s-%s-%s-surface.stl" % (id, code, processed)
+    surface_file = "%s-%s-%d-surface.stl" % (id, code, version)
     surface_path = "/%s/%s/%s" % (id, code, surface_file)
 
     if not current_app.debug:

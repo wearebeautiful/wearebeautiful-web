@@ -22,14 +22,14 @@
 
 {% macro list_models(id, models) -%}
   <div class="browse-section">{{ id }}</div>
-  <p>{{ models[0].gender }}, {{ models[0].body_type }}
-     {% if models[0].mother != "no" %}
-       , mother: {{ models[0].mother }}
+  <p>{{ models[0].sex }}, {{ models[0].body_type }}
+     {% if models[0].given_birth != "no" %}
+       , given_birth: {{ models[0].given_birth }}
       {% endif %}
   </p>
   <p>
-      {% if models[0].modification %}
-         {{ models[0].modification }}
+      {% if models[0].history %}
+         {{ models[0].history }}
       {% endif %}
       {% if models[0].tags %}
          {{ models[0].tags }}
@@ -40,7 +40,7 @@
   </p>
 
   {% for model in models %}
-        <p class="browse-model"><a href="/model/{{ model.model_id }}-{{ model.code }}">{{ model.model_id }}-{{ model.code }}</a>:
+        <p class="browse-model"><a href="/model/{{ model.model_id }}-{{ model.code }}-{{ model.version }}">{{ model.display_code }}</a>:
           {{ model.pose }},
           {% if model.arrangement == "natural" %}
             naturally arranged,
