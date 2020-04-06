@@ -47,10 +47,10 @@
             {% else %}
                anatomical model
             {% endif %}
-            {% if model.tag_list or model.mods_list %}
+            {% if model.tags_list or model.history_list %}
               <span class="model-tags">
-                {% for mod in model.mods_list %}
-                  <span class="badge badge-primary">{{ mod }}</span>
+                {% for event in model.history_list %}
+                  <span class="badge badge-primary">{{ event }}</span>
                 {% endfor %}
                 {% for tag in model.tags_list %}
                   <span class="badge badge-secondary">{{ tag }}</span>
@@ -116,6 +116,16 @@
                         <tr><td>body history</td><td>{{ model.history }}</td></tr>
                      {% endif %}
                      <tr><td>tags</td><td>{{ model.tags }}</td></tr>
+                     {% if model.links %}
+                       <tr>
+                         <td><p>Related content</p></td>
+                         <td>
+                           {% for link in model.link_list %}
+                              <p><a href="{{ link }}">{{ link }}</a></p>
+                           {% endfor %}
+                         </td>
+                        </tr>
+                     {% endif %}
                   </table>
                 </div>
               </div>

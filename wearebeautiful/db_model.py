@@ -33,14 +33,18 @@ class DBModel(Model):
     excited = TextField()
     tags = TextField(null = False)
     history = TextField(null = False)
+    links = TextField(null = False)
     comment = TextField(null = False)
 
     def parse_data(self):
         self.info_list = []
         if self.comment:
             self.info_list.append("comment")
+        if self.links:
+            self.info_list.append("links")
         self.tags_list = (self.tags or "").split(",")
         self.history_list = (self.history or "").split(",")
+        self.link_list = (self.links or "").split(" ")
         if self.given_birth != "no":
             self.history_list.append((self.given_birth or "") + " birth")
         if self.excited != "not excited":
