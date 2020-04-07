@@ -10,11 +10,21 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/')
 def index():
+    models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
+                    .order_by(DBModel.id.desc()) \
+                    .limit(3)
+
+    model_list = []
+    for m in models:
+        m.parse_data()
+        model_list.append(m)
+
+    return render_template("index.html", recent_models=model_list)
+
 #    if auth.username():
 #        return render_template("index.html")
 #    else:
 #        return redirect(url_for("index.soon"))
-     return render_template("index.html")
 
 
 @bp.route('/browse')
