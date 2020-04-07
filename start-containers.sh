@@ -3,7 +3,7 @@
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LOGDIR=/tmp/
 MODELS=/home/wab/wearebeautiful-models
-DOMAIN=test.wearebeautiful.info
+DOMAIN=wearebeautiful.info
 
 docker run -d \
     --expose 3031 \

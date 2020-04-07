@@ -10,6 +10,12 @@ bp = Blueprint('index', __name__)
 
 
 @bp.route('/')
+def soon():
+    return render_template("coming-soon.html", bare=True)
+
+
+@bp.route('/index')
+@auth.login_required
 def index():
     models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
                     .order_by(DBModel.id.desc()) \
@@ -40,20 +46,10 @@ def index():
 
     return render_template("index.html", slide_models=slide_models, recent_models=model_list)
 
-#    if auth.username():
-#        return render_template("index.html")
-#    else:
-#        return redirect(url_for("index.soon"))
-
 
 @bp.route('/browse')
 def browse():
     return redirect(url_for("model.browse_by_part"))
-
-
-@bp.route('/soon')
-def soon():
-    return render_template("coming-soon.html", bare=True)
 
 
 @bp.route('/team')
