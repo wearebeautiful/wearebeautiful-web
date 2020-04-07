@@ -1,9 +1,89 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
-<div class="row flex-grow-1 justify-content-center">
+<div class="row">
 
-    There should be some stuff here soon. very soon.
+    <div class="col-12 text-center"> 
+      <p>
+        <img class="index-logo" src="{{ static_url_for('static', filename='img/wearebeautiful.svg') }}">
+      <p>
+      <div class="tagline">
+        Come for the bits, stay for the education.
+      </div>
+    </div>
 
 </div>
-
+<div class="row">
+    <div class="col-2">
+    </div>
+    <div class="col-5"> 
+      <div>
+        <p class="index-text">
+           We create 3D models of human genitals with the aim of breaking taboos, educating at a global level, 
+           and improving our users self body images. We aim to enable educators to do the same by making the 
+           3D models freely available for viewing online and for downloading/printing under the CC0 license.
+        </p>
+        <p class="index-text">
+           Our photographer take photos of volunteers and process these photos to produce 3D models of their genitals 
+           and other body parts. These 3D models freely available for viewing on this site and for downloading so that you 
+           may print them on your own 3D printer.
+        </p>
+        <p class="index-text">
+           This project exists because we feel that there is a lack of educational material that shows what real people
+           look like. We feel that a lot of people have very little appreciation for if their own genitals look <i>normal</i>.
+           We hope to show that there is no <i>normal</i> and that we humans are all beautiful.
+        </p>
+      </div>
+    </div> 
+    <div class="col-5">
+      <img class="index-image" src="{{ url_for_screenshot('000000', 'HSNN', 1) }}">
+      <img class="index-image" src="{{ url_for_screenshot('694420', 'HTAX', 1) }}">
+    </div>
+</div>
+<div class="row" id="index-red-pill">
+    <div class="col-2">
+    </div> 
+    <div class="col-8"> 
+       <div class="alert alert-danger text-center" role="alert">
+          By scrolling down, I agree to view models of human genitals!
+       </div>
+    </div> 
+    <div class="col-2">
+    </div>
+</div>
+<div class="row invisible" id="index-nsfw">
+    <div class="col-2">
+    </div> 
+    <div class="col-8 index-text"> 
+        <h4 style="padding-top: 25px">most recently released models:</h4>
+        <div id="recent-models" class="row">
+           {% for m in recent_models %}
+             <div class="col-4">
+                 <p style="margin-bottom: 1px"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
+                 <a href="/model/{{ m.model_id }}-{{ m.code }}-{{ m.version }}"><img src="{{ url_for_screenshot_m(m) }}" class="screenshot"></a>
+             </div>
+           {% endfor %}
+        </div>
+    </div> 
+    <div class="col-2">
+    </div>
+</div>
 {% endblock%}
+
+{% block scripts %}
+{{ bootstrap.load_js() }}
+<script>
+var revealed = false;
+$(document).ready(function() {
+   var p = $("#index-red-pill").position()
+   var h = $(window).height();
+   $("#index-red-pill").height((h - p.top) * 1.05);
+});
+$(window).scroll(function() {
+   if(!revealed && $(window).scrollTop() + $(window).height() == $(document).height()) {
+       $("#index-nsfw").toggleClass("invisible");
+       $("#index-red-pill").toggleClass("d-none");
+       revealed = true;
+   }
+});
+</script>
+{% endblock %}
