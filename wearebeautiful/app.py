@@ -10,7 +10,7 @@ import config
 import json
 from wearebeautiful.db_model import db, DB_FILE
 from wearebeautiful.auth import init_auth
-
+from wearebeautiful.utils import static_url, url_for_screenshot_m, url_for_screenshot
 
 STATIC_PATH = "/static"
 STATIC_FOLDER = "../static"

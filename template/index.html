@@ -50,22 +50,68 @@
     <div class="col-2">
     </div>
 </div>
-<div class="row invisible" id="index-nsfw">
-    <div class="col-2">
-    </div> 
-    <div class="col-8 index-text"> 
-        <h4 style="padding-top: 25px">most recently released models:</h4>
-        <div id="recent-models" class="row">
-           {% for m in recent_models %}
-             <div class="col-4">
-                 <p style="margin-bottom: 1px"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
-                 <a href="/model/{{ m.model_id }}-{{ m.code }}-{{ m.version }}"><img src="{{ url_for_screenshot_m(m) }}" class="screenshot"></a>
-             </div>
-           {% endfor %}
-        </div>
-    </div> 
-    <div class="col-2">
-    </div>
+<div class="invisible" id="index-nsfw">
+  <div class="row">
+     <div class="col-2">
+     </div> 
+     <div class="col-4"> 
+        <h4 style="padding-top: 25px">our models:</h4>
+        <p class="index-text">
+           We have all kiiiinds of models! Check 'em out!
+        </p>
+        <p class="index-text">
+         Dicks. Pussies. Loads of pussies. Oh, and boobies! We got boobies. And butts. Yes, butts! Yum! 
+        </p>
+     </div>
+     <div class="col-4"> 
+         <div id="image-carousel" class="carousel slide" data-ride="carousel">
+           <ol class="carousel-indicators">
+             {% for slide in slide_models %}
+               <li data-target="#image-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></li>
+             {% endfor %}
+           </ol>
+           <div class="carousel-inner">
+             {% for slide in slide_models %}
+               <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                 <img class="d-block w-100" src="{{ slide.screenshot }}" alt="{{ slide.desc }}">
+                 <div class="carousel-caption d-none d-md-block" style="color: black">
+                    {{ slide.desc }}
+                 </div>
+               </div>
+             {% endfor %}
+           </div>
+           <a class="carousel-control-prev" href="#image-carousel" role="button" data-slide="prev">
+             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+             <span class="sr-only">Previous</span>
+           </a>
+           <a class="carousel-control-next" href="#image-carousel" role="button" data-slide="next">
+             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+             <span class="sr-only">Next</span>
+           </a>
+         </div>
+     </div> 
+     <div class="col-2">
+     </div>
+  </div>
+
+  <div class="row">
+     <div class="col-2">
+     </div> 
+     <div class="col-8 index-text"> 
+         <h4 style="padding-top: 25px">most recently released models:</h4>
+         <div id="recent-models" class="row">
+            {% for m in recent_models %}
+              <div class="col-4">
+                  <p style="margin-bottom: 1px"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
+                  <a href="/model/{{ m.model_id }}-{{ m.code }}-{{ m.version }}"><img src="{{ url_for_screenshot_m(m) }}" class="screenshot"></a>
+              </div>
+            {% endfor %}
+         </div>
+     </div> 
+     <div class="col-2">
+     </div>
+  </div>
+
 </div>
 {% endblock%}
 
@@ -87,3 +133,5 @@ $(window).scroll(function() {
 });
 </script>
 {% endblock %}
+
+

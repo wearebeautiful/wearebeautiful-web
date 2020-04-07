@@ -3,6 +3,7 @@ from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
+from wearebeautiful.utils import url_for_screenshot_m
 import config
 
 bp = Blueprint('index', __name__)
@@ -19,7 +20,25 @@ def index():
         m.parse_data()
         model_list.append(m)
 
-    return render_template("index.html", recent_models=model_list)
+    slide_models_ids = [
+        ("476551", "VLNN", 1),
+        ("554268", "PLRN", 1),
+        ("320912", "FSAN", 1),
+        ("833579", "LSNN", 1)
+    ]
+
+    slide_models = []
+    for slide in slide_models_ids:
+        m = DBModel.get(DBModel.model_id == slide[0], DBModel.code == slide[1], DBModel.version == slide[2])
+        m.parse_data()
+
+        slide_models.append({
+            "desc" : "%s model %s" % (m.body_part, m.display_code),
+            "screenshot" : url_for_screenshot_m(m),
+            "link" : "/model" + m.display_code
+        })
+
+    return render_template("index.html", slide_models=slide_models, recent_models=model_list)
 
 #    if auth.username():
 #        return render_template("index.html")
