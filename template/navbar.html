@@ -25,8 +25,9 @@
           models
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="{{ url_for('model.browse_by_part') }}">browse by body part</a>
-          <a class="dropdown-item" href="{{ url_for('model.browse_by_model') }}">browse by model</a>
+          <a class="dropdown-item" href="{{ url_for('browse.browse_by_part') }}">browse by body part</a>
+          <a class="dropdown-item" href="{{ url_for('browse.browse_by_model') }}">browse by model</a>
+          <a class="dropdown-item" href="{{ url_for('browse.browse_by_history') }}">browse by history</a>
           <a class="dropdown-item" href="{{ url_for('model.diversity') }}">model diversity</a>
           <a class="dropdown-item" href="{{ url_for('docs.printing_guide') }}">printing guide</a>
         </div>

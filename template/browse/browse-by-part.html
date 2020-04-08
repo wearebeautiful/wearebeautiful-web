@@ -23,7 +23,7 @@
 {% macro list_models(models, name) -%}
   <div class="browse-section">{{ name }}</div>
   {% for model in models %}
-        <div class="browse-model"><a href="/model/{{ model.model_id }}-{{ model.code }}-{{ model.version }}">{{ model.display_code }}</a>:
+        <div class="browse-model"><a href="/model/{{ model.display_code }}">{{ model.display_code }}</a>:
           {{ model.sex }}, {{ model.pose }},
           {% if model.arrangement == "natural" %}
             naturally arranged,

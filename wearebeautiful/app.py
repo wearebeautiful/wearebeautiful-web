@@ -37,9 +37,11 @@ db.init(os.path.join(config.MODEL_DIR, DB_FILE))
 
 from wearebeautiful.views.index import bp as index_bp
 from wearebeautiful.views.model import bp as model_bp
+from wearebeautiful.views.browse import bp as browse_bp
 from wearebeautiful.views.docs import bp as docs_bp
 app.register_blueprint(index_bp)
 app.register_blueprint(model_bp, url_prefix='/model')
+app.register_blueprint(browse_bp, url_prefix='/browse')
 app.register_blueprint(docs_bp, url_prefix='/docs')
 
 
