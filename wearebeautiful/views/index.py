@@ -51,7 +51,7 @@ def index():
 
 @bp.route('/browse')
 def browse():
-    return redirect(url_for("model.browse_by_part"))
+    return redirect(url_for("browse.browse_by_part"))
 
 
 @bp.route('/team')
