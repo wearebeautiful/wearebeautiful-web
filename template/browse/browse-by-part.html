@@ -21,16 +21,20 @@
 {% endblock%}
 
 {% macro list_models(models, name) -%}
-  <div class="browse-section">{{ name }}</div>
-  {% for model in models %}
-        <div class="browse-model"><a href="/model/{{ model.display_code }}">{{ model.display_code }}</a>:
-          {{ model.sex }}, {{ model.pose }},
-          {% if model.arrangement == "natural" %}
-            naturally arranged,
-          {% else %}
-            {{ model.arrangement }},
-          {% endif %}
-          {{ model.excited }}
-        </div>
-    {% endfor %}
+  <div>
+    <p class="browse-section">{{ name }}</p>
+    <table class="table table-sm">
+      {% for model in models %}
+          <tr><td>
+            <p>
+              <a class="browse-model-link" href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
+            </p>
+            <p>
+            {{ model.english_description() }}
+            </p>
+          </td></tr>
+      {% endfor %}
+    </table>
+  </div>
+
 {%- endmacro %}

@@ -55,5 +55,23 @@ class DBModel(Model):
         else:
             self.display_code = "%s-%s-%d" % (self.model_id, self.code, self.version)
 
+    def english_description(self):
+
+        desc = "A %s model of " % self.body_part
+        if self.sex in ('male', 'female'):
+            desc = "a %s " % self.sex
+        elif self.sex == "intersex":
+            desc = "an intersex person "
+        else:
+            desc = "a person "
+
+        if self.body_type == "average":
+            desc += "with an %s body type" % self.body_type
+        else:
+            desc += "with a %s body type" % self.body_type
+
+        return desc
+
+
     def __repr__(self):
         return "<DBModel(%s-%s)>" % (self.model_id, self.code)

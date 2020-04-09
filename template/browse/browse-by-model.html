@@ -21,33 +21,58 @@
 {% endblock%}
 
 {% macro list_models(id, models) -%}
-  <div class="browse-section">{{ id }}</div>
-  <p>{{ models[0].sex }}, {{ models[0].body_type }}
-     {% if models[0].given_birth != "no" %}
-       , given_birth: {{ models[0].given_birth }}
-      {% endif %}
-  </p>
-  <p>
-      {% if models[0].history %}
-         {{ models[0].history }}
-      {% endif %}
-      {% if models[0].tags %}
-         {{ models[0].tags }}
-      {% endif %}
-      {% if models[0].comment %}
-         <b>Model comment:</b> {{ models[0].comment }}
-      {% endif %}
-  </p>
+    <p class="browse-section">
+      {{ id }}
+    </p>
 
-  {% for model in models %}
-        <p class="browse-model"><a href="/model/{{ model.display_code }}">{{ model.display_code }}</a>:
-          {{ model.pose }},
-          {% if model.arrangement == "natural" %}
-            naturally arranged,
-          {% else %}
-            {{ model.arrangement }},
+    <table class="table table-hover table-sm">
+      <thead>
+        <td colspan="3">
+          {{ models[0].english_description() }}
+
+          {% if models[0].tags_list or models[0].history_list %}
+            <span class="model-tags">
+              {% for event in models[0].history_list %}
+                <span class="badge badge-primary">{{ event }}</span>
+              {% endfor %}
+              {% for info in models[0].info_list %}
+                <span class="badge badge-info">{{ info }}</span>
+              {% endfor %}
+            </span>
           {% endif %}
-          {{ model.excited }}
-        </p>
-    {% endfor %}
+        </td>
+      </thead>
+   
+      {% for model in models %}
+        <tr>
+          <td style="width: 20%">
+            {{ model.body_part }}</b>
+          </td>
+          <td>
+            {{ model.pose }},
+            {% if model.arrangement == "natural" %}
+              naturally arranged,
+            {% else %}
+              {{ model.arrangement }},
+            {% endif %}
+            {{ model.excited }}
+            {% for tag in model.tags_list %}
+              <span class="badge badge-secondary">{{ tag }}</span>
+            {% endfor %}
+          </td>
+          <td class="text-right" style="width: 30%">
+            <a href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </table>
 {%- endmacro %}
+
+{% block scripts %}
+{{ bootstrap.load_js() }}
+<script>
+$('table tbody tr').click(function() {
+    console.log("click")
+});
+</script>
+{% endblock %}
