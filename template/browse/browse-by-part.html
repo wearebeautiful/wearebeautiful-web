@@ -28,10 +28,30 @@
           <tr><td>
             <p>
               <a class="browse-model-link" href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
+              {{ model.pose }},
+              {% if model.arrangement == "natural" %}
+                naturally arranged,
+              {% else %}
+                {{ model.arrangement }},
+              {% endif %}
+              {{ model.excited }}
             </p>
             <p>
-            {{ model.english_description() }}
-            </p>
+              {{ model.english_description() }}
+              {% if model.tags_list or model.history_list %}
+                <span class="model-tags">
+                {% for event in model.history_list %}
+                  <span class="badge badge-primary">{{ event }}</span>
+                {% endfor %}
+                {% for info in model.info_list %}
+                  <span class="badge badge-info">{{ info }}</span>
+                {% endfor %}
+                </span>
+              {% endif %}
+              {% for tag in model.tags_list %}
+                <span class="badge badge-secondary">{{ tag }}</span>
+              {% endfor %}
+              </p>
           </td></tr>
       {% endfor %}
     </table>
