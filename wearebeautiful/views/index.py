@@ -1,4 +1,5 @@
 import os
+from peewee import *
 from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
 from wearebeautiful.auth import _auth as auth
@@ -17,6 +18,7 @@ def soon():
 @bp.route('/index')
 @auth.login_required
 def index():
+    model_count = DBModel.select().count()
     models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
                     .order_by(DBModel.id.desc()) \
                     .limit(3)
@@ -44,7 +46,7 @@ def index():
             "link" : "/model" + m.display_code
         })
 
-    return render_template("index.html", slide_models=slide_models, recent_models=model_list)
+    return render_template("index.html", slide_models=slide_models, recent_models=model_list, model_count=model_count)
 
 
 @bp.route('/browse')

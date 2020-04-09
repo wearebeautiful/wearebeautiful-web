@@ -6,13 +6,42 @@
     <div class="col-11 text-div">
       <h2>Browse by history</h2>
       <p>
-      To find out more about our selection of models, please read our <a href="{{ url_for("model.diversity") }}">model diversity
-      statement</a>. We also have <a href="{{ url_for("model.statistics") }}">model statistics</a>.  We have the following models available:
+         To view the models that have the following attributes, click on one of the below:
       </p>
 
-
+      <div class="card">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            {% for event in events %}
+              <a href="#" class="badge badge-primary">{{ event }}</a>
+            {% endfor %}
+          </li>
+          <li class="list-group-item">
+            {% for tag in tags %}
+              <a href="#" class="badge badge-secondary">{{ tag }}</a>
+            {% endfor %}
+          </li>
+          <li class="list-group-item">
+            {% for i in info %}
+              <a href="#" class="badge badge-info">{{ i }}</a>
+            {% endfor %}
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="col">
     </div>
   </div>
 {% endblock%}
+{% block scripts %}
+{{ bootstrap.load_js() }}
+<script>
+
+    $('#close-focus').on('click', toggle_focus_mode);
+
+    function clicked(item) {
+
+
+    }
+</script>
+{% endblock %}
