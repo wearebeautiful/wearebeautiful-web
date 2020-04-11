@@ -1,8 +1,15 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 
 $theme-colors: (
-    "primary": #0074d9,
-    "danger": $purple
+    "primary": #D68833,
+    "secondary": #F0815B,
+    "danger": #E6393E,
+    "success": #E6D64A,
+    "info": #F0CC71  
 );
+
+$link-color:       #d58733;
+$link-hover-color: #D67717;
+$link-visted-color: #F0815B;
 
 @import "bootstrap";

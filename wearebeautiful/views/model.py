@@ -46,13 +46,11 @@ def model(model):
 def model_screenshot_get(model):
     return prepare_model(model, True)
 
-@bp.route('/<model>/screenshot/<int:version>', methods = ['POST'])
+@bp.route('/<id>-<code>-<int:version>/screenshot', methods = ['POST'])
 @auth.login_required
-def model_screenshot_post(model, version):
+def model_screenshot_post(id, code, version):
     if not config.SUBMIT_SCREENSHOTS:
         raise NotFound()
-
-    id, code = model.split("-")
 
     data = base64.b64decode(request.get_data()[23:])
     fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
