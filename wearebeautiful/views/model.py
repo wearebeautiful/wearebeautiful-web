@@ -147,6 +147,7 @@ def prepare_model(model, screenshot):
         model = model, 
         model_file=model_file, 
         screenshot = int(screenshot),
-        color_1 = "9A1085", color_2 = "e8a11e", color_3 = "57ab6d",
+        color_1 = "E6393E", color_2 = "9A1085", color_3 = "49D2AE",
+        bg_color = "F1EDE2",
         downloads = downloads,
         related = get_related_models(model))

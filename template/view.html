@@ -266,7 +266,7 @@
                 }
 
        		scene = new THREE.Scene();
-       		scene.background = new THREE.Color( 0xEECCDD );
+       		scene.background = new THREE.Color( 0x{{ bg_color}} );
 
        		var material = new THREE.MeshPhongMaterial( { color: 0x{{ color_1 }}, specular: 0x111111, shininess: 50 } );
                 material.side = THREE.DoubleSide;
