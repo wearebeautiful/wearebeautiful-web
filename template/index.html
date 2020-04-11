@@ -55,12 +55,25 @@
      <div class="col-2">
      </div> 
      <div class="col-4"> 
-        <h4 style="padding-top: 25px">our models:</h4>
         <p class="index-text">
-           We have all kiiiinds of models! Check 'em out!
+           We have {{ model_count }} models of vulvas, penises, breasts, full body and partial body scans. All of our models are at
+           least 18 years old and span a wide range of <a href="{{ url_for('model.diversity') }}">ages, body types and 
+           countries of origin</a>. We've carefully curated all the metadata of our models and are releasing the public information
+           while <a href="{{ url_for('index.privacy') }}">carefully protecting</a> the private information. The identity of our models
+           is never made public and is not available online at all.
         </p>
         <p class="index-text">
-         Dicks. Pussies. Loads of pussies. Oh, and boobies! We got boobies. And butts. Yes, butts! Yum! 
+           We invite you to browse our models online, download the 3D solids for printing or ordering a print online. You may also download
+           the surfaces and use them in your own 3D modeling projects. Start browsing now:
+        </p>
+        <p class="index-text">
+           <a href="{{ url_for('browse.browse_by_part') }}">browse by body part</a>: All models organized by body part.
+        </p>
+        <p class="index-text">
+           <a href="{{ url_for('browse.browse_by_model') }}">browse by model</a>: All models organized by the human model.
+        </p>
+        <p class="index-text">
+           <a  href="{{ url_for('browse.browse_by_history') }}">browse by history</a>: Browse models based on the data about our models.
         </p>
      </div>
      <div class="col-4"> 

@@ -96,10 +96,12 @@ h2 {
 }
 
 .browse-section {
-    font-size: 15pt;
-    margin-top: 1em;
+    font-size: 20pt;
+    font-weight: bold;
+    margin-top: 1rem;
 }
-.browse-model {
+
+.browse-model-link {
     font-size: 13pt;
     margin-top: 1em;
 }

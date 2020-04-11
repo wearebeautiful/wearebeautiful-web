@@ -48,4 +48,33 @@ def browse_by_model():
 @auth.login_required
 def browse_by_history():
 
-    return render_template("browse/browse-by-history.html")
+    models = []
+    for model in DBModel.select():
+        model.parse_data()
+        models.append(model)
+
+    info = {}
+    tags = {}
+    events = {}
+    for model in models:
+        for tag in model.tags_list:
+            try:
+                tags[tag].append(model)
+            except KeyError:
+                tags[tag] = [ model ]
+
+        for event in model.history_list:
+            try:
+                events[event].append(model)
+            except KeyError:
+                events[event] = [ model ]
+
+        if model.links:
+            info['link'] = model
+
+        if model.comment:
+            info['comment'] = model
+
+
+    return render_template("browse/browse-by-history.html", 
+        models=models, info=info, tags=tags, events=events)
