@@ -14,7 +14,9 @@ RUN pip3 install setuptools wheel
 RUN mkdir /js
 WORKDIR /js
 RUN npm install && \
-    npm i three
+    npm i three@0.115.0 && \
+    npm i bootstrap@4.4.1 \
+    npm i -g sass@1.26.3
 
 RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
