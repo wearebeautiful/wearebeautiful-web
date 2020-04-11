@@ -7,16 +7,17 @@ RUN apt-get update \
          python3-dev \
          python3-pip \
          npm \
+         vim \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install setuptools wheel
 
-RUN mkdir /js
+RUN mkdir -p /js/scss
+COPY static/scss/custom.scss /js/scss
 WORKDIR /js
 RUN npm install && \
-    npm i three@0.115.0 && \
-    npm i bootstrap@4.4.1 \
-    npm i -g sass@1.26.3
+    npm i -g sass@1.26.3 && \
+    npm i three@0.115.0 bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
 
 RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info

@@ -33,9 +33,8 @@ RUN rm -rf js && \
     mkdir js && \
     cd js && \
     npm install && \
-    npm i three@0.115.0 && \
-    npm i bootstrap@4.4.1 \
-    npm i sass@1.26.3
+    npm i -g sass@1.26.3 && \
+    npm i three@0.115.0 bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
 
 WORKDIR /code/wearebeautiful.info
 ENV FLASK_APP=wearebeautiful.app
