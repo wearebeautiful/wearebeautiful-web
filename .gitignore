@@ -107,3 +107,4 @@ config.py
 *.swp
 *.db
 static/js
+static/gcss

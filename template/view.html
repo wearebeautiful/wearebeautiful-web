@@ -199,7 +199,6 @@
 {% endblock%}
 
 {% block scripts %}
-{{ bootstrap.load_js() }}
 <script type="module">
 
        	import * as THREE from '{{ static_url_for('static', filename="js/node_modules/three/build/three.module.js") }}';

@@ -29,12 +29,15 @@ WORKDIR /code/wearebeautiful.info
 COPY . /code/wearebeautiful.info
 
 WORKDIR /code/wearebeautiful.info/static
-RUN rm -rf js && \
-    mkdir js && \
+RUN rm -rf js gcss && \
+    mkdir js gcss && \
     cd js && \
     npm install && \
     npm i -g sass@1.26.3 && \
     npm i three@0.115.0 bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
+RUN sass --load-path=./node_modules/bootstrap/scss \
+         --load-path=./ scss/custom.scss \
+         /code/wearebeautiful.info/static/gcss/bootstrap.css
 
 WORKDIR /code/wearebeautiful.info
 ENV FLASK_APP=wearebeautiful.app
@@ -42,5 +45,3 @@ ENV FLASK_ENV=production
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
 RUN flask digest compile
-
-#CMD uwsgi --ini /code/wearebeautiful.info/admin/uwsgi/uwsgi.ini

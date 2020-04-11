@@ -5,7 +5,6 @@ from flask_fontawesome import FontAwesome
 from flask_static_digest import FlaskStaticDigest
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_bootstrap import Bootstrap
 import config
 import json
 from wearebeautiful.db_model import db, DB_FILE
@@ -29,7 +28,6 @@ app.config['FONTAWESOME_SERVE_LOCAL'] = False
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
-Bootstrap(app)
 fa = FontAwesome(app)
 flask_static_digest.init_app(app)
 

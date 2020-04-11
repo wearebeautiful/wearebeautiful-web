@@ -13,11 +13,15 @@ RUN apt-get update \
 RUN pip3 install setuptools wheel
 
 RUN mkdir -p /js/scss
+RUN mkdir -p /gcss
 COPY static/scss/custom.scss /js/scss
 WORKDIR /js
 RUN npm install && \
     npm i -g sass@1.26.3 && \
     npm i three@0.115.0 bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
+RUN sass --load-path=./node_modules/bootstrap/scss \
+         --load-path=./ scss/custom.scss \
+         /gcss/bootstrap.css
 
 RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
@@ -31,7 +35,6 @@ ENV LANG=C.UTF-8
 
 COPY requirements.txt /code
 RUN pip3 install -r /code/requirements.txt
-#RUN ln -s /js /code/wearebeautiful.info/static/
 
 ENV FLASK_APP=wearebeautiful/app.py
 ENV FLAK_ENV=development
@@ -39,4 +42,3 @@ ENV FLASK_DEBUG=1
 ENV FLASK_RUN_HOST=0.0.0.0
 
 CMD /code/wearebeautiful.info/dev-server.sh
-
