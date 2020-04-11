@@ -201,9 +201,9 @@
 {% block scripts %}
 <script type="module">
 
-       	import * as THREE from '{{ static_url_for('static', filename="js/node_modules/three/build/three.module.js") }}';
-       	import { STLLoader } from '{{ static_url_for('static', filename="js/node_modules/three/examples/jsm/loaders/STLLoader.js") }}';
-        import { OrbitControls } from '{{ static_url_for('static', filename="js/node_modules/three/examples/jsm/controls/OrbitControls.js") }}';
+       	import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.115.0/build/three.module.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/jsm/controls/OrbitControls.js';
+        import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/jsm/loaders/STLLoader.js';
 
        	var container, mesh = null;
        	var camera, scene, renderer, controls;

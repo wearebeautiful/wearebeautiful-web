@@ -34,7 +34,7 @@ RUN rm -rf js gcss && \
     cd js && \
     npm install && \
     npm i -g sass@1.26.3 && \
-    npm i three@0.115.0 bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
+    npm i bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
 RUN sass --load-path=./node_modules/bootstrap/scss \
          --load-path=./ scss/custom.scss \
          /code/wearebeautiful.info/static/gcss/bootstrap.css
