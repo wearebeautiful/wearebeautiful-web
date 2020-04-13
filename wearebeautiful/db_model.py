@@ -47,8 +47,6 @@ class DBModel(Model):
         self.link_list = (self.links or "").split(" ")
         if self.given_birth != "no":
             self.history_list.append((self.given_birth or "") + " birth")
-        if self.excited != "not excited":
-            self.history_list.append(self.excited)
 
         if self.version == 1:
             self.display_code = "%s-%s" % (self.model_id, self.code)
@@ -69,6 +67,9 @@ class DBModel(Model):
             desc += "with an %s body type" % self.body_type
         else:
             desc += "with a %s body type" % self.body_type
+
+        if self.given_birth != "no":
+            desc += " who has given %s birth" % self.given_birth
 
         return desc
 

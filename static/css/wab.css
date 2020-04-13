@@ -116,6 +116,16 @@ h2 {
     padding-bottom: .5em;
 }
 
+.model-english { 
+    font-size: 15pt; 
+    font-width: italic;
+    padding-bottom: .5em;
+}
+
+.pose-desc { 
+    color: #888;
+}
+
 #focus-overlay {
     position: absolute;
     z-index: 1;

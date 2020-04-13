@@ -23,36 +23,43 @@
 {% macro list_models(models, name) -%}
   <div>
     <p class="browse-section">{{ name }}</p>
-    <table class="table table-sm">
+      <table class="table">
       {% for model in models %}
-          <tr><td>
-            <p>
-              <a class="browse-model-link" href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
-              {{ model.pose }},
-              {% if model.arrangement == "natural" %}
-                naturally arranged,
-              {% else %}
-                {{ model.arrangement }},
-              {% endif %}
-              {{ model.excited }}
-            </p>
-            <p>
-              {{ model.english_description() }}
-              {% if model.tags_list or model.history_list %}
-                <span class="model-tags">
-                {% for event in model.history_list %}
-                  <span class="badge badge-primary">{{ event }}</span>
+         <tr>
+           <td colspan="5">
+             <div class="float-right">
+                {% if  model.history_list %}
+                  <span class="model-tags">
+                  {% for event in model.history_list %}
+                    <span class="badge badge-primary">{{ event }}</span>
+                  {% endfor %}
+                  </span>
+                {% endif %}
+                {% for tag in model.tags_list %}
+                  <span class="badge badge-secondary">{{ tag }}</span>
                 {% endfor %}
-                {% for info in model.info_list %}
-                  <span class="badge badge-info">{{ info }}</span>
-                {% endfor %}
-                </span>
-              {% endif %}
-              {% for tag in model.tags_list %}
-                <span class="badge badge-secondary">{{ tag }}</span>
-              {% endfor %}
-              </p>
-          </td></tr>
+             </div>
+             <div>
+                <a class="browse-model-link" href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
+             </div>
+           </td>
+         </tr>
+         <tr>
+         <div>
+           <td>{{ model.sex }}</td>
+           <td>{{ model.given_birth }}</td>
+           <td>{{ model.pose }}</td>
+           <td>
+             {% if model.arrangement == "natural" %}
+               naturally arranged,
+             {% else %}
+               {{ model.arrangement }},
+             {% endif %}
+           </td>
+           <td>
+             {{ model.excited }}
+           </td>
+         </tr>
       {% endfor %}
     </table>
   </div>

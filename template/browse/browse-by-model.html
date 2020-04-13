@@ -21,44 +21,49 @@
 {% endblock%}
 
 {% macro list_models(id, models) -%}
-    <p class="browse-section">
+    {% if models[0].common_tags_list %}
+        <div class="float-right">
+          {% if models[0].history_list %}
+            <span class="history-tags">
+              {% for event in models[0].history_list %}
+                <span class="badge badge-primary">{{ event }}</span>
+              {% endfor %}
+            </span>
+          {% endif %}
+          {% for tag in models[0].common_tags_list %}
+            <span class="badge badge-secondary">{{ tag }}</span>
+          {% endfor %}
+        </div>
+    {% endif %}
+    <div class="browse-section">
       {{ id }}
-    </p>
+    </div>
 
     <table class="table table-hover table-sm">
       <thead>
         <td colspan="3">
-          {{ models[0].english_description() }}
-
-          {% if models[0].tags_list or models[0].history_list %}
-            <span class="model-tags">
-              {% for event in models[0].history_list %}
-                <span class="badge badge-primary">{{ event }}</span>
-              {% endfor %}
-              {% for info in models[0].info_list %}
-                <span class="badge badge-info">{{ info }}</span>
-              {% endfor %}
-            </span>
-          {% endif %}
+          <span class="model-english">{{ models[0].english_description() }}</span>
         </td>
       </thead>
    
       {% for model in models %}
         <tr>
           <td style="width: 20%">
-            {{ model.body_part }}</b>
+            {{ model.body_part }}
           </td>
           <td>
-            {{ model.pose }},
-            {% if model.arrangement == "natural" %}
-              naturally arranged,
-            {% else %}
-              {{ model.arrangement }},
-            {% endif %}
-            {{ model.excited }}
-            {% for tag in model.tags_list %}
-              <span class="badge badge-secondary">{{ tag }}</span>
-            {% endfor %}
+            <span class="pose-desc">
+              {{ model.pose }},
+              {% if model.arrangement == "natural" %}
+                naturally arranged,
+              {% else %}
+                {{ model.arrangement }},
+              {% endif %}
+              {{ model.excited }}
+              {% for tag in model.tags_list %}
+                <span class="badge badge-secondary">{{ tag }}</span>
+              {% endfor %}
+            </span>
           </td>
           <td class="text-right" style="width: 30%">
             <a href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
