@@ -1,14 +1,14 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 
 $theme-colors: (
-    "primary":   #413c69,  // used for history pills
-    "secondary": #4a47a3,  // used for tags pills
-    "success":   #ad62aa,  // donate buttons
-    "info":      #eab9c9   // related info to model pills
+    "primary":   #cf7c2d,  // used for history pills
+    "secondary": #CF5E2D,  // used for tags pills
+    "info":      #CF412D,  // related info to model pills
+    "light":     #F2ECE5   // backgrounds and such 
 );
 
-$link-color:       #4a47a3;
-$link-hover-color: #121128;
-$link-visited-color: #5C58CB;
+$link-color:       #cf7c2d;
+$link-hover-color: #F59235;
+$link-visited-color: #A86524;
 
 @import "bootstrap";

@@ -11,3 +11,9 @@ SITE_PASSWORD="test"
 STATIC_BASE_URL = ""
 IMAGE_BASE_URL = ""
 STL_BASE_URL = ""
+
+# For theming -- run colorhunt_theme.py to generate a new scss file
+COLOR_0 = "b83b5e"
+COLOR_1 = "f08a5d"
+COLOR_2 = "6a2c70"
+COLOR_3 = "f9ed69"

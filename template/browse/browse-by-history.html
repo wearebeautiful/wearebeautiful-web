@@ -6,24 +6,28 @@
     <div class="col-11 text-div">
       <h2>Browse by history</h2>
       <p>
-         <a href="/index">To view the models that have the following</a> attributes, <a href="/ffe">click on one of the below</a>:
+         To view the models that have the following attributes, select one or 
+         more of the buttons below to show the models:
       </p>
 
-      <div class="card">
+      <div class="card" id="buttons">
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
+            <p><a href="#" class="badge badge-primary">history</a></p>
             {% for event in events %}
-              <a href="#" class="badge badge-primary">{{ event }}</a>
+              <a href="#" id="e-{{ loop.index0 }}" class="btn btn-outline-primary btn-sm browse-btn">{{ event }}</a>
             {% endfor %}
           </li>
           <li class="list-group-item">
+            <p><a href="#" class="badge badge-secondary">tags</a></p>
             {% for tag in tags %}
-              <a href="#" class="badge badge-secondary">{{ tag }}</a>
+              <a href="#" id="t-{{ loop.index0 }}" class="btn btn-outline-secondary btn-sm browse-btn">{{ tag }}</a>
             {% endfor %}
           </li>
           <li class="list-group-item">
+            <p><a href="#" class="badge badge-info">info</a></p>
             {% for i in info %}
-              <a href="#" class="badge badge-info">{{ i }}</a>
+              <a href="#" id="i-{{ loop.index0 }}" class="btn btn-outline-info btn-sm browse-btn">{{ i }}</a>
             {% endfor %}
           </li>
         </ul>
@@ -36,11 +40,30 @@
 {% block scripts %}
 <script>
 
-    $('#close-focus').on('click', toggle_focus_mode);
+    $('#buttons a').on('click', clicked);
 
-    function clicked(item) {
+    function clicked(event) {
+        id = event.currentTarget.id
+        if (id[0] == 'e') {
+            $("#" + id).toggleClass("btn-outline-primary");
+            $("#" + id).toggleClass("btn-primary");
+        } 
+        else  
+        if (id[0] == 't') {
+            $("#" + id).toggleClass("btn-outline-secondary");
+            $("#" + id).toggleClass("btn-secondary");
+        } 
+        else  
+        if (id[0] == 'i') {
+            $("#" + id).toggleClass("btn-outline-info");
+            $("#" + id).toggleClass("btn-info");
+        } 
+        update_model_list();
+    }
 
+    function update_model_list() {
 
     }
+
 </script>
 {% endblock %}

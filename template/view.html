@@ -15,9 +15,9 @@
           {{ model.model_id }}-{{ model.code }}{% if model.version > 1 %}-{{ model.version }}{% endif %}
         </div>
         <div id="nav-overlay" class="d-inline-flex">
-           <div class="color-well rounded d-inline-flex" id="color-well-1" style="background-color: #{{ color_1 }}"></div>
-           <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_2 }}"></div>
-           <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_3 }}"></div>
+           <div class="color-well rounded d-inline-flex" id="color-well-1" style="background-color: #{{ color_0 }}"></div>
+           <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_1 }}"></div>
+           <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_2 }}"></div>
         </div>
         <div id="model"></div>
 
@@ -30,8 +30,6 @@
         <div id="distract-mode" class="d-none">
           <p class="jump-to text-right">
              Jump to:
-             <a href="#model-info">model info.</a> |
-             <a href="#person">person info.</a> |
              <a href="#model-info" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
              <a href="#person" data-toggle="collapse" data-target="#collapse-person" aria-expanded="false" aria-controls="collapse-person">person information</a> |
              {% if model.comment %}
@@ -223,9 +221,9 @@
         $('#close-focus').on('click', toggle_focus_mode);
         $('#open-focus').on('click', toggle_focus_mode);
         $('#focus-button').on('click', toggle_focus_mode);
-        $('#color-well-1').on('click', function() { color_well_click("{{ color_1 }}") });
-        $('#color-well-2').on('click', function() { color_well_click("{{ color_2 }}") });
-        $('#color-well-3').on('click', function() { color_well_click("{{ color_3 }}") });
+        $('#color-well-1').on('click', function() { color_well_click("{{ color_0 }}") });
+        $('#color-well-2').on('click', function() { color_well_click("{{ color_1 }}") });
+        $('#color-well-3').on('click', function() { color_well_click("{{ color_2 }}") });
         $('#screenshot').on('click', function() { screenshot() });
 
         function toggle_focus_mode() {
@@ -243,7 +241,7 @@
         }
 
         function color_well_click(color) {
-            mesh.material = new THREE.MeshPhongMaterial( { color: '#' + color, specular: 0x111111, shininess: 50 } );
+            mesh.material = new THREE.MeshPhongMaterial( { color: '#' + color, specular: 0x111111, shininess: 30 } );
             mesh.material.side = THREE.DoubleSide;
         }
 
@@ -268,7 +266,7 @@
        		scene = new THREE.Scene();
        		scene.background = new THREE.Color( 0x{{ bg_color}} );
 
-       		var material = new THREE.MeshPhongMaterial( { color: 0x{{ color_1 }}, specular: 0x111111, shininess: 50 } );
+  		var material = new THREE.MeshPhongMaterial( { color: 0x{{ color_0 }}, specular: 0x111111, shininess: 30 } );
                 material.side = THREE.DoubleSide;
 
                 var loader = new STLLoader();
@@ -308,11 +306,11 @@
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
 
-       		addShadowedLight( 2, 2, 2, 0xffffff, .4 );
-       		addShadowedLight( 2, 2, -2, 0xffffff, .4 );
-       		addShadowedLight( -2, 2, 2, 0xffffff, .4 );
-       		addShadowedLight( -2, 2, -2, 0xffffff, .4 );
-       		addShadowedLight( 0, -2, 0, 0xffffff, .2 );
+       		addShadowedLight( 2, 2, 2, 0xffffff, .35 );
+       		addShadowedLight( 2, 2, -2, 0xffffff, .35 );
+       		addShadowedLight( -2, 2, 2, 0xffffff, .35 );
+       		addShadowedLight( -2, 2, -2, 0xffffff, .35 );
+       		addShadowedLight( 0, -2, 0, 0xffffff, .3 );
 
        		// renderer
                 var flags = { antialias: true };

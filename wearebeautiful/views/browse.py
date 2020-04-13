@@ -1,4 +1,5 @@
 import os
+from operator import attrgetter
 from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
@@ -89,12 +90,16 @@ def browse_by_history():
     events = {}
     for model in models:
         for tag in model.tags_list:
+            if not tag:
+                continue
             try:
                 tags[tag].append(model)
             except KeyError:
                 tags[tag] = [ model ]
 
         for event in model.history_list:
+            if not event:
+                continue
             try:
                 events[event].append(model)
             except KeyError:
@@ -106,6 +111,7 @@ def browse_by_history():
         if model.comment:
             info['comment'] = model
 
+#    tags = sorted(tags, key=attrgetter('tag'))
 
     return render_template("browse/browse-by-history.html", 
         models=models, info=info, tags=tags, events=events)
