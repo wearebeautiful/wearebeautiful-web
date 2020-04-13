@@ -49,8 +49,8 @@ h2 {
     font-size: 18pt;
 }
 
-.index-nsfw {
-    display: hidden;
+#index-nsfw {
+    display: none;
 }
 
 #index-red-pill {

@@ -12,8 +12,12 @@ STATIC_BASE_URL = ""
 IMAGE_BASE_URL = ""
 STL_BASE_URL = ""
 
-# For theming -- run colorhunt_theme.py to generate a new scss file
-COLOR_0 = "b83b5e"
-COLOR_1 = "f08a5d"
-COLOR_2 = "6a2c70"
-COLOR_3 = "f9ed69"
+# For theming -- run generate_theme.py to generate a new scss file, then rebuild, reload
+THEME_BASE_COLOR = "cf7c2d"
+THEME_SECONDARY_COLOR = "036882"
+THEME_TERIARY_COLOR = "036882"
+
+OBJECT_COLOR_0 = "9F33A0"
+OBJECT_COLOR_1 = "E3C752"
+OBJECT_COLOR_2 = "469991"
+BG_COLOR = "F2ECE5"

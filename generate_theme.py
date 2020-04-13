@@ -11,7 +11,8 @@ $theme-colors: (
     "primary":   #%s,  // used for history pills
     "secondary": #%s,  // used for tags pills
     "info":      #%s,  // related info to model pills
-    "light":     #%s   // backgrounds and such 
+    "light":     #%s,  // backgrounds and such 
+    "danger":    #%s   // danger
 );
 
 $link-color:       #%s;
@@ -51,6 +52,7 @@ comp_col_0 = tweak_hue(rgb, -.03)
 comp_col_1 = tweak_hue(rgb, -.06)
 hover_col = tweak_value(rgb, .15)
 visited_col = tweak_value(rgb, -.15)
+danger = tweak_hue(rgb, -.045)
 
 
 
@@ -60,6 +62,7 @@ with open("static/scss/custom.scss", "w") as f:
         comp_col_0,
         comp_col_1,
         config.BG_COLOR,
+        danger, 
         base_col,
         hover_col,
         visited_col))

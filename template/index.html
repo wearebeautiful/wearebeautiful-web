@@ -12,7 +12,7 @@
     </div>
 
 </div>
-<div class="row">
+<div class="row" style="margin-bottom: 2rem;">
     <div class="col-2">
     </div>
     <div class="col-5"> 
@@ -42,15 +42,15 @@
 <div class="row" id="index-red-pill">
     <div class="col-2">
     </div> 
-    <div class="col-8"> 
-       <div class="alert alert-danger text-center" role="alert">
-          By scrolling down, I agree to view models of human genitals!
-       </div>
+    <div class="col-8 text-center"> 
+       <button id="bits-button" type="button" class="btn btn-danger btn-lg" style="width: 75%">
+          I agree to view models of human genitals!
+       </button>
     </div> 
     <div class="col-2">
     </div>
 </div>
-<div class="invisible" id="index-nsfw">
+<div id="index-nsfw">
   <div class="row">
      <div class="col-2">
      </div> 
@@ -132,17 +132,12 @@
 <script>
 var revealed = false;
 $(document).ready(function() {
-   var p = $("#index-red-pill").position()
-   var h = $(window).height();
-   $("#index-red-pill").height((h - p.top) * 1.05);
+   $('#bits-button').on('click', show_me_bits_clicked);
 });
-$(window).scroll(function() {
-   if(!revealed && $(window).scrollTop() + $(window).height() == $(document).height()) {
-       $("#index-nsfw").toggleClass("invisible");
-       $("#index-red-pill").toggleClass("d-none");
-       revealed = true;
-   }
-});
+function show_me_bits_clicked() {
+   $("#index-nsfw").slideDown(200);
+   $("#index-red-pill").slideUp(200);
+}
 </script>
 {% endblock %}
 
