@@ -76,9 +76,9 @@ def browse_by_model():
     return render_template("browse/browse-by-model.html", models=models, model_list=model_list)
 
 
-@bp.route('/by-history')
+@bp.route('/by-attributes')
 @auth.login_required
-def browse_by_history():
+def browse_by_attributes():
 
     models = []
     for model in DBModel.select():
@@ -113,5 +113,5 @@ def browse_by_history():
 
 #    tags = sorted(tags, key=attrgetter('tag'))
 
-    return render_template("browse/browse-by-history.html", 
+    return render_template("browse/browse-by-attributes.html", 
         models=models, info=info, tags=tags, events=events)

@@ -8,3 +8,8 @@ bp = Blueprint('docs', __name__)
 @auth.login_required
 def printing_guide():
     return render_template("docs/printing-guide.html")
+
+@bp.route('/our-data')
+@auth.login_required
+def our_data():
+    return render_template("docs/our-data.html")

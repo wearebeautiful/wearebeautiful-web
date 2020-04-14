@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light" id="navbar" style="background-color: #F7F7F7;">
-  <a class="navbar-brand" href="/">
+  <a class="navbar-brand" href="/index">
      <img style="width: 250px" src="{{ static_url_for('static', filename='img/wearebeautiful.svg') }}" alt="we are beautiful" />
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,8 +27,9 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{{ url_for('browse.browse_by_part') }}">browse by body part</a>
           <a class="dropdown-item" href="{{ url_for('browse.browse_by_model') }}">browse by model</a>
-          <a class="dropdown-item" href="{{ url_for('browse.browse_by_history') }}">browse by history</a>
+          <a class="dropdown-item" href="{{ url_for('browse.browse_by_attributes') }}">browse by attributes</a>
           <a class="dropdown-item" href="{{ url_for('model.diversity') }}">model diversity</a>
+          <a class="dropdown-item" href="{{ url_for('docs.our_data') }}">about our data</a>
           <a class="dropdown-item" href="{{ url_for('docs.printing_guide') }}">printing guide</a>
         </div>
       </li>
@@ -37,7 +38,7 @@
         <a class="nav-link" href="{{ url_for('index.contact') }}">contact</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="{{ url_for('index.support') }}">support us!</a>
+        <a class="nav-link active" style="font-weight: bold; margin-left: 2rem;" href="{{ url_for('index.support') }}">support us!</a>
       </li>
     </ul>
   </div>

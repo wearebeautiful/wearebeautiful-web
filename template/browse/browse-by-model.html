@@ -6,8 +6,12 @@
     <div class="col-11 text-div">
       <h2>Browse by model</h2>
       <p>
-      To find out more about our selection of models, please read our <a href="{{ url_for("model.diversity") }}">model diversity
-      statement</a>. We also have <a href="{{ url_for("model.statistics") }}">model statistics</a>.  We have the following models available:
+        This page lists all of the models we have available, arranged by human models. If you wish to
+        narrow down the list of models based on model attributes, please have a look at our 
+        <a href="{{ url_for('browse.browse_by_attributes') }}">browse by attribute</a> page.
+      <p>
+        If you're wondering why we have the collection of models we have, see our 
+        <a href="{{ url_for("model.diversity") }}">model diversity statement</a> for more details.
       </p>
 
       {% for model in model_list %}

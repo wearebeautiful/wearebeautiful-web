@@ -7,7 +7,7 @@
         <h2>What we offer</h2>
 
         <p>
-          From this web-site you may download an utilize these three resources:
+          From this web-site you may download and utilize these three resources:
         </p>
 
         <ul>
@@ -15,10 +15,10 @@
                 <p> 
                    <b>solids</b>:
                    These solid files are in the STL file format, a common format used to distribute 3D files that are
-                   intended to be printed on your own 3D filement of SLA printer. Ideally these files should require no
+                   intended to be printed on your own 3D filament or SLA printer. Often these files require no
                    more work than to print any other STL file you might download and print. Each solid file contains the solid
-                   itself, marked with the URL of this site as a <a href="/docs/codes">model code</a> that clearly
-                   identifies the human model. Our goal is to make it so that every 3D printed model in the world remains
+                   itself, marked with the URL of this site as a <a href="{{ url_for('docs.our_data') }}">model code</a> that 
+                   clearly identifies the human model. Our goal is to make it so that every 3D printed model in the world remains
                    easy to look up and that anyone wishing to find out more about a model can use the code on the physical
                    model to find the information about the human model here on our site.
                 </p> 
@@ -71,13 +71,32 @@
         </p>
 
         <p>
-           Most of our models should be ready to import into your favorite slicing/printing software and not need any rotations
-           in order to print correctly. Some may need rotations and quite a few will likely need to be scaled down, unless you
-           have a very large printer. When printing breast models you may want to consider standing the model up (as they are shown on 
-           our site) in order to avoid unsightly countour lines. Some experimentation might be needed to get a clean print, but
-           overall it should not be very hard.
+           Most of our models should be ready to import into your favorite slicing/printing software. Some may need rotations 
+           and quite a few will likely need to be scaled down, unless you have a very large printer. When printing breast 
+           models you may want to consider standing the model up (as they are shown on our site) in order to avoid unsightly 
+           countour lines. Some experimentation might be needed to get a clean print, but overall it should not be very hard.
         </p>
 
+        <h4>Tips for specific models</h4>
+
+        <ul>
+           <li>
+             <b>Penis models:</b> These often times print better if the models are oriented so that the tip of the penis points up.
+           </li>
+           <li>
+             <b>Body models:</b> Lower body, upper body and full body scans often print best upside down. 
+           </li>
+           <li>
+             <b>Breast models:</b> Breast models can print fine in their orientation as downloaded, but sometimes contour lines
+                can be visible if the layer height is not fine enough. Standing the model up, as the human would stand normally, 
+                can give better results.
+           </li>
+           <li>
+             <b>Vulva models:</b> These are the easiest to print, simply print them in the same orientation as downloaded.
+             However, the standing models (with an S in the second letter of the <a href="{{ url_for('docs.our_data') }}">model 
+             code</a>, such as VSNN) will need a rotation to print correctly.
+           </li>
+        </ul>
 
     </div>
     <div class="col">
