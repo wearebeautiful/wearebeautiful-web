@@ -115,7 +115,7 @@
             $("#results").append('<div><a class="browse-model-link" href="/model/' + model.display_code + '">' + model.display_code + '</a>' +
                                       '<p>' + model.english_description + '</p>' + 
                                       '<button type="button" id="p-' + m + '" class="btn btn-secondary" data-toggle="popover" ' +
-                                      'title="' + model.display_code + '" tabindex="' + m + '" data-img="' + model.screenshot_url + '">Preview model</button>' + 
+                                      'title="' + model.display_code + '" data-code="' + model.display_code + '">quick preview</button>' + 
                                  '</div>');
         }
         $('[data-toggle="popover"]').popover({
@@ -126,7 +126,8 @@
                       $('#' + last_popover).popover('hide');
 
                   last_popover = this.id;
-                  return '<img class="img-fluid" src="'+$(this).data('img') + '" />';
+                  model = model_index[$(this).data('code')]
+                  return '<a href="/model/' + model.display_code + '"><img class="img-fluid" src="'+ model.screenshot_url + '" /></a>';
               },
               title: 'preview'
         });
