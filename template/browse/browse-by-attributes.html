@@ -44,14 +44,15 @@
 {% endblock%}
 {% block scripts %}
 <script>
-
     var model_index = JSON.parse({{ models |tojson }});
     var info_list = JSON.parse({{ info_list |tojson }});
     var tags_list = JSON.parse({{ tags_list |tojson }});
     var events_list = JSON.parse({{ events_list |tojson }});
     var model_list = [];
+    var last_popover = null;
 
     $('#buttons a').on('click', clicked);
+
 
     function clicked(event) {
         id = event.currentTarget.id
@@ -105,14 +106,30 @@
         });
 
         models = [...new Set(models)]
+        if (last_popover)
+            $('#' + last_popover).popover('hide');
         $("#results").empty();
+
         for(m = 0; m < models.length; m++) {
             model = model_index[models[m]];
-            console.log(model);
             $("#results").append('<div><a class="browse-model-link" href="/model/' + model.display_code + '">' + model.display_code + '</a>' +
                                       '<p>' + model.english_description + '</p>' + 
+                                      '<button type="button" id="p-' + m + '" class="btn btn-secondary" data-toggle="popover" ' +
+                                      'title="' + model.display_code + '" tabindex="' + m + '" data-img="' + model.screenshot_url + '">Preview model</button>' + 
                                  '</div>');
         }
+        $('[data-toggle="popover"]').popover({
+              trigger: 'click',
+              html: true,
+              content: function () {
+                  if (last_popover)
+                      $('#' + last_popover).popover('hide');
+
+                  last_popover = this.id;
+                  return '<img class="img-fluid" src="'+$(this).data('img') + '" />';
+              },
+              title: 'preview'
+        });
     }
 
 </script>

@@ -1,7 +1,7 @@
 from peewee import *
 import dateutil.parser
 
-# This file is duplicate in the -tools repo. :(
+from wearebeautiful.utils import url_for_screenshot
 
 DB_FILE = "wab-models.db"
 db = SqliteDatabase(None)
@@ -103,7 +103,8 @@ class DBModel(Model):
             'link_list' : self.link_list,
             'given_birth' : self.given_birth,
             'display_code' : self.display_code,
-            'english_description' : self.english_description()
+            'english_description' : self.english_description(),
+            'screenshot_url' : url_for_screenshot(self.model_id, self.code, self.version)
         }
 
     def english_description(self):
