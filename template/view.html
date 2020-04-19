@@ -7,17 +7,19 @@
 
     <div class="col-10" id="view-center-col">
 
-        <div id="focus-overlay">
-           <a href="#"><i id="close-focus" class="fas fa-times-circle d-none focus-button"></i></a>
-           <a href="#"><i id="open-focus" class="fas fa-expand focus-button"></i></a>
-        </div>
-        <div id="code-overlay">
-          {{ model.model_id }}-{{ model.code }}{% if model.version > 1 %}-{{ model.version }}{% endif %}
-        </div>
-        <div id="nav-overlay" class="d-inline-flex">
-           <div class="color-well rounded d-inline-flex" id="color-well-1" style="background-color: #{{ color_0 }}"></div>
-           <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_1 }}"></div>
-           <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_2 }}"></div>
+        <div id="model-overlay" class="d-none">
+          <div id="focus-overlay" class="text-right">
+             <a href="#"><i id="close-focus" class="fas fa-times-circle d-none focus-button"></i></a>
+             <a href="#"><i id="open-focus" class="fas fa-expand focus-button"></i></a>
+          </div>
+          <div id="code-overlay">
+            {{ model.model_id }}-{{ model.code }}{% if model.version > 1 %}-{{ model.version }}{% endif %}
+          </div>
+          <div id="nav-overlay" class="d-inline-flex">
+             <div class="color-well rounded d-inline-flex" id="color-well-1" style="background-color: #{{ color_0 }}"></div>
+             <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_1 }}"></div>
+             <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_2 }}"></div>
+          </div>
         </div>
 
         <div id="model"></div>
@@ -207,6 +209,7 @@
        	var container, mesh = null;
        	var camera, scene, renderer, controls;
         var focus_mode = false;
+        var window_height = 0, window_width = 0;
 
         $(document).ready(function() {
             init();
@@ -246,15 +249,45 @@
             mesh.material.side = THREE.DoubleSide;
         }
 
+        function resize_window() {
+            
+            if (focus_mode) {
+                window_width = Math.floor(window.innerWidth);
+                // TODO: get rid of this hack!
+                window_height = Math.floor(window.innerHeight - $("#navbar").outerHeight() - 10);
+            }
+            else {
+                window_width = Math.floor($("#model").innerWidth());
+                window_height = Math.floor(window_width * get_aspect_ratio());
+            }
+
+            var pos = $("#model").position();
+            
+            $("#model").height(window_height);
+            $("#model").width(window_width);
+            var pos = $("#model").position();
+
+            $("#model-overlay").height(window_height);
+            $("#model-overlay").width(window_width);
+            $("#model-overlay").position(pos);
+
+            if (renderer)
+      	        renderer.setSize(window_width, window_height);
+
+            if (camera) {
+                camera.aspect = window_width / window_height; 
+                camera.updateProjectionMatrix();
+            }
+        }
+
        	function init() {
 
-                var width = Math.floor($("#model").innerWidth());
-                var height = Math.floor(width * get_aspect_ratio());
                 var scale_factor;
 
-                position_elements(width, height);
+                resize_window();
+                $("#model-overlay").toggleClass("d-none")
 
-       		camera = new THREE.PerspectiveCamera( 35, width / height, 1, 15 );
+       		camera = new THREE.PerspectiveCamera( 35, window_width / window_height, 1, 15 );
                 if ({{ screenshot }}) {
                     scale_factor = .85;
                     camera.position.set( 0, .5, 3 );
@@ -318,7 +351,7 @@
                     flags['preserveDrawingBuffer'] = true;
                 renderer = new THREE.WebGLRenderer(flags);
        		renderer.setPixelRatio( window.devicePixelRatio );
-       		renderer.setSize( width, height );
+       		renderer.setSize( window_width, window_height );
        		renderer.outputEncoding = THREE.sRGBEncoding;
 
        		renderer.shadowMap.enabled = true;
@@ -358,45 +391,9 @@
 
        	}
 
-        function position_elements(width, height) {
-
-                // resize the div according to the aspect ratio
-                $("#model").height(height);
-                var pos = $("#model").position();
-
-                $("#focus-overlay").css('top', pos.top + 3);
-                $("#focus-overlay").css('left', pos.left + width - $("#focus-overlay").width() - 10);
-
-                $("#code-overlay").css('top', pos.top + height - $("#code-overlay").height());
-                $("#code-overlay").css('left', pos.left);
-
-                $("#nav-overlay").css('top', pos.top + height - $("#nav-overlay").height());
-                $("#nav-overlay").css('left', pos.left + width - $("#nav-overlay").width() - 13);
-        }
-
        	function onWindowResize() {
-
-                var width, height;
-                
-                if (focus_mode) {
-                    width = Math.floor(window.innerWidth);
-                    // TODO: get rid of this hack!
-                    height = Math.floor(window.innerHeight - $("#navbar").outerHeight() - 10);
-                }
-                else {
-                    width = Math.floor($("#model").innerWidth());
-                    height = Math.floor(width * get_aspect_ratio());
-                }
-                var pos = $("#model").position();
-                
-                $("#model").height(height);
-                $("#model").width(width);
-                var pos = $("#model").position();
-                position_elements(width, height);
-
-      		renderer.setSize(width, height);
-       		camera.aspect = width / height; 
-       		camera.updateProjectionMatrix();
+             
+                resize_window();
        	}
 
        	function animate() {
