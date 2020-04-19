@@ -31,7 +31,9 @@ app.wsgi_app = ProxyFix(app.wsgi_app)
 fa = FontAwesome(app)
 flask_static_digest.init_app(app)
 
-db.init(os.path.join(config.MODEL_DIR, DB_FILE))
+db_file = os.path.join(config.MODEL_DIR, DB_FILE)
+print(db_file)
+db.init(db_file)
 
 from wearebeautiful.views.index import bp as index_bp
 from wearebeautiful.views.model import bp as model_bp
