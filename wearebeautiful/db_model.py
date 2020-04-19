@@ -58,19 +58,18 @@ class DBModel(Model):
 
         desc = "A %s model of " % self.body_part
         if self.sex in ('male', 'female'):
-            desc = "a %s " % self.sex
+            desc += "a %s " % self.sex
         elif self.sex == "intersex":
-            desc = "an intersex person "
+            desc += "an intersex person "
         else:
-            desc = "a person "
+            desc += "a person "
 
-        if self.body_type == "average":
-            desc += "with an %s body type" % self.body_type
-        else:
-            desc += "with a %s body type" % self.body_type
+        desc += " who is %s" % self.pose
+        if self.pose == "lying":
+            desc += " down"
 
         if self.given_birth != "no":
-            desc += " who has given %s birth" % self.given_birth
+            desc += " and has given %s birth" % self.given_birth
 
         return desc
 
@@ -106,26 +105,6 @@ class DBModel(Model):
             'english_description' : self.english_description(),
             'screenshot_url' : url_for_screenshot(self.model_id, self.code, self.version)
         }
-
-    def english_description(self):
-
-        desc = "A %s model of " % self.body_part
-        if self.sex in ('male', 'female'):
-            desc = "a %s " % self.sex
-        elif self.sex == "intersex":
-            desc = "an intersex person "
-        else:
-            desc = "a person "
-
-        if self.body_type == "average":
-            desc += "with an %s body type" % self.body_type
-        else:
-            desc += "with a %s body type" % self.body_type
-
-        if self.given_birth != "no":
-            desc += " who has given %s birth" % self.given_birth
-
-        return desc
 
 
     def __repr__(self):
