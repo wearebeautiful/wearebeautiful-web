@@ -1,4 +1,5 @@
 import os
+import json
 from operator import attrgetter
 from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
@@ -88,30 +89,52 @@ def browse_by_attributes():
     info = {}
     tags = {}
     events = {}
+    models_dict = {}
     for model in models:
         for tag in model.tags_list:
             if not tag:
                 continue
             try:
-                tags[tag].append(model)
+                tags[tag].append(model.display_code)
             except KeyError:
-                tags[tag] = [ model ]
+                tags[tag] = [ model.display_code ]
 
         for event in model.history_list:
             if not event:
                 continue
             try:
-                events[event].append(model)
+                events[event].append(model.display_code)
             except KeyError:
-                events[event] = [ model ]
+                events[event] = [ model.display_code ]
 
         if model.links:
-            info['link'] = model
+            try:
+                info['link'].append(model.display_code)
+            except KeyError:
+                info['link'] = [ model.display_code ]
 
         if model.comment:
-            info['comment'] = model
+            try:
+                info['comment'].append(model.display_code)
+            except KeyError:
+                info['comment'] = [ model.display_code ]
 
-#    tags = sorted(tags, key=attrgetter('tag'))
+        models_dict[model.display_code] = model.to_json()
+
+    tags_list = []
+    for tag in tags:
+        tags_list.append((tag, tags[tag]))
+
+    events_list = []
+    for event in events:
+        events_list.append((event, events[event]))
+
+    info_list = []
+    for i in info:
+        info_list.append((i, info[i]))
 
     return render_template("browse/browse-by-attributes.html", 
-        models=models, info=info, tags=tags, events=events)
+        models=json.dumps(models_dict), 
+        info=info, info_list=json.dumps(info_list), 
+        tags=tags, tags_list=json.dumps(tags_list),
+        events=events, events_list=json.dumps(events_list))

@@ -43,29 +43,41 @@
 {% block scripts %}
 <script>
 
+    var models = JSON.parse({{ models |tojson }});
+    var info_list = JSON.parse({{ info_list |tojson }});
+    var tags_list = JSON.parse({{ tags_list |tojson }});
+    var events_list = JSON.parse({{ events_list |tojson }});
+    var model_list = [];
+
     $('#buttons a').on('click', clicked);
 
     function clicked(event) {
         id = event.currentTarget.id
-        if (id[0] == 'e') {
+        type = id[0]
+        index = parseInt(id.substr(2))
+        if (type == 'e') {
+            add = $("#" + id).hasClass("btn-outline-primary");
             $("#" + id).toggleClass("btn-outline-primary");
             $("#" + id).toggleClass("btn-primary");
+            update_model_list(events_list[index][1], add)
         } 
         else  
-        if (id[0] == 't') {
+        if (type == 't') {
+            add = $("#" + id).hasClass("btn-outline-secondary");
             $("#" + id).toggleClass("btn-outline-secondary");
             $("#" + id).toggleClass("btn-secondary");
+            update_model_list(tags_list[index][1], add)
         } 
         else  
-        if (id[0] == 'i') {
+        if (type == 'i') {
+            add = $("#" + id).hasClass("btn-outline-info");
             $("#" + id).toggleClass("btn-outline-info");
             $("#" + id).toggleClass("btn-info");
+            update_model_list(info_list[index][1], add)
         } 
-        update_model_list();
     }
 
-    function update_model_list() {
-
+    function update_model_list(models, add) {
     }
 
 </script>
