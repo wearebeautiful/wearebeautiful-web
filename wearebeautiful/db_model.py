@@ -102,7 +102,8 @@ class DBModel(Model):
             'history_list' : self.history_list,
             'link_list' : self.link_list,
             'given_birth' : self.given_birth,
-            'display_code' : self.display_code
+            'display_code' : self.display_code,
+            'english_description' : self.english_description()
         }
 
     def english_description(self):
@@ -123,7 +124,7 @@ class DBModel(Model):
         if self.given_birth != "no":
             desc += " who has given %s birth" % self.given_birth
 
-
+        return desc
 
 
     def __repr__(self):

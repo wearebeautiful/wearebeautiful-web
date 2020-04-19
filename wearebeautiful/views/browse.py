@@ -99,7 +99,9 @@ def browse_by_attributes():
             except KeyError:
                 tags[tag] = [ model.display_code ]
 
+        print("'%s'" % model.history)
         for event in model.history_list:
+            print("'%s'" % event)
             if not event:
                 continue
             try:
