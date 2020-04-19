@@ -147,7 +147,5 @@ def prepare_model(model, screenshot):
         model = model, 
         model_file=model_file, 
         screenshot = int(screenshot),
-        color_0 = config.OBJECT_COLOR_0, color_1 = config.OBJECT_COLOR_1, color_2 = config.OBJECT_COLOR_2,
-        bg_color = config.BG_COLOR,
         downloads = downloads,
         related = get_related_models(model))
