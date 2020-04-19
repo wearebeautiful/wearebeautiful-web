@@ -19,6 +19,7 @@
            <div class="color-well rounded d-inline-flex" id="color-well-2" style="background-color: #{{ color_1 }}"></div>
            <div class="color-well rounded d-inline-flex" id="color-well-3" style="background-color: #{{ color_2 }}"></div>
         </div>
+
         <div id="model"></div>
 
         {% if screenshot %}
@@ -247,10 +248,9 @@
 
        	function init() {
 
-                var width = $("#model").innerWidth();
-                var height = width * get_aspect_ratio();
+                var width = Math.floor($("#model").innerWidth());
+                var height = Math.floor(width * get_aspect_ratio());
                 var scale_factor;
-
 
                 position_elements(width, height);
 
@@ -379,16 +379,18 @@
                 var width, height;
                 
                 if (focus_mode) {
-                    width = window.innerWidth;
+                    width = Math.floor(window.innerWidth);
                     // TODO: get rid of this hack!
-                    height = window.innerHeight - $("#navbar").outerHeight() - 10;
+                    height = Math.floor(window.innerHeight - $("#navbar").outerHeight() - 10);
                 }
                 else {
-                    width = $("#model").innerWidth();
-                    height = width * get_aspect_ratio();
+                    width = Math.floor($("#model").innerWidth());
+                    height = Math.floor(width * get_aspect_ratio());
                 }
+                var pos = $("#model").position();
                 
                 $("#model").height(height);
+                $("#model").width(width);
                 var pos = $("#model").position();
                 position_elements(width, height);
 

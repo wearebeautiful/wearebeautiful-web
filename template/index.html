@@ -64,7 +64,7 @@
            private information. We never reveal the identity of our models and this information does not exist online at all.
         </p>
         <p class="index-text">
-           We invite you to browse our models online, download the 3D solids for printing or order a print online. You may also 
+           We invite you to browse our models online, download the 3D solids for printing or order a print online. You may also
            download the surfaces and use them in your own 3D modeling projects. Start browsing now:
         </p>
         <p class="index-text">
@@ -89,7 +89,7 @@
                <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
                  <img class="d-block w-100" src="{{ slide.screenshot }}" alt="{{ slide.desc }}">
                  <div class="carousel-caption d-none d-md-block" style="color: black">
-                    {{ slide.desc }}
+                    <a href="{{slide.link}}" class="carousel-link">{{ slide.desc }}</a>
                  </div>
                </div>
              {% endfor %}

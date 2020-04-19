@@ -43,7 +43,7 @@ def index():
         slide_models.append({
             "desc" : "%s model %s" % (m.body_part, m.display_code),
             "screenshot" : url_for_screenshot_m(m),
-            "link" : "/model" + m.display_code
+            "link" : "/model/" + m.display_code
         })
 
     return render_template("index.html", slide_models=slide_models, recent_models=model_list, model_count=model_count)

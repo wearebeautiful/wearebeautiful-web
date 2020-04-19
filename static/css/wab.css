@@ -95,6 +95,30 @@ h2 {
     padding: 10px;
 }
 
+.carousel-inner {
+    font-size: 15pt;
+    font-weight: bold;
+}
+
+.carousel-inner a {
+    color: #444;
+    text-decoration: none;
+}
+
+.carousel-inner a:hover {
+    color: #666;
+    text-decoration: none;
+}
+
+.carousel-indicators li {
+    background-color: #444;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    filter: invert(1);
+}
+
 .browse-section {
     font-size: 20pt;
     font-weight: bold;
