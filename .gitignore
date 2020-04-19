@@ -108,3 +108,4 @@ config.py
 *.db
 static/js
 static/gcss
+node_modules

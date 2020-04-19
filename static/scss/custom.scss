@@ -1,10 +1,12 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 
+@import "./colors.scss";
+
 $theme-colors: (
-    "primary":   #cf7c2d,  // used for history pills
+    "primary":   $THEME_BASE_COLOR,  // used for history pills
     "secondary": #CF5E2D,  // used for tags pills
     "info":      #CF412D,  // related info to model pills
-    "light":     #F2ECE5,  // backgrounds and such 
+    "light":     #F2ECE5,  // backgrounds and such
     "danger":    #CF502D   // danger
 );
 
