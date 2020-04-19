@@ -14,11 +14,11 @@ RUN pip3 install setuptools wheel
 
 RUN mkdir -p /js/scss
 RUN mkdir -p /gcss
-COPY static/scss/custom.scss /js/scss
 WORKDIR /js
 RUN npm install && \
     npm i -g sass@1.26.3 && \
     npm i bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
+COPY static/scss /js/scss
 RUN sass --load-path=./node_modules/bootstrap/scss \
          --load-path=./ scss/custom.scss \
          /gcss/bootstrap.css

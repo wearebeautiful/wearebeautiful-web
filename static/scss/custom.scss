@@ -1,6 +1,6 @@
 @import "node_modules/bootstrap/scss/bootstrap";
 
-@import "./colors.scss";
+@import "colors";
 
 $theme-colors: (
     "primary":   $THEME_BASE_COLOR,  // used for history pills
