@@ -5,7 +5,7 @@
     <div class="col-1" id="view-left-col">
     </div>
 
-    <div class="col-10" id="view-center-col">
+    <div class="col-10" id="view-center-col" style="padding: 0px">
 
         <div id="model-overlay" class="d-none">
           <div id="focus-overlay" class="text-right">
@@ -241,6 +241,11 @@
             $("#open-focus").toggleClass("d-none")
             $("#close-focus").toggleClass("d-none")
             $("#distract-mode").toggleClass("d-none")
+            $("#footer").toggleClass("d-none")
+            if (focus_mode)
+                $("body").css("overflow", "hidden");
+            else
+                $("body").css("overflow", "auto");
             onWindowResize();
         }
 
@@ -250,23 +255,22 @@
         }
 
         function resize_window() {
+            console.log("window " + window.innerWidth + " " + window.innerHeight);
+            console.log("navbar " + $("#navbar").outerWidth() + " " + $("#navbar").outerHeight());
             
             if (focus_mode) {
                 window_width = Math.floor(window.innerWidth);
-                // TODO: get rid of this hack!
-                window_height = Math.floor(window.innerHeight - $("#navbar").outerHeight() - 10);
+                window_height = Math.floor(window.innerHeight - $("#navbar").outerHeight());
             }
             else {
-                window_width = Math.floor($("#model").innerWidth());
+                window_width = Math.floor($("#view-center-col").innerWidth());
                 window_height = Math.floor(window_width * get_aspect_ratio());
             }
 
-            var pos = $("#model").position();
-            
             $("#model").height(window_height);
             $("#model").width(window_width);
-            var pos = $("#model").position();
 
+            var pos = $("#model").position();
             $("#model-overlay").height(window_height);
             $("#model-overlay").width(window_width);
             $("#model-overlay").position(pos);
