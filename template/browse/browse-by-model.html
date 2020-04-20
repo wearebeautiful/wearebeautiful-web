@@ -1,9 +1,7 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
   <div class="row">
-    <div class="col">
-    </div>
-    <div class="col-11 text-div">
+    <div class="col-12 browse-layout">
       <h2>Browse by model</h2>
       <p>
         This page lists all of the 3D models we have available, ordered by their human identifier. If you wish to
@@ -18,8 +16,6 @@
         {{ list_models(model, models[model]) }}
       {% endfor %}
 
-    </div>
-    <div class="col">
     </div>
   </div>
 {% endblock%}

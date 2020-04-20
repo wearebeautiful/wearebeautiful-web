@@ -95,16 +95,20 @@ def get_related_models(model):
 def prepare_model(model, screenshot):
 
     if model.isdigit() and len(model) == 6:
-        models = DBModel.select(DBModel.model_id, DBModel.code).where(DBModel.model_id == model)
-        model_list = [ "%s-%s" % (m.model_id, m.code) for m in models ]
+        models = DBModel.select().where(DBModel.model_id == model)
+        model_list = [ ]
+        for m in models:
+            m.parse_data()
+            model_list.append(m)
+
         if not model_list:
             raise NotFound("Model %s does not exist." % model)
 
         if len(model_list) == 1:
-            return redirect(url_for("index.view", model=model_list[0]))
+            return redirect(url_for("model.model", model=model_list[0]))
         else:
             model_list = [ m for m in models ]
-            return render_template("browse/model-disambig.html", model=model, model_list=model_list)
+            return render_template("docs/model-disambig.html", model=model, model_list=model_list)
 
     try:
         parts = model.split('-')

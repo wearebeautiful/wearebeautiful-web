@@ -10,11 +10,19 @@ h2 {
 .text-layout {
 }
 
+.browse-layout {
+}
+
 @media (min-width: 576px) { 
 
   .text-layout {
       padding-right: 4rem;
       padding-left: 4rem;
+  }
+
+  .browse-layout {
+      padding-right: 2rem;
+      padding-left: 2rem;
   }
 
 }
@@ -26,6 +34,11 @@ h2 {
       padding-left: 8rem;
   }
 
+  .browse-layout {
+      padding-right: 4rem;
+      padding-left: 4rem;
+  }
+
 }
 
 @media (min-width: 992px) {
@@ -33,6 +46,11 @@ h2 {
   .text-layout {
       padding-right: 12rem;
       padding-left: 12rem;
+  }
+
+  .browse-layout {
+      padding-right: 6rem;
+      padding-left: 6rem;
   }
 
 }
@@ -147,7 +165,7 @@ h2 {
 .browse-section {
     font-size: 20pt;
     font-weight: bold;
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
 .browse-model-link {

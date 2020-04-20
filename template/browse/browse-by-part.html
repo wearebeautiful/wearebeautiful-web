@@ -1,9 +1,7 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
   <div class="row">
-    <div class="col">
-    </div>
-    <div class="col-11 text-div">
+    <div class="col-12 browse-layout">
       <h2>Browse by body part</h2>
       <p>
         This page lists all of the models we have available, arranged by body parts. If you wish to
@@ -18,8 +16,6 @@
         {{ list_models(sections[section].models, sections[section].name) }}
       {% endfor %}
 
-    </div>
-    <div class="col">
     </div>
   </div>
 {% endblock%}
