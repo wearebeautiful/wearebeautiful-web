@@ -15,9 +15,9 @@ class IndexViewsTestCase(ServerTestCase):
         resp = self.client.get(url_for('index.index'))
         self.assert200(resp)
 
-    def test_team(self):
-        resp = self.client.get(url_for('index.team'))
-        self.assert200(resp)
+    def test_browse(self):
+        resp = self.client.get(url_for('index.browse'))
+        self.assert_redirects(resp, url_for('browse.browse_by_part'))
 
     def test_about(self):
         resp = self.client.get(url_for('index.about'))
@@ -27,24 +27,26 @@ class IndexViewsTestCase(ServerTestCase):
         resp = self.client.get(url_for('index.company'))
         self.assert200(resp)
 
+    def test_contact(self):
+        resp = self.client.get(url_for('index.contact'))
+        self.assert200(resp)
+
+    def test_support(self):
+        resp = self.client.get(url_for('index.support'))
+        self.assert200(resp)
+
+    def test_support_success(self):
+        resp = self.client.get(url_for('index.support_success'))
+        self.assert200(resp)
+
+    def test_support_cancel(self):
+        resp = self.client.get(url_for('index.support_cancel'))
+        self.assert200(resp)
+
     def test_donate(self):
         resp = self.client.get(url_for('index.donate'))
+        self.assert_redirects(resp, url_for('index.support'))
+
+    def test_privacy(self):
+        resp = self.client.get(url_for('index.privacy'))
         self.assert200(resp)
-
-    def test_browse(self):
-        resp = self.client.get(url_for('index.browse'))
-        self.assert200(resp)
-
-    def test_view_no_model(self):
-        resp = self.client.get(url_for('index.view_simple'))
-        self.assert_status(resp, 308)
-
-    def test_view_empty(self):
-        resp = self.client.get(url_for('index.view', model="-"))
-        self.assert200(resp)
-
-    def test_view(self):
-        resp = self.client.get(url_for('index.view', model="-"))
-        self.assert200(resp)
-
-    # TODO Add more browse and view testing

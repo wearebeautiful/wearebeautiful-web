@@ -26,7 +26,6 @@ def diversity():
 @bp.route('/')
 @auth.login_required
 def model_root():
-    flash('You need to provide a model id to view the model.')
     return render_template("error.html")
 
 

@@ -108,13 +108,3 @@ def donate():
 @bp.route('/privacy')
 def privacy():
     return render_template("about/privacy.html")
-
-@bp.route('/view')
-@auth.login_required
-def view():
-    return redirect(url_for("model.browse_by_part"))
-
-@bp.route('/view/<model>')
-@auth.login_required
-def view_model(model):
-    return redirect(url_for("model.model", model=model))
