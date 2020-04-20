@@ -7,9 +7,34 @@ h2 {
     margin-bottom: .5em;
 }
 
-.text-div {
-    max-width: 700px;
-    margin-top: 1em;
+.text-layout {
+}
+
+@media (min-width: 576px) { 
+
+  .text-layout {
+      padding-right: 4rem;
+      padding-left: 4rem;
+  }
+
+}
+
+@media (min-width: 768px) {
+
+  .text-layout {
+      padding-right: 8rem;
+      padding-left: 8rem;
+  }
+
+}
+
+@media (min-width: 992px) {
+
+  .text-layout {
+      padding-right: 12rem;
+      padding-left: 12rem;
+  }
+
 }
 
 .team-name {
@@ -204,4 +229,3 @@ h2 {
   z-index: 3;
   font-size: 15pt;
 }
-

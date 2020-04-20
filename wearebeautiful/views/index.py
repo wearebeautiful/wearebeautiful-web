@@ -57,34 +57,34 @@ def browse():
 @bp.route('/team')
 @auth.login_required
 def team():
-    return render_template("team.html")
+    return render_template("about/team.html")
 
 
 @bp.route('/about')
 @auth.login_required
 def about():
-    return render_template("about.html")
+    return render_template("about/about.html")
 
 
 @bp.route('/company')
 def company():
-    return render_template("company.html")
+    return render_template("about/company.html")
 
 @bp.route('/contact')
 def contact():
-    return render_template("contact.html")
+    return render_template("about/contact.html")
 
 @bp.route('/support')
 def support():
-    return render_template("support.html")
+    return render_template("support/support.html")
 
 @bp.route('/support/success')
 def support_success():
-    return render_template("support-success.html")
+    return render_template("support/support-success.html")
 
 @bp.route('/support/cancel')
 def support_cancel():
-    return render_template("support-cancel.html")
+    return render_template("support/support-cancel.html")
 
 @bp.route('/donate')
 def donate():
@@ -92,7 +92,7 @@ def donate():
 
 @bp.route('/privacy')
 def privacy():
-    return render_template("privacy.html")
+    return render_template("about/privacy.html")
 
 @bp.route('/view')
 @auth.login_required

@@ -20,7 +20,7 @@ def send_model(filename):
 @bp.route('/model-diversity')
 @auth.login_required
 def diversity():
-    return render_template("model-diversity.html")
+    return render_template("docs/model-diversity.html")
 
 
 @bp.route('/')
@@ -33,7 +33,7 @@ def model_root():
 @bp.route('/statistics')
 @auth.login_required
 def statistics():
-    return render_template("statistics.html")
+    return render_template("docs/statistics.html")
 
 
 @bp.route('/<model>')
@@ -104,7 +104,7 @@ def prepare_model(model, screenshot):
             return redirect(url_for("index.view", model=model_list[0]))
         else:
             model_list = [ m for m in models ]
-            return render_template("model-disambig.html", model=model, model_list=model_list)
+            return render_template("browse/model-disambig.html", model=model, model_list=model_list)
 
     try:
         parts = model.split('-')
@@ -143,7 +143,7 @@ def prepare_model(model, screenshot):
         'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/m" + surface_path, surface_file)
     }
 
-    return render_template("view.html", 
+    return render_template("browse/view.html", 
         model = model, 
         model_file=model_file, 
         screenshot = int(screenshot),

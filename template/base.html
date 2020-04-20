@@ -20,10 +20,8 @@
   </head>
   <body>
 
-  {% if not bare %}
-     {%- include 'navbar.html' -%}
-  {% endif %}
-  <div id="container" class="container-fluid">
+  {%- include 'navbar.html' -%}
+  <div id="container" class="{% if not container %}container-lg{% else %}{{ container }}{% endif %}">
     {% block content %}
     {% endblock%}
   </div>
