@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python3 -m nose wearebeautiful
+docker exec -it wab-web nosetests
