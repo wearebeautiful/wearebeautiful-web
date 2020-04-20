@@ -12,7 +12,7 @@ bp = Blueprint('index', __name__)
 
 @bp.route('/')
 def soon():
-    return render_template("coming-soon.html", bare=True)
+    return render_template("about/coming-soon.html", bare=True)
 
 
 @bp.route('/index')

@@ -1,4 +1,5 @@
 {%- extends 'base.html' -%}
+{% set navbar_hidden = True %}
 {%- block content -%}
 <div class="row">
 
@@ -13,9 +14,7 @@
 
 </div>
 <div class="row" style="margin-bottom: 2rem;">
-    <div class="col-2">
-    </div>
-    <div class="col-5"> 
+    <div class="col-md-8"> 
       <div>
         <p class="index-text">
            We create 3D models of human genitals with the aim of breaking taboos, educating at a global level, 
@@ -35,27 +34,21 @@
         </p>
       </div>
     </div> 
-    <div class="col-5">
+    <div class="col-md-4">
       <img class="index-image" src="{{ url_for_screenshot('000000', 'HSNN', 1) }}">
       <img class="index-image" src="{{ url_for_screenshot('694420', 'HTAX', 1) }}">
     </div>
 </div>
-<div class="row" id="index-red-pill">
-    <div class="col-2">
-    </div> 
-    <div class="col-8 text-center"> 
+<div class="row text-layout"" id="index-red-pill">
+    <div class="col-md-12 text-center"> 
        <button id="bits-button" type="button" class="btn btn-danger btn-lg" style="width: 75%">
           I agree to view models of human genitals!
        </button>
     </div> 
-    <div class="col-2">
-    </div>
 </div>
 <div id="index-nsfw">
   <div class="row">
-     <div class="col-2">
-     </div> 
-     <div class="col-4"> 
+     <div class="col-md-8"> 
         <p class="index-text">
            We have {{ model_count }} models of vulvas, penises, breasts, full body and partial body scans.
            All of our models are at least 18 years old and span a wide range of <a href="{{ url_for('model.diversity') }}">ages,
@@ -77,7 +70,7 @@
            <a  href="{{ url_for('browse.browse_by_attributes') }}">browse by attributes</a>: Browse models based on the data about our models.
         </p>
      </div>
-     <div class="col-4"> 
+     <div class="col-md-4"> 
          <div id="image-carousel" class="carousel slide" data-ride="carousel">
            <ol class="carousel-indicators">
              {% for slide in slide_models %}
@@ -109,21 +102,17 @@
   </div>
 
   <div class="row">
-     <div class="col-2">
-     </div> 
-     <div class="col-8 index-text"> 
+     <div class="col-md-12 index-text"> 
          <h4 style="padding-top: 25px">most recently released models:</h4>
          <div id="recent-models" class="row">
             {% for m in recent_models %}
-              <div class="col-4">
+              <div class="col-md-4">
                   <p style="margin-bottom: 1px"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
                   <a href="/model/{{ m.model_id }}-{{ m.code }}-{{ m.version }}"><img src="{{ url_for_screenshot_m(m) }}" class="screenshot"></a>
               </div>
             {% endfor %}
          </div>
      </div> 
-     <div class="col-2">
-     </div>
   </div>
 
 </div>
@@ -137,6 +126,7 @@ $(document).ready(function() {
 });
 function show_me_bits_clicked() {
    $("#index-nsfw").slideDown(200);
+   $("#navbar").toggleClass("invisible");
    $("#index-red-pill").slideUp(200);
 }
 </script>

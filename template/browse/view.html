@@ -2,10 +2,7 @@
 {%- block content -%}
 <div class="row" id="top-row">
 
-    <div class="col-1" id="view-left-col">
-    </div>
-
-    <div class="col-10" id="view-center-col" style="padding: 0px">
+    <div class="col-12" id="view-center-col" style="padding: 0px">
 
         <div id="model-overlay" class="d-none">
           <div id="focus-overlay" class="text-right">
@@ -193,9 +190,6 @@
 
     </div>
 
-    <div class="col-1" id="view-right-col">
-    </div>
-
 </div>
 {% endblock%}
 
@@ -233,12 +227,12 @@
         function toggle_focus_mode() {
             focus_mode = !focus_mode;
 
-            $("#view-left-col").toggleClass("d-none")
             $("#view-center-col").toggleClass("col-10")
             $("#view-center-col").toggleClass("col-12")
             $("#view-center-col").toggleClass("p-0")
-            $("#view-right-col").toggleClass("d-none")
             $("#open-focus").toggleClass("d-none")
+            $("#container").toggleClass("container-lg")
+            $("#container").toggleClass("container-fluid")
             $("#close-focus").toggleClass("d-none")
             $("#distract-mode").toggleClass("d-none")
             $("#footer").toggleClass("d-none")

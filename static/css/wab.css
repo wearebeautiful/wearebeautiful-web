@@ -109,8 +109,9 @@ h2 {
 }
 
 .tagline {
-    font-size: 25pt;
+    font-size: 21pt;
     font-weight: bold;
+    color: #666;
     padding-bottom: 35px;
 }
 
