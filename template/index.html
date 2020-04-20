@@ -34,7 +34,7 @@
         </p>
       </div>
     </div> 
-    <div class="col-md-4">
+    <div class="col-md-4 text-center">
       <img class="index-image" src="{{ url_for_screenshot('000000', 'HSNN', 1) }}">
       <img class="index-image" src="{{ url_for_screenshot('694420', 'HTAX', 1) }}">
     </div>
@@ -71,16 +71,19 @@
         </p>
      </div>
      <div class="col-md-4"> 
+         <div class="text-center">
+            <h4>sample models</h4>
+         </div>
          <div id="image-carousel" class="carousel slide" data-ride="carousel">
            <ol class="carousel-indicators">
-             {% for slide in slide_models %}
+             {% for slide in sample_models %}
                <li data-target="#image-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></li>
              {% endfor %}
            </ol>
            <div class="carousel-inner">
-             {% for slide in slide_models %}
+             {% for slide in sample_models %}
                <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
-                 <img class="d-block w-100" src="{{ slide.screenshot }}" alt="{{ slide.desc }}">
+                 <img class="d-block w-100 index-image" src="{{ slide.screenshot }}" alt="{{ slide.desc }}">
                  <div class="carousel-caption d-none d-md-block" style="color: black">
                     <a href="{{slide.link}}" class="carousel-link">{{ slide.desc }}</a>
                  </div>
@@ -96,14 +99,43 @@
              <span class="sr-only">Next</span>
            </a>
          </div>
+
+         <div class="text-center">
+            <h4 style="padding-top: 25px">our favorite models</h4>
+         </div>
+         <div id="picks-carousel" class="carousel slide" data-ride="carousel">
+           <ol class="carousel-indicators">
+             {% for slide in picks_models %}
+               <li data-target="#picks-carousel" data-slide-to="{{ loop.index0 }}" {% if loop.index0 == 0 %}class="active"{% endif %}></li>
+             {% endfor %}
+           </ol>
+           <div class="carousel-inner">
+             {% for slide in picks_models %}
+               <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
+                 <img class="d-block w-100" src="{{ slide.screenshot }}" alt="{{ slide.desc }}">
+                 <div class="carousel-caption d-none d-md-block" style="color: black">
+                    <a href="{{slide.link}}" class="carousel-link">{{ slide.desc }}</a>
+                 </div>
+               </div>
+             {% endfor %}
+           </div>
+           <a class="carousel-control-prev" href="#picks-carousel" role="button" data-slide="prev">
+             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+             <span class="sr-only">Previous</span>
+           </a>
+           <a class="carousel-control-next" href="#picks-carousel" role="button" data-slide="next">
+             <span class="carousel-control-next-icon" aria-hidden="true"></span>
+             <span class="sr-only">Next</span>
+           </a>
+         </div>
+
      </div> 
-     <div class="col-2">
-     </div>
+
   </div>
 
   <div class="row">
      <div class="col-md-12 index-text"> 
-         <h4 style="padding-top: 25px">most recently released models:</h4>
+         <h4 style="padding-top: 25px">most recently released models</h4>
          <div id="recent-models" class="row">
             {% for m in recent_models %}
               <div class="col-md-4">
