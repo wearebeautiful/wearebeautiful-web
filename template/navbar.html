@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light {% if navbar_hidden %}invisible{% endif %}"
+<nav class="navbar navbar-expand-lg navbar-light {% if navbar_hidden %}{% endif %}"
       id="navbar" style="background-color: #F7F7F7;" >
     
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
@@ -26,6 +26,7 @@
             <a class="dropdown-item" href="{{ url_for('model.diversity') }}">model diversity</a>
             <a class="dropdown-item" href="{{ url_for('docs.our_data') }}">about our data</a>
             <a class="dropdown-item" href="{{ url_for('docs.printing_guide') }}">printing guide</a>
+            <a class="dropdown-item" href="{{ url_for('docs.faq') }}">frequently asked questions</a>
           </div>
         </li>
         

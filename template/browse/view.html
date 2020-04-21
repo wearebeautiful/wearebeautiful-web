@@ -40,7 +40,7 @@
 
 
           <div class="model-desc">
-            {{ model.english_description() }}
+            {{ model.english_description(True) }}
             {% if model.tags_list or model.history_list %}
               <span class="model-tags">
                 {% for event in model.history_list %}

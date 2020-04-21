@@ -18,3 +18,7 @@ class DocsViewsTestCase(ServerTestCase):
     def test_our_data(self):
         resp = self.client.get(url_for('docs.our_data'))
         self.assert200(resp)
+
+    def test_faq(self):
+        resp = self.client.get(url_for('docs.faq'))
+        self.assert200(resp)

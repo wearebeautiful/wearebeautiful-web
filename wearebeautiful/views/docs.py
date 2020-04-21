@@ -13,3 +13,8 @@ def printing_guide():
 @auth.login_required
 def our_data():
     return render_template("docs/our-data.html")
+
+@bp.route('/faq')
+@auth.login_required
+def faq():
+    return render_template("docs/faq.html")

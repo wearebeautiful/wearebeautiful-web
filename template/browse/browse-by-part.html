@@ -23,43 +23,31 @@
 {% macro list_models(models, name) -%}
   <div>
     <p class="browse-section">{{ name }}</p>
-      <table class="table">
       {% for model in models %}
-         <tr>
-           <td colspan="5">
-             <div class="float-right">
-                {% if  model.history_list %}
-                  <span class="model-tags">
-                  {% for event in model.history_list %}
-                    <span class="badge badge-primary">{{ event }}</span>
-                  {% endfor %}
-                  </span>
-                {% endif %}
-                {% for tag in model.tags_list %}
-                  <span class="badge badge-secondary">{{ tag }}</span>
-                {% endfor %}
-             </div>
-             <div>
-                <a class="browse-model-link" href="/model/{{ model.display_code }}">{{ model.display_code }}</a>
-             </div>
-           </td>
-         </tr>
-         <tr>
-         <div>
-           <td>{{ model.sex }}</td>
-           <td>{{ model.given_birth }}</td>
-           <td>{{ model.pose }}</td>
-           <td>
+          <div>
+             <a class="browse-model-link" href="/model/{{ model.display_code }}">{{ model.display_code }}</a>,
+             {{ model.pose }},
              {% if model.arrangement == "natural" %}
                naturally arranged,
              {% else %}
                {{ model.arrangement }},
              {% endif %}
-           </td>
-           <td>
-             {{ model.excited }}
-           </td>
-         </tr>
+          </div>
+          <div style="margin-bottom: 10px">
+             {% if  model.history_list %}
+               <span class="model-tags">
+               {% for event in model.history_list %}
+                 <span class="badge badge-primary">{{ event }}</span>
+               {% endfor %}
+               </span>
+             {% endif %}
+             {% for tag in model.tags_list %}
+               <span class="badge badge-secondary">{{ tag }}</span>
+             {% endfor %}
+             {% for i in model.info_list %}
+               <span class="badge badge-info">{{ i }}</span>
+             {% endfor %}
+         </div>
       {% endfor %}
     </table>
   </div>

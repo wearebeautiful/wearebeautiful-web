@@ -38,6 +38,8 @@ class DBModel(Model):
 
     def parse_data(self):
         self.info_list = []
+        if self.excited != "not excited":
+            self.info_list.append(self.excited)
         if self.comment:
             self.info_list.append("comment")
         if self.links:
@@ -54,7 +56,7 @@ class DBModel(Model):
             self.display_code = "%s-%s-%d" % (self.model_id, self.code, self.version)
 
 
-    def english_description(self):
+    def english_description(self, long=False):
 
         desc = "A %s model of " % self.body_part
         if self.sex in ('male', 'female'):
@@ -64,9 +66,10 @@ class DBModel(Model):
         else:
             desc += "a person "
 
-        desc += " who is %s" % self.pose
-        if self.pose == "lying":
-            desc += " down"
+        if long:
+            desc += " who is %s" % self.pose
+            if self.pose == "lying":
+                desc += " down"
 
         if self.given_birth != "no":
             desc += " and has given %s birth" % self.given_birth
