@@ -11,20 +11,29 @@
       <div id="buttons">
         <div><span class="badge badge-primary" style="margin-top: 10px; margin-bottom: 1px;">history</span></div>
         <div>
-          {% for event in events | sort(attribute='0') %}
-            <button type="button" id="e-{{ loop.index0 }}" class="btn btn-outline-primary btn-sm browse-btn">{{ event }}</button>
+          {% for event, active in events %}
+            <button type="button" id="e-{{ loop.index0 }}" class="btn btn-sm browse-btn 
+                {% if active %}btn-primary{% else -%}btn-outline-primary{% endif %}">
+                {{ event }}
+            </button>
           {% endfor %}
         </div>
         <div><span class="badge badge-secondary" style="margin-top: 10px; margin-bottom: 1px;">tags</span></div>
         <div>
-          {% for tag in tags | sort(attribute='0') %}
-            <button type="button" id="t-{{ loop.index0 }}" class="btn btn-outline-secondary btn-sm browse-btn">{{ tag }}</button>
+          {% for tag, active in tags %}
+            <button type="button" id="t-{{ loop.index0 }}" class="btn btn-sm browse-btn 
+                {% if active %}btn-secondary{% else -%}btn-outline-secondary{% endif %}">
+                {{ tag }}
+            </button>
           {% endfor %}
         </div>
         <div><span class="badge badge-info" style="margin-top: 10px; margin-bottom: 1px;">other</span></div>
         <div>
-          {% for i in info | sort(attribute='0') %}
-            <button type="button" id="i-{{ loop.index0 }}" class="btn btn-outline-info btn-sm browse-btn">{{ i }}</button>
+          {% for i, active in info %}
+            <button type="button" id="i-{{ loop.index0 }}" class="btn btn-sm browse-btn 
+                {% if active %}btn-secondary{% else -%}btn-outline-secondary{% endif %}">
+                {{ i }}
+            </button>
           {% endfor %}
         </div>
       </div>
@@ -48,6 +57,9 @@
 
     $('#buttons button').on('click', clicked);
 
+    $(function() {
+        update_model_list();
+    });
 
     function clicked(event) {
         id = event.currentTarget.id

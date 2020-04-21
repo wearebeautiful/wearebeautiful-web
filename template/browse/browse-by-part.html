@@ -6,7 +6,7 @@
       <p>
         This page lists all of the models we have available, arranged by body parts. If you wish to
         narrow down the list of models based on model attributes, please have a look at our 
-        <a href="{{ url_for('browse.browse_by_attributes') }}">browse by attribute</a> page.
+        <a href="{{ url_for('browse.by_attributes') }}">browse by attribute</a> page.
       <p>
         If you're wondering why we have the collection of models we have, see our 
         <a href="{{ url_for("model.diversity") }}">model diversity statement</a> for more details.
@@ -39,15 +39,15 @@
            {% if model.history_list %}
              <span class="model-tags">
              {% for event in model.history_list %}
-               <span class="badge badge-primary">{{ event }}</span>
+               <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a>
              {% endfor %}
              </span>
            {% endif %}
            {% for tag in model.tags_list %}
-             <span class="badge badge-secondary">{{ tag }}</span>
+             <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary">{{ tag }}</span></a>
            {% endfor %}
            {% for i in model.info_list %}
-             <span class="badge badge-info">{{ i }}</span>
+             <a href="{{ url_for("browse.by_attributes", a=i) }}"><span class="badge badge-info">{{ i }}</span></a>
            {% endfor %}
        </td>
       </tr>

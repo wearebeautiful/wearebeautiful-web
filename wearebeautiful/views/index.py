@@ -66,7 +66,7 @@ def index():
 
 @bp.route('/browse')
 def browse():
-    return redirect(url_for("browse.browse_by_part"))
+    return redirect(url_for("browse.by_part"))
 
 
 @bp.route('/team')

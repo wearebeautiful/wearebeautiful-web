@@ -43,7 +43,7 @@ class DBModel(Model):
         if self.comment:
             self.info_list.append("comment")
         if self.links:
-            self.info_list.append("links")
+            self.info_list.append("link")
         self.tags_list = (self.tags or "").split(",")
         self.history_list = (self.history or "").split(",")
         self.link_list = (self.links or "").split(" ")

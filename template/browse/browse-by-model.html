@@ -6,7 +6,7 @@
       <p>
         This page lists all of the 3D models we have available, ordered by their human identifier. If you wish to
         narrow down the list of models based on model attributes, please have a look at our 
-        <a href="{{ url_for('browse.browse_by_attributes') }}">browse by attribute</a> page.
+        <a href="{{ url_for('browse.by_attributes') }}">browse by attribute</a> page.
       <p>
         If you're wondering why we have the collection of models we have, see our 
         <a href="{{ url_for("model.diversity") }}">model diversity statement</a> for more details.
@@ -30,12 +30,12 @@
             {% if models[0].history_list %}
               <span class="history-tags">
                 {% for event in models[0].history_list %}
-                  <span class="badge badge-primary" style="margin-top: 15px">{{ event }}</span>
+                  <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary" style="margin-top: 15px">{{ event }}</span></a>
                 {% endfor %}
               </span>
             {% endif %}
             {% for tag in models[0].common_tags_list %}
-              <span class="badge badge-secondary" style="margin-top: 15px">{{ tag }}</span>
+              <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary" style="margin-top: 15px">{{ tag }}</span></a>
             {% endfor %}
           {% endif %}
         </span>

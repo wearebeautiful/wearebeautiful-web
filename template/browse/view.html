@@ -44,13 +44,13 @@
             {% if model.tags_list or model.history_list %}
               <span class="model-tags">
                 {% for event in model.history_list %}
-                  <span class="badge badge-primary">{{ event }}</span>
+                  <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a></a>
                 {% endfor %}
                 {% for tag in model.tags_list %}
-                  <span class="badge badge-secondary">{{ tag }}</span>
+                  <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary">{{ tag }}</span></a>
                 {% endfor %}
                 {% for info in model.info_list %}
-                  <span class="badge badge-info">{{ info }}</span>
+                  <a href="{{ url_for("browse.by_attributes", a=info) }}"><span class="badge badge-info">{{ info }}</span></a>
                 {% endfor %}
               </span>
             {% endif %}

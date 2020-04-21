@@ -17,7 +17,7 @@ class IndexViewsTestCase(ServerTestCase):
 
     def test_browse(self):
         resp = self.client.get(url_for('index.browse'))
-        self.assert_redirects(resp, url_for('browse.browse_by_part'))
+        self.assert_redirects(resp, url_for('browse.by_part'))
 
     def test_about(self):
         resp = self.client.get(url_for('index.about'))

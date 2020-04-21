@@ -11,14 +11,14 @@ class BrowseViewsTestCase(ServerTestCase):
     def setUp(self):
         ServerTestCase.setUp(self)
 
-    def test_browse_by_part(self):
-        resp = self.client.get(url_for('browse.browse_by_part'))
+    def test_by_part(self):
+        resp = self.client.get(url_for('browse.by_part'))
         self.assert200(resp)
 
-    def test_browse_by_model(self):
-        resp = self.client.get(url_for('browse.browse_by_model'))
+    def test_by_model(self):
+        resp = self.client.get(url_for('browse.by_model'))
         self.assert200(resp)
 
-    def test_browse_by_attributes(self):
-        resp = self.client.get(url_for('browse.browse_by_attributes'))
+    def test_by_attributes(self):
+        resp = self.client.get(url_for('browse.by_attributes'))
         self.assert200(resp)

@@ -12,7 +12,7 @@ bp = Blueprint('browse', __name__)
 
 @bp.route('/by-part')
 @auth.login_required
-def browse_by_part():
+def by_part():
 
     body_parts = DBModel.select(DBModel.body_part).distinct()
     body_parts = [ part.body_part for part in body_parts ]
@@ -31,7 +31,7 @@ def browse_by_part():
 
 @bp.route('/by-model')
 @auth.login_required
-def browse_by_model():
+def by_model():
 
     models = {}
     tag_counts = {}
@@ -79,7 +79,10 @@ def browse_by_model():
 
 @bp.route('/by-attributes')
 @auth.login_required
-def browse_by_attributes():
+def by_attributes():
+
+    keywords = (request.args.get('a') or "").split(",")
+    keywords = [ k.lower() for k in keywords ]
 
     models = []
     for model in DBModel.select():
@@ -119,22 +122,38 @@ def browse_by_attributes():
             except KeyError:
                 info['comment'] = [ model.display_code ]
 
+        if model.excited:
+            try:
+                info['excited'].append(model.display_code)
+            except KeyError:
+                info['excited'] = [ model.display_code ]
+
         models_dict[model.display_code] = model.to_json()
 
     tags_list = []
-    for tag in tags:
+    disp_tags = []
+    for tag in sorted(tags):
         tags_list.append((tag, tags[tag]))
+        disp_tags.append((tag, True if tag in keywords else False))
 
     events_list = []
-    for event in events:
+    disp_events = []
+    for event in sorted(events):
         events_list.append((event, events[event]))
+        disp_events.append((event, True if event in keywords else False))
 
     info_list = []
-    for i in info:
+    disp_info = []
+    for i in sorted(info):
         info_list.append((i, info[i]))
+        disp_info.append((i, True if i in keywords else False))
+
+#    disp_tags = sorted(disp_tags, key=itemgetter(0))
+#    disp_events = sorted(disp_events, key=itemgetter(0))
+#    disp_info = sorted(disp_info, key=itemgetter(0))
 
     return render_template("browse/browse-by-attributes.html", 
         models=json.dumps(models_dict), 
-        info=info, info_list=json.dumps(info_list), 
-        tags=tags, tags_list=json.dumps(tags_list),
-        events=events, events_list=json.dumps(events_list))
+        info=disp_info, info_list=json.dumps(info_list), 
+        tags=disp_tags, tags_list=json.dumps(tags_list),
+        events=disp_events, events_list=json.dumps(events_list))
