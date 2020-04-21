@@ -8,28 +8,27 @@
          more of the buttons below to show the models:
       </p>
 
-      <div class="card" id="buttons">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <p><a href="#" class="badge badge-primary">history</a></p>
-            {% for event in events %}
-              <a href="#" id="e-{{ loop.index0 }}" class="btn btn-outline-primary btn-sm browse-btn">{{ event }}</a>
-            {% endfor %}
-          </li>
-          <li class="list-group-item">
-            <p><a href="#" class="badge badge-secondary">tags</a></p>
-            {% for tag in tags %}
-              <a href="#" id="t-{{ loop.index0 }}" class="btn btn-outline-secondary btn-sm browse-btn">{{ tag }}</a>
-            {% endfor %}
-          </li>
-          <li class="list-group-item">
-            <p><a href="#" class="badge badge-info">info</a></p>
-            {% for i in info %}
-              <a href="#" id="i-{{ loop.index0 }}" class="btn btn-outline-info btn-sm browse-btn">{{ i }}</a>
-            {% endfor %}
-          </li>
-        </ul>
+      <div id="buttons">
+        <div><span class="badge badge-primary" style="margin-top: 10px; margin-bottom: 1px;">history</span></div>
+        <div>
+          {% for event in events | sort(attribute='0') %}
+            <button type="button" id="e-{{ loop.index0 }}" class="btn btn-outline-primary btn-sm browse-btn">{{ event }}</button>
+          {% endfor %}
+        </div>
+        <div><span class="badge badge-secondary" style="margin-top: 10px; margin-bottom: 1px;">tags</span></div>
+        <div>
+          {% for tag in tags | sort(attribute='0') %}
+            <button type="button" id="t-{{ loop.index0 }}" class="btn btn-outline-secondary btn-sm browse-btn">{{ tag }}</button>
+          {% endfor %}
+        </div>
+        <div><span class="badge badge-info" style="margin-top: 10px; margin-bottom: 1px;">other</span></div>
+        <div>
+          {% for i in info | sort(attribute='0') %}
+            <button type="button" id="i-{{ loop.index0 }}" class="btn btn-outline-info btn-sm browse-btn">{{ i }}</button>
+          {% endfor %}
+        </div>
       </div>
+      <hr/>
       <div id="results">
          <p id="results-msg" style="font-size: 18; margin-top: 2rem; color: #555;" class="text-center">
            No results.
@@ -47,11 +46,12 @@
     var model_list = [];
     var last_popover = null;
 
-    $('#buttons a').on('click', clicked);
+    $('#buttons button').on('click', clicked);
 
 
     function clicked(event) {
         id = event.currentTarget.id
+        console.log(id);
         type = id[0];
         index = parseInt(id.substr(2))
         if (type == 'e') {
@@ -76,7 +76,7 @@
     function update_model_list() {
         models = []
 
-        $("#buttons a").each(function(index, element) {
+        $("#buttons button").each(function(index, element) {
             var id = element.id
             var type = id[0];
             if (!type)

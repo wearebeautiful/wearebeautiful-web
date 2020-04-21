@@ -1,6 +1,6 @@
 import os
 import json
-from operator import attrgetter
+from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
