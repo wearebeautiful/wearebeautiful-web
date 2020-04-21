@@ -21,22 +21,25 @@
 {% endblock%}
 
 {% macro list_models(id, models) -%}
-    {% if models[0].common_tags_list %}
-        <div class="float-right">
-          {% if models[0].history_list %}
-            <span class="history-tags">
-              {% for event in models[0].history_list %}
-                <span class="badge badge-primary">{{ event }}</span>
-              {% endfor %}
-            </span>
+    <div class="row" style="margin-top: 15px">
+      <div class="col-md-3">
+        <span class="browse-section">{{ id }}</span>
+      </div>
+      <div class="col-md-9 text-right">
+          {% if models[0].common_tags_list %}
+            {% if models[0].history_list %}
+              <span class="history-tags">
+                {% for event in models[0].history_list %}
+                  <span class="badge badge-primary" style="margin-top: 15px">{{ event }}</span>
+                {% endfor %}
+              </span>
+            {% endif %}
+            {% for tag in models[0].common_tags_list %}
+              <span class="badge badge-secondary" style="margin-top: 15px">{{ tag }}</span>
+            {% endfor %}
           {% endif %}
-          {% for tag in models[0].common_tags_list %}
-            <span class="badge badge-secondary">{{ tag }}</span>
-          {% endfor %}
-        </div>
-    {% endif %}
-    <div class="browse-section">
-      {{ id }}
+        </span>
+      </div>
     </div>
 
     <table class="table table-striped table-sm">
