@@ -52,16 +52,14 @@
     var info_list = JSON.parse({{ info_list |tojson }});
     var tags_list = JSON.parse({{ tags_list |tojson }});
     var events_list = JSON.parse({{ events_list |tojson }});
-    var model_list = [];
-    var last_popover = null;
 
-    $('#buttons button').on('click', clicked);
+    $('#buttons button').on('click', tag_clicked);
 
     $(function() {
         update_model_list();
     });
 
-    function clicked(event) {
+    function tag_clicked(event) {
         id = event.currentTarget.id
         console.log(id);
         type = id[0];
@@ -114,31 +112,58 @@
         });
 
         models = [...new Set(models)]
-        if (last_popover)
-            $('#' + last_popover).popover('hide');
         $("#results").empty();
 
+        var table = `<table class="table table-striped">`;
         for(m = 0; m < models.length; m++) {
             model = model_index[models[m]];
-            $("#results").append('<div><a class="browse-model-link" href="/model/' + model.display_code + '">' + model.display_code + '</a>' +
-                                      '<p>' + model.english_description + '</p>' + 
-                                      '<button type="button" id="p-' + m + '" class="btn btn-secondary" data-toggle="popover" ' +
-                                      'title="' + model.display_code + '" data-code="' + model.display_code + '">quick preview</button>' + 
-                                 '</div>');
-        }
-        $('[data-toggle="popover"]').popover({
-              trigger: 'click',
-              html: true,
-              content: function () {
-                  if (last_popover)
-                      $('#' + last_popover).popover('hide');
 
-                  last_popover = this.id;
-                  model = model_index[$(this).data('code')]
-                  return '<a href="/model/' + model.display_code + '"><img class="img-fluid" src="'+ model.screenshot_url + '" /></a>';
-              },
-              title: 'preview'
-        });
+            if (model.arrangement == "natural")
+                arrangement = "naturally arranged";
+            else
+                arrangement = model.arrangement;
+
+            tags = ``
+            for(i = 0; i < model.history_list.length; i++) 
+                tags += `<span class="badge badge-primary">${ model.history_list[i] }</span> `
+
+            for(i = 0; i < model.tags_list.length; i++) 
+                tags += `<span class="badge badge-secondary">${ model.tags_list[i] }</span> `
+
+            for(i = 0; i < model.info_list.length; i++) 
+                tags += `<span class="badge badge-info">${ model.info_list[i] }</span> `
+
+            table += 
+               `<tr id="r-${m}">
+                  <td style="width: 60%">
+                    <button type="button" id="p-${m}" class="btn btn-outline-primary"><i class="fas fa-image"></i></button>
+                    <a class="browse-model-link" href="/model/${ model.display_code }">${ model.display_code }</a> - 
+                    ${ model.body_part },
+                    ${ model.pose },
+                    ${ arrangement }
+                  </td>
+                  <td style="width: 40%" class="text-right">
+                    ${ tags }
+                  </td>
+                </tr>`;
+        }
+        table += `</table>`;
+        $("#results").append(table);
+        $('#results button').on('click', preview_clicked);
+    }
+
+    function preview_clicked(event) {
+        id = event.currentTarget.id;
+        index = parseInt(id.substr(2));
+        model = model_index[models[index]];
+        console.log(model);
+        html = `
+            <tr>
+              <td colspan="2" class="text-center">
+                <a href="/model/${ model.display_code }"><img style="max-width: 50%" src="${ model.screenshot_url }"/></a>
+              </td>
+            </tr>`;
+        $("#r-" + index).after(html);
     }
 
 </script>
