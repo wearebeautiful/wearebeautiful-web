@@ -4,32 +4,111 @@
     <div class="col-12 text-layout">
       <h2>Statistics</h2>
 
-      <p>Our model's ages, origins and ethnicities break down as follows:</p>
+      <p>
+         Here are some statistics on the models we have in our collection. If you
+         have questions about these numbers, please have a look at our
+         <a href="{{ url_for("model.diversity") }}">model diversity statement</a> 
+         for more details.
+      </p>
 
-      <h4>Age</h4>
-      <table class="table table-striped">
-      <tr><th>age</th><th>number of models</th></tr>
-      <tr><td>28</td><td>2</td></tr>
-      <tr><td>34</td><td>1</td></tr>
-      <tr><td>36</td><td>1</td></tr>
-      <tr><td>39</td><td>1</td></tr>
+      <table class="table table-striped thead-dark table-sm table-bordered" style="width: 60%">
+        <thead>
+            <th style="width: 50%">model type</th>
+            <th style="width: 50%">count</th>
+        </thead>
+        <tr>
+            <td>total</td>
+            <td>{{ model_stats.count }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">vulva models</span></td>
+            <td>{{ model_stats.vulva }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">penis models</span></td>
+            <td>{{ model_stats.penis }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">breast models</span></td>
+            <td>{{ model_stats.breast }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">full body models</span></td>
+            <td>{{ model_stats.full_body }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">upper body models</span></td>
+            <td>{{ model_stats.upper_body }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">lower body models</span></td>
+            <td>{{ model_stats.lower_body }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">hand models</span></td>
+            <td>{{ model_stats.hand }}</td>
+        </tr>
+        <tr>
+            <td><span style="margin-left: 10px">anatomical</span></td>
+            <td>{{ model_stats.anatomical }}</td>
+        </tr>
       </table>
 
-      <h4>Country</h4>
-      <table class="table table-striped">
-      <tr><th>country</th><th>number of models</th></tr>
-      <tr><td>CH</td><td>3</td></tr>
-      <tr><td>CZ</td><td>1</td></tr>
-      <tr><td>HU</td><td>1</td></tr>
+      <p>
+        We do not state any of the following data in conjunction with our models 
+        because those would be a privacy risk to our models. However, we show this
+        data in aggregate to show the general characteristics of our models.
+      </p>
+      <p>
+        Our models have the following ages at the time of their
+        photo shoot:
+      </p>
+
+      <table class="table table-striped thead-dark table-sm table-bordered" style="width: 60%">
+        <thead>
+            <th style="width: 50%">model age</th>
+            <th style="width: 50%">count</th>
+        </thead>
+        {% for age, count in ages %}
+          <tr>
+              <td style="margin-left: 10px">{{ age }}</td>
+              <td>{{ count }}</td>
+          </tr>
+        {% endfor %}
       </table>
 
-      <h4>Ethnicity</h4>
+      <p>
+        Our models were born in the following countries:
+      </p>
 
-      <p>Please note that ethnicity is self declared by each model.</p>
+      <table class="table table-striped thead-dark table-sm table-bordered" style="width: 60%">
+        <thead>
+            <th style="width: 50%">country of birth</th>
+            <th style="width: 50%">count</th>
+        </thead>
+        {% for country, count in countries %}
+          <tr>
+              <td style="margin-left: 10px">{{ country }}</td>
+              <td>{{ count }}</td>
+          </tr>
+        {% endfor %}
+      </table>
 
-      <table class="table table-striped">
-      <tr><th>ehtnicity</th><th>number of models</th></tr>
-      <tr><td>european white</td><td>5</td></tr>
+      <p>
+        Our models have declared their ethnicities as follows:
+      </p>
+
+      <table class="table table-striped thead-dark table-sm table-bordered" style="width: 60%">
+        <thead>
+            <th style="width: 50%">ethnicity</th>
+            <th style="width: 50%">count</th>
+        </thead>
+        {% for ethnicity, count in ethnicities %}
+          <tr>
+              <td style="margin-left: 10px">{{ ethnicity }}</td>
+              <td>{{ count }}</td>
+          </tr>
+        {% endfor %}
       </table>
 
     </div>

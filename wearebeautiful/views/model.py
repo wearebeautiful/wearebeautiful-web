@@ -1,6 +1,8 @@
 import base64
 import os
 import random
+import json
+from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from hurry.filesize import size, alternative
@@ -32,7 +34,52 @@ def model_root():
 @bp.route('/statistics')
 @auth.login_required
 def statistics():
-    return render_template("docs/statistics.html")
+
+    model_stats = {
+        'count' : DBModel.select().count(),
+        'vulva' : DBModel.select().where(DBModel.body_part == 'vulva').count(),
+        'penis' : DBModel.select().where(DBModel.body_part == 'penis').count(),
+        'breast' : DBModel.select().where(DBModel.body_part == 'breast').count(),
+        'full_body' : DBModel.select().where(DBModel.body_part == 'full body').count(),
+        'upper_body' : DBModel.select().where(DBModel.body_part == 'upper body').count(),
+        'lower_body' : DBModel.select().where(DBModel.body_part == 'lower body').count(),
+        'hand' : DBModel.select().where(DBModel.body_part == 'hand').count(),
+        'anatomical' : DBModel.select().where(DBModel.body_part == 'anatomical').count()
+    }
+
+
+#    "ages": {
+#        "19": 1,
+#    },
+#    "countries": {
+#        "BR": 1,
+#    "ethnicities": {
+
+    with open("static/stats/aggregated_stats.json", "r") as j:
+        jsdoc = j.read()
+
+    stats = json.loads(jsdoc)
+
+    ages = []
+    for age in stats["ages"]:
+        ages.append(( age, stats["ages"][age] ))
+
+    countries = []
+    for country in stats["countries"]:
+        countries.append(( country, int(stats["countries"][country]) ))
+    print(countries)
+    countries = sorted(countries, key=itemgetter(1), reverse=True)
+
+    ethnicities = []
+    for ethnicity in stats["ethnicities"]:
+        ethnicities.append(( ethnicity, stats["ethnicities"][ethnicity] ))
+    ethnicities = sorted(ethnicities, key=itemgetter(1), reverse=True)
+
+    return render_template("docs/statistics.html", 
+        model_stats=model_stats,
+        ages=ages,
+        countries=countries,
+        ethnicities=ethnicities)
 
 
 @bp.route('/<model>')

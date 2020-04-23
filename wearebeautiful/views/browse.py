@@ -148,10 +148,6 @@ def by_attributes():
         info_list.append((i, info[i]))
         disp_info.append((i, True if i in keywords else False))
 
-#    disp_tags = sorted(disp_tags, key=itemgetter(0))
-#    disp_events = sorted(disp_events, key=itemgetter(0))
-#    disp_info = sorted(disp_info, key=itemgetter(0))
-
     return render_template("browse/browse-by-attributes.html", 
         models=json.dumps(models_dict), 
         info=disp_info, info_list=json.dumps(info_list), 
