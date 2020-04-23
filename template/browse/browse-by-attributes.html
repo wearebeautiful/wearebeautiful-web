@@ -114,7 +114,7 @@
         models = [...new Set(models)]
         $("#results").empty();
 
-        var table = `<table class="table table-striped">`;
+        var results = "";
         for(m = 0; m < models.length; m++) {
             model = model_index[models[m]];
 
@@ -133,9 +133,9 @@
             for(i = 0; i < model.info_list.length; i++) 
                 tags += `<span class="badge badge-info">${ model.info_list[i] }</span> `
 
-            table += 
-               `<tr id="r-${m}">
-                  <td style="width: 60%">
+            col = 
+               `<div class="row">
+                  <div class="col-md-8"> 
                     <div>
                       <a class="browse-model-link" href="/model/${ model.display_code }">${ model.display_code }</a> - 
                       ${ model.body_part },
@@ -145,14 +145,19 @@
                     <div>
                       ${ tags }
                     </div>
-                  </td>
-                  <td style="width: 40%" class="text-right">
-                    <a href="/model/${ model.display_code }"><img style="max-width: 50%" src="${ model.screenshot_url }"/></a>
-                  </td>
-                </tr>`;
+                  </div> 
+                  <div class="col-md-4 text-center"> 
+                    <a href="/model/${ model.display_code }"><img style="max-width: 75%" src="${ model.screenshot_url }"/></a>
+                  </div>
+                </div>`;
+
+            if (m % 2 == 0)
+                results += `<div class="row" style="margin-top: 10px"><div class="col-md-6">${col}</div>`
+            else
+                results += `<div class="col-md-6">${ col }</div></div><hr>`
         }
-        table += `</table>`;
-        $("#results").append(table);
+
+        $("#results").append(results);
         $('#results button').on('click', preview_clicked);
     }
 
