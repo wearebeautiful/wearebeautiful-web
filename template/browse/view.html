@@ -12,6 +12,10 @@
           <div id="code-overlay">
             {{ model.model_id }}-{{ model.code }}{% if model.version > 1 %}-{{ model.version }}{% endif %}
           </div>
+          <div id="spinner-overlay">
+              <p><i class="fas fa-circle-notch fa-spin" id="spinner"></i></p>
+              <div id="progress"></div>
+          </div>
           <div id="nav-overlay" class="d-inline-flex">
              <div class="color-well rounded d-inline-flex color-well-1" id="color-well-1"></div>
              <div class="color-well rounded d-inline-flex color-well-2" id="color-well-2"></div>
@@ -324,9 +328,14 @@
                         }
 
        		}, function ( prog ) {
-                   // prog.total, prod.loaded
+                    if (prog.loaded == prog.total)
+                        $("#spinner-overlay").addClass("d-none")
+                    else
+                        $("#progress").html(Math.ceil(100 * prog.loaded / prog.total) + "% loaded");
                 }, function ( err ) {
-                   console.log("Cannot load model. Are source model files gzipped?");
+                    $("#spinner-overlay").removeClass("d-none")
+                    $("#spinner").addClass("d-none");
+                    $("#progress").html(`<p>Cannot load surface. :(</p><p>${err.originalTarget.status}: ${err.originalTarget.statusText}</p>`);
                 });
 
        		// Lights

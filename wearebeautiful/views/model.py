@@ -17,7 +17,11 @@ bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
-    return send_file(os.path.join(current_app.config['MODEL_DIR'], filename))
+    f = os.path.join(current_app.config['MODEL_DIR'], filename)
+    if not os.path.exists(f):
+        raise NotFound()
+
+    return send_file(f)
 
 
 @bp.route('/model-diversity')

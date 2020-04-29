@@ -231,6 +231,18 @@ h2 {
     bottom: 0px;
 }
 
+#spinner-overlay {
+    position: absolute;
+    pointer-events: auto;
+    text-align: center;
+    width: 100%;
+    bottom: 50%;
+}
+
+#spinner {
+    font-size: 50pt;
+}
+
 .color-well {
     background-color: #ff0000;
     width: 35px;
