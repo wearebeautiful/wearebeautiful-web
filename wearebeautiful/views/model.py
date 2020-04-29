@@ -162,7 +162,8 @@ def prepare_model(model, screenshot):
     id = model.model_id
     code = model.code
     version = model.version
-    model_file = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-med.stl" % (id, code, id, code, version)
+    model_file_med = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-med.stl" % (id, code, id, code, version)
+    model_file_low = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-low.stl" % (id, code, id, code, version)
 
     solid_file = "%s-%s-%d-solid.stl" % (id, code, version)
     solid_path = "/%s/%s/%s" % (id, code, solid_file)
@@ -183,7 +184,8 @@ def prepare_model(model, screenshot):
 
     return render_template("browse/view.html", 
         model = model, 
-        model_file=model_file, 
+        model_file_med=model_file_med, 
+        model_file_low=model_file_low, 
         screenshot = int(screenshot),
         downloads = downloads,
         related = get_related_models(model))

@@ -31,7 +31,6 @@
           <p class="jump-to text-right">
              Jump to:
              <a href="#model-info" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
-             <a href="#person" data-toggle="collapse" data-target="#collapse-person" aria-expanded="false" aria-controls="collapse-person">person information</a> |
              {% if model.comment %}
                <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
@@ -62,38 +61,26 @@
               <div class="card-header" id="heading-info">
                 <h5 class="mb-0">
                   <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="true" aria-controls="collapseOne">
-                    3D model information
+                    model information
                   </button>
                 </h5>
               </div>
 
               <div id="collapse-info" class="collapse show" aria-labelledby="heading-info" data-parent="#accordion">
                 <div class="card-body">
+                  <h5>3D model information</h5>
                   <table class="table table-striped table-bordered table-sm">
-                     <tr><td>body part</td><td>{{ model.body_part }}</td></tr>
+                     <tr><td style="width: 50%">body part</td><td>{{ model.body_part }}</td></tr>
                      <tr><td>pose</td><td>{{ model.pose }}</td></tr>
                      <tr><td>arangement type</td><td>{{ model.arrangement }}</td></tr>
                      <tr><td>excited</td><td>{{ model.excited }}</td></tr>
                      <tr><td>created</td><td>{{ model.created }}</td></tr>
                      <tr><td>released</td><td>{{ model.released }}</td></tr>
                   </table>
-                </div>
-              </div>
-            </div>
 
-            <div class="card">
-              <a id="person"></a>
-              <div class="card-header" id="heading-person">
-                <h5 class="mb-0">
-                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-person" aria-expanded="false" aria-controls="collapseTwo">
-                    Human model information
-                  </button>
-                </h5>
-              </div>
-              <div id="collapse-person" class="collapse" aria-labelledby="heading-person" data-parent="#accordion">
-                <div class="card-body">
+                  <h5>human model information</h5>
                   <table class="table table-striped table-bordered table-sm">
-                     <tr><td>id</td><td>{{ model.model_id }}</td></tr>
+                     <tr><td style="width: 50%">id</td><td>{{ model.model_id }}</td></tr>
                      <tr><td>gender</td><td>{{ model.gender }}
                      {% if model.gender_comment %}
                         <p>Comment: {{ model.gender_comment }}</p>
@@ -109,7 +96,7 @@
                      {% if model.history %}
                         <tr><td>body history</td><td>{{ model.history }}</td></tr>
                      {% endif %}
-                     <tr><td>tags</td><td>{{ model.tags }}</td></tr>
+                     <tr><td>tags</td><td>{{ model.tags or "-" }}</td></tr>
                      {% if model.links %}
                        <tr>
                          <td><p>Related content</p></td>
@@ -204,6 +191,7 @@
        	var camera, scene, renderer, controls;
         var focus_mode = false;
         var window_height = 0, window_width = 0;
+        var med_low_resolution_breakpoint = 992;
 
         $(document).ready(function() {
             init();
@@ -251,9 +239,6 @@
         }
 
         function resize_window() {
-            console.log("window " + window.innerWidth + " " + window.innerHeight);
-            console.log("navbar " + $("#navbar").outerWidth() + " " + $("#navbar").outerHeight());
-            
             if (focus_mode) {
                 window_width = Math.floor(window.innerWidth);
                 window_height = Math.floor(window.innerHeight - $("#navbar").outerHeight());
@@ -304,8 +289,14 @@
   		var material = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 30 } );
                 material.side = THREE.DoubleSide;
 
+                var model_file;
+                if ($(window).width() >= med_low_resolution_breakpoint)
+                    model_file = "{{ model_file_med }}";
+                else
+                    model_file = "{{ model_file_low }}";
+
                 var loader = new STLLoader();
-       		loader.load( '{{ model_file }}', function ( geometry ) {
+       		loader.load( model_file, function ( geometry ) {
 
                         geometry.rotateZ(1.57079);
                         geometry.computeFaceNormals();
