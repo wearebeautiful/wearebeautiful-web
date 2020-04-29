@@ -1,4 +1,5 @@
 import os
+import json
 from peewee import *
 from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
@@ -36,6 +37,16 @@ def index():
                     .order_by(DBModel.id.desc()) \
                     .limit(3)
 
+    with open("static/stats/aggregated_stats.json", "r") as j:
+        stats = json.loads(j.read())
+
+    min_age = 1000
+    max_age = 18
+    for age in stats["ages"]:
+        age = int(age)
+        min_age = age if age < min_age else min_age
+        max_age = age if age > max_age else max_age
+
     model_list = []
     for m in models:
         m.parse_data()
@@ -61,7 +72,9 @@ def index():
         sample_models=sample_models, 
         picks_models=picks_models, 
         recent_models=model_list, 
-        model_count=model_count)
+        model_count=model_count,
+        min_age=min_age,
+        max_age=max_age)
 
 
 @bp.route('/browse')

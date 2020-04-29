@@ -51,8 +51,9 @@
      <div class="col-md-8"> 
         <p class="index-text">
            We have {{ model_count }} models of vulvas, penises, breasts, full body and partial body scans.
-           All of our models are at least 18 years old and span a wide range of <a href="{{ url_for('model.diversity') }}">ages,
-           body types and countries of origin</a>. We've carefully curated all the metadata of our models and are
+           All of our models are between {{ min_age }} and {{ max_age}} years old and span a wide range 
+           of <a href="{{ url_for('model.diversity') }}">ages, body types and countries of origin</a>. We've 
+           carefully curated all the metadata of our models and are
            releasing the public information while <a href="{{ url_for('index.privacy') }}">carefully protecting</a> the
            private information. We never reveal the identity of our models and this information does not exist online at all.
         </p>
