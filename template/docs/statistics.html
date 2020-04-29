@@ -18,40 +18,14 @@
         </thead>
         <tr>
             <td>total</td>
-            <td>{{ model_stats.count }}</td>
+            <td>{{ total_models }}</td>
         </tr>
-        <tr>
-            <td><span style="margin-left: 10px">vulva models</span></td>
-            <td>{{ model_stats.vulva }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">penis models</span></td>
-            <td>{{ model_stats.penis }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">breast models</span></td>
-            <td>{{ model_stats.breast }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">full body models</span></td>
-            <td>{{ model_stats.full_body }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">upper body models</span></td>
-            <td>{{ model_stats.upper_body }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">lower body models</span></td>
-            <td>{{ model_stats.lower_body }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">hand models</span></td>
-            <td>{{ model_stats.hand }}</td>
-        </tr>
-        <tr>
-            <td><span style="margin-left: 10px">anatomical</span></td>
-            <td>{{ model_stats.anatomical }}</td>
-        </tr>
+        {% for body_part, count in model_stats %}
+          <tr>
+              <td><span style="margin-left: 10px"><a href="{{ url_for("browse.by_part") }}#{{ body_part }}">{{ body_part }} models</a></span></td>
+              <td>{{ count }}</td>
+          </tr>
+        {% endfor %}
       </table>
 
       <p>

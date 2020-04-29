@@ -2,6 +2,7 @@ import base64
 import os
 import random
 import json
+from peewee import *
 from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
@@ -35,25 +36,12 @@ def model_root():
 @auth.login_required
 def statistics():
 
-    model_stats = {
-        'count' : DBModel.select().count(),
-        'vulva' : DBModel.select().where(DBModel.body_part == 'vulva').count(),
-        'penis' : DBModel.select().where(DBModel.body_part == 'penis').count(),
-        'breast' : DBModel.select().where(DBModel.body_part == 'breast').count(),
-        'full_body' : DBModel.select().where(DBModel.body_part == 'full body').count(),
-        'upper_body' : DBModel.select().where(DBModel.body_part == 'upper body').count(),
-        'lower_body' : DBModel.select().where(DBModel.body_part == 'lower body').count(),
-        'hand' : DBModel.select().where(DBModel.body_part == 'hand').count(),
-        'anatomical' : DBModel.select().where(DBModel.body_part == 'anatomical').count()
-    }
 
-
-#    "ages": {
-#        "19": 1,
-#    },
-#    "countries": {
-#        "BR": 1,
-#    "ethnicities": {
+    model_stats = []
+    for model in DBModel.select(DBModel.body_part, fn.COUNT(DBModel.id).alias('ct')).group_by(DBModel.body_part):
+        model_stats.append((model.body_part, model.ct))
+    model_stats = sorted(model_stats, key=itemgetter(1), reverse=True)
+    total_models = DBModel.select().count()
 
     with open("static/stats/aggregated_stats.json", "r") as j:
         jsdoc = j.read()
@@ -67,7 +55,6 @@ def statistics():
     countries = []
     for country in stats["countries"]:
         countries.append(( country, int(stats["countries"][country]) ))
-    print(countries)
     countries = sorted(countries, key=itemgetter(1), reverse=True)
 
     ethnicities = []
@@ -77,6 +64,7 @@ def statistics():
 
     return render_template("docs/statistics.html", 
         model_stats=model_stats,
+        total_models=total_models,
         ages=ages,
         countries=countries,
         ethnicities=ethnicities)
