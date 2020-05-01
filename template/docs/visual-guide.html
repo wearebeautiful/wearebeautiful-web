@@ -1,0 +1,59 @@
+{%- extends 'base.html' -%}
+{%- block content -%}
+  <div class="row">
+    <div class="col-12 browse-layout">
+        <h2>Illustated guide to human sexual anatomy</h2>
+
+        <p>
+           The models you see on our site are intended to give you the idea of the shape, look and the vast
+           differences between humans. However, a lot of our models are taken out of context -- most times you don't get
+           to see the rest of the person. Quite a lot about the person is lost when they become a 3D model on this site.
+           In this illustated guide we hope to give you and idea of what our models may look like in real life. You'll
+           see that there is a lot of diversity and depth to human beings:
+        </p>
+
+        <p>
+           To start off with, we have a group of people: Young, old, thin, overweight, differently abled, different cultures:
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/group.png') }}">
+
+        <p>
+           And now let's look at more specific examples of people, in this case cis-gender females:
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/cis_female.png') }}">
+
+        <p>
+           And some cis-gender males:
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/cis_male.png') }}">
+
+        <p>
+           Here are some illustrations of penises and how they might look in a more realistic context:
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/penis_closeup.png') }}">
+
+        <p>
+           And now the same for vulvas, showing two different examples:
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/vulva_closeup.png') }}">
+
+        <p>
+           And intersex people, in between male and female:
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/intersex_closeup.png') }}">
+
+        <p>
+           Here we have transgender males...
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/trans_males.png') }}">
+
+        <p>
+           and transgender females.
+        </p>
+        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/trans_females.png') }}">
+        <p>
+           As you can see, people come in many shapes and sizes. We are all normal and we are beautiful! ❤️
+        </p>
+    </div>
+  </div>
+{% endblock%}

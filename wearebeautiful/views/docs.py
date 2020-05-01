@@ -18,3 +18,8 @@ def our_data():
 @auth.login_required
 def faq():
     return render_template("docs/faq.html")
+
+@bp.route('/guide')
+@auth.login_required
+def visual_guide():
+    return render_template("docs/visual-guide.html")

@@ -88,6 +88,11 @@ h2 {
     padding-bottom: 5px;
 }
 
+.guide-image {
+    width: 100%;
+    border-radius: 10px;
+}
+
 .index-text {
     font-size: 18pt;
 }
@@ -260,3 +265,4 @@ h2 {
   z-index: 3;
   font-size: 15pt;
 }
+
