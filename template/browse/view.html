@@ -77,6 +77,9 @@
 
               <div id="collapse-info" class="collapse show" aria-labelledby="heading-info" data-parent="#accordion">
                 <div class="card-body">
+                  <div class="float-right">
+                     <a href="{{ url_for('docs.our_data') }}">Questions about our data/codes?</a>
+                  </div>
                   <h5>3D model information</h5>
                   <table class="table table-striped table-bordered table-sm">
                      <tr><td style="width: 50%">body part</td><td>{{ model.body_part }}</td></tr>
