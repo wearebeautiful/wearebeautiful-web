@@ -22,3 +22,7 @@ class BrowseViewsTestCase(ServerTestCase):
     def test_by_attributes(self):
         resp = self.client.get(url_for('browse.by_attributes'))
         self.assert200(resp)
+
+    def test_illustrated_guide(self):
+        resp = self.client.get(url_for('browse.illustrated_guide'))
+        self.assert200(resp)
