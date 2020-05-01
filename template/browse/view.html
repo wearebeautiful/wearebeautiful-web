@@ -33,6 +33,11 @@
 
         <div id="distract-mode" class="d-none">
           <p class="jump-to text-right">
+             {% if solid %}
+               <a href="/model/{{ model.display_code }}">View surface</a> | 
+             {% else %}
+               <a href="/model/{{ model.display_code }}/solid">View solid</a> | 
+             {% endif %}
              Jump to:
              <a href="#model-info" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
              {% if model.comment %}
@@ -294,6 +299,9 @@
                 material.side = THREE.DoubleSide;
 
                 var model_file;
+                if ({{ solid }})
+                    model_file = "{{ model_file_solid }}";
+                else
                 if ($(window).width() >= med_low_resolution_breakpoint)
                     model_file = "{{ model_file_med }}";
                 else

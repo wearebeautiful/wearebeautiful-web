@@ -79,10 +79,18 @@ def statistics():
 def model(model):
     return prepare_model(model, current_app.config["SUBMIT_SCREENSHOTS"])
 
+
+@bp.route('/<model>/solid')
+@auth.login_required
+def model_solid(model):
+    return prepare_model(model, current_app.config["SUBMIT_SCREENSHOTS"], True)
+
+
 @bp.route('/<model>/screenshot')
 @auth.login_required
 def model_screenshot_get(model):
     return prepare_model(model, True)
+
 
 @bp.route('/<id>-<code>-<int:version>/screenshot', methods = ['POST'])
 @auth.login_required
@@ -130,7 +138,7 @@ def get_related_models(model):
     return { "desc" : desc, "models" : models[0:MAX_NUM_RELATED_MODELS] }
 
 
-def prepare_model(model, screenshot):
+def prepare_model(model, screenshot, solid = False):
 
     if model.isdigit() and len(model) == 6:
         models = DBModel.select().where(DBModel.model_id == model)
@@ -168,6 +176,7 @@ def prepare_model(model, screenshot):
     version = model.version
     model_file_med = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-med.stl" % (id, code, id, code, version)
     model_file_low = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-low.stl" % (id, code, id, code, version)
+    model_file_solid= config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-solid.stl" % (id, code, id, code, version)
 
     solid_file = "%s-%s-%d-solid.stl" % (id, code, version)
     solid_path = "/%s/%s/%s" % (id, code, solid_file)
@@ -190,6 +199,8 @@ def prepare_model(model, screenshot):
         model = model, 
         model_file_med=model_file_med, 
         model_file_low=model_file_low, 
+        model_file_solid=model_file_solid, 
         screenshot = int(screenshot),
         downloads = downloads,
+        solid=(1 if solid else 0),
         related = get_related_models(model))
