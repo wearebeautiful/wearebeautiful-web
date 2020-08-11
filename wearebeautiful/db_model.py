@@ -56,7 +56,7 @@ class DBModel(Model):
             self.display_code = "%s-%s-%d" % (self.model_id, self.code, self.version)
 
 
-    def english_description(self, long=False):
+    def threed_model_description(self, long=False):
 
         desc = "A %s model of " % self.body_part
         if self.sex in ('male', 'female'):
@@ -73,6 +73,21 @@ class DBModel(Model):
 
         if self.given_birth != "no":
             desc += " and has given %s birth" % self.given_birth
+
+        return desc
+
+
+    def human_model_description(self):
+
+        if self.sex in ('male', 'female'):
+            desc = "%s " % self.sex
+        elif self.sex == "intersex":
+            desc = "intersex person "
+        else:
+            desc = "person "
+
+        if self.given_birth != "no":
+            desc += " who has given %s birth" % self.given_birth
 
         return desc
 
