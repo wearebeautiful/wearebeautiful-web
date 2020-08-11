@@ -204,11 +204,27 @@
         var focus_mode = false;
         var window_height = 0, window_width = 0;
         var med_low_resolution_breakpoint = 992;
+        var rotate_speed = 3.0;
 
         $(document).ready(function() {
             init();
             animate();
         });
+
+        document.body.onkeydown = function(e) {
+            if (e.keyCode == 32){
+                controls.autoRotateSpeed = 0.0;
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        };
+        document.body.onkeyup = function(e) {
+            if (e.keyCode == 32){
+                controls.autoRotateSpeed = rotate_speed;
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        };
 
         function get_aspect_ratio() {
             if ({{ screenshot }})
@@ -370,7 +386,7 @@
 
                 controls = new OrbitControls( camera, renderer.domElement );
                 if (!{{ screenshot }}) {
-                    controls.autoRotateSpeed = 3.0;
+                    controls.autoRotateSpeed = rotate_speed;
                     controls.autoRotate = true;
                     controls.enableDamping = true;
                     controls.dampingFactor = 0.05;
