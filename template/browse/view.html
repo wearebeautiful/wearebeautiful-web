@@ -195,9 +195,9 @@
 {% block scripts %}
 <script type="module">
 
-       	import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.115.0/build/three.module.js';
-        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/jsm/controls/OrbitControls.js';
-        import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/jsm/loaders/STLLoader.js';
+       	import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.module.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/controls/OrbitControls.js';
+        import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/loaders/STLLoader.js';
 
        	var container, mesh = null;
        	var camera, scene, renderer, controls;
@@ -313,6 +313,7 @@
                 var loader = new STLLoader();
        		loader.load( model_file, function ( geometry ) {
 
+                        $("#spinner-overlay").addClass("d-none")
                         geometry.rotateZ(1.57079);
                         geometry.computeFaceNormals();
                         geometry.computeVertexNormals();
@@ -339,10 +340,7 @@
                         }
 
        		}, function ( prog ) {
-                    $("#code-overlay").html("loaded " + prog.loaded + " total " + prog.total)
-                    if (prog.loaded == prog.total)
-                        $("#spinner-overlay").addClass("d-none")
-                    else
+                    if (prog.total && prog.loaded < prog.total)
                         $("#progress").html(Math.ceil(100 * prog.loaded / prog.total) + "% loaded");
                 }, function ( err ) {
                     $("#spinner-overlay").removeClass("d-none")
