@@ -339,6 +339,7 @@
                         }
 
        		}, function ( prog ) {
+                    $("#code-overlay").html("loaded " + prog.loaded + " total " + prog.total)
                     if (prog.loaded == prog.total)
                         $("#spinner-overlay").addClass("d-none")
                     else
