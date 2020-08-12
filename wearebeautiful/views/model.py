@@ -151,7 +151,7 @@ def prepare_model(model, screenshot, solid = False):
             raise NotFound("Model %s does not exist." % model)
 
         if len(model_list) == 1:
-            return redirect(url_for("model.model", model=model_list[0]))
+            return redirect(url_for("model.model", model=model_list[0].model_id + '-' + model_list[0].code))
         else:
             model_list = [ m for m in models ]
             return render_template("docs/model-disambig.html", model=model, model_list=model_list)
