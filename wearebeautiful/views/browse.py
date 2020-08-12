@@ -17,10 +17,13 @@ def by_part():
     body_parts = DBModel.select(DBModel.body_part).distinct()
     body_parts = [ part.body_part for part in body_parts ]
     body_parts = sorted(body_parts, reverse=True)
+    body_parts.remove("anatomical")
 
     models = DBModel.select().order_by(DBModel.body_part)
     sections = {}
     for model in models:
+        if model.model_id in '284284':
+            continue
         model.parse_data()
         if not model.body_part in sections:
             sections[model.body_part] = { 'name' : model.body_part, 'models' : [] }
@@ -39,6 +42,9 @@ def by_model():
     model_list = []
     model_tags = []
     for model in DBModel.select().order_by(DBModel.model_id, DBModel.code):
+        if model.model_id == '284284':
+            continue
+
         model.parse_data()
         model.common_tags_list = []
 
@@ -86,6 +92,8 @@ def by_attributes():
 
     models = []
     for model in DBModel.select():
+        if model.model_id == '284284':
+            continue
         model.parse_data()
         models.append(model)
 
