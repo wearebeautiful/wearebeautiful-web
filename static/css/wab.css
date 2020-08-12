@@ -248,15 +248,15 @@ h2 {
     font-size: 50pt;
 }
 
-.pngcontainer1, .pngcontainer1 img {
+.guide-div, .guide-div img {
   position: relative;
 
 }
-.pngcontainer1 img {
+.guide-div img {
   z-index: 1;
 }
 
-.pngcontainer1 img:first-child {
+.guide-div img:first-child {
   position: absolute;
   top: 0;
   left: 0;

@@ -16,15 +16,15 @@
         <p>
            To start off with, we have a group of people: Young, old, thin, overweight, differently abled, different cultures:
         </p>
-        <div class="pngcontainer1">
+        <div class="guide-div">
            <img class="guide-image" id="group-overlay" src="{{ static_url_for('static', filename='img/illustrations/group_overlay.png') }}">
            <img class="guide-image" id="group" src="{{ static_url_for('static', filename='img/illustrations/group.png') }}">
         </div>
         <p>
            Did you notice some of the following? <a href="https://en.wikipedia.org/wiki/Stretch_marks">Stretch marks<a/>, 
            <a href="https://en.wikipedia.org/wiki/Lichen_sclerosus">skin conditions</a>, a tampon string, lots of body hair? 
-           Tatoos, colored hair, make-up? What about how people are 
-           standing or sitting?
+           Tatoos, colored hair, make-up? What about how people are standing or sitting? Click on the image to reveal the
+           answers.
         </p>
 
         <h4>Cisgender Females</h4>
@@ -32,17 +32,24 @@
            Now let's look at more specific examples of females, in this case <a href="https://en.wikipedia.org/wiki/Cisgender">
            cisgender</a> females:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/cis_female.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="cis-female-overlay" src="{{ static_url_for('static', filename='img/illustrations/cis_female_overlay.png') }}">
+           <img class="guide-image" id="cis-female" src="{{ static_url_for('static', filename='img/illustrations/cis_female.png') }}">
+        </div>
         <p>
            Here you can see a female with a <a href="https://en.wikipedia.org/wiki/Mastectomy">mastectomy</a>, different 
-           <a href="https://en.wikipedia.org/wiki/Labia">labia</a> sizes, piercings and leg hair. What else?
+           <a href="https://en.wikipedia.org/wiki/Labia">labia</a> sizes, piercings and leg hair. What else? Click the image
+           to find out.
         </p>
 
         <h4>Cisgender Males</h4>
         <p>
            Below are cisgender males -- pay close attention to their testicles:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/cis_male.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="cis-male-overlay" src="{{ static_url_for('static', filename='img/illustrations/cis_male_overlay.png') }}">
+           <img class="guide-image" id="cis-male" src="{{ static_url_for('static', filename='img/illustrations/cis_male.png') }}">
+        </div>
         <p>
            This illustration shows diffent testicle sizes, including one male who has one missing. Did you see scars
            or hair pigment anomaly?
@@ -52,7 +59,10 @@
         <p>
            Here are some illustrations of penises and how they might look in a more realistic context:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/penis_closeup.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="penis-closeup-overlay" src="{{ static_url_for('static', filename='img/illustrations/penis_closeup_overlay.png') }}">
+           <img class="guide-image" id="penis-closeup" src="{{ static_url_for('static', filename='img/illustrations/penis_closeup.png') }}">
+        </div>
         <p>
            We can clearly see that testicles and penises come in different shapes and sizes and that the size of one will
            not be related to the size of the other.
@@ -62,7 +72,10 @@
         <p>
            And now the same for vulvas, showing two different examples:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/vulva_closeup.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="vulva-closeup-overlay" src="{{ static_url_for('static', filename='img/illustrations/vulva_closeup_overlay.png') }}">
+           <img class="guide-image" id="vulva-closeup" src="{{ static_url_for('static', filename='img/illustrations/vulva_closeup.png') }}">
+        </div>
         <p>
            You can see different sizes and shapes of vulvas. One person is a mother and has a scar from the birth -- can you
            spot the <a href="https://en.wikipedia.org/wiki/Episiotomy">episiotomy scar</a>?
@@ -70,9 +83,12 @@
 
         <h4>Intersex people</h4>
         <p>
-           Below is an illugration of intersex people, in-between male and female:
+           Below is an illustration of intersex people, in-between male and female:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/intersex_closeup.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="intersex-closeup-overlay" src="{{ static_url_for('static', filename='img/illustrations/intersex_closeup_overlay.png') }}">
+           <img class="guide-image" id="intersex-closeup" src="{{ static_url_for('static', filename='img/illustrations/intersex_closeup.png') }}">
+        </div>
         <p>
           The person on the left represents a case of <a href="https://en.wikipedia.org/wiki/Clitoromegaly">Clitoromegaly</a>, 
           the person on the right a case of <a href="https://en.wikipedia.org/wiki/Hypospadias">hypospadias</a>. 
@@ -87,7 +103,10 @@
            Here we have transgender males -- think of what you consider a transgender male looks like. Do these males
            fit your expectations?
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/trans_males.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="trans-male-overlay" src="{{ static_url_for('static', filename='img/illustrations/trans_males_overlay.png') }}">
+           <img class="guide-image" id="trans-male" src="{{ static_url_for('static', filename='img/illustrations/trans_males.png') }}">
+        </div>
         <p>
            Only one person has undergone gender reaffirming surgery and now has a penis. Did you notice the mastectomy
            scars, hairy nipples, and a person with clitoromegaly? The person on the right is just now starting
@@ -99,7 +118,10 @@
         <p>
            Last, but certainly not least, we have transgender females:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/trans_females.png') }}">
+        <div class="guide-div">
+           <img class="guide-image" id="trans-female-overlay" src="{{ static_url_for('static', filename='img/illustrations/trans_females_overlay.png') }}">
+           <img class="guide-image" id="trans-female" src="{{ static_url_for('static', filename='img/illustrations/trans_females.png') }}">
+        </div>
         <p>
            Did you spot the signs of weight loss? That two females have a penis? We think it is imporant to be aware
            of the fact that when someone says that they are transgender, that you cannot make any assumptions about
@@ -122,6 +144,57 @@ $("#group").click(function() {
 });
 $("#group-overlay").click(function() {
     $("#group-overlay").css('z-index', '1');
+});
+
+$("#cis-female").click(function() {
+    console.log("click");
+    $("#cis-female-overlay").css('z-index', '2');
+});
+$("#cis-female-overlay").click(function() {
+    console.log("click y");
+    $("#cis-female-overlay").css('z-index', '1');
+});
+
+$("#cis-male").click(function() {
+    $("#cis-male-overlay").css('z-index', '2');
+});
+$("#cis-male-overlay").click(function() {
+    $("#cis-male-overlay").css('z-index', '1');
+});
+
+$("#trans-male").click(function() {
+    $("#trans-male-overlay").css('z-index', '2');
+});
+$("#trans-male-overlay").click(function() {
+    $("#trans-male-overlay").css('z-index', '1');
+});
+
+$("#trans-female").click(function() {
+    $("#trans-female-overlay").css('z-index', '2');
+});
+$("#trans-female-overlay").click(function() {
+    $("#trans-female-overlay").css('z-index', '1');
+});
+
+$("#penis-closeup").click(function() {
+    $("#penis-closeup-overlay").css('z-index', '2');
+});
+$("#penis-closeup-overlay").click(function() {
+    $("#penis-closeup-overlay").css('z-index', '1');
+});
+
+$("#vulva-closeup").click(function() {
+    $("#vulva-closeup-overlay").css('z-index', '2');
+});
+$("#vulva-closeup-overlay").click(function() {
+    $("#vulva-closeup-overlay").css('z-index', '1');
+});
+
+$("#intersex-closeup").click(function() {
+    $("#intersex-closeup-overlay").css('z-index', '2');
+});
+$("#intersex-closeup-overlay").click(function() {
+    $("#intersex-closeup-overlay").css('z-index', '1');
 });
 
 </script>
