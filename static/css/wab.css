@@ -248,6 +248,21 @@ h2 {
     font-size: 50pt;
 }
 
+.pngcontainer1, .pngcontainer1 img {
+  position: relative;
+
+}
+.pngcontainer1 img {
+  z-index: 1;
+}
+
+.pngcontainer1 img:first-child {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
 .color-well {
     background-color: #ff0000;
     width: 35px;

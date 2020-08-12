@@ -2,7 +2,7 @@
 {%- block content -%}
   <div class="row">
     <div class="col-12 browse-layout">
-        <h2>Illustated guide to human sexual anatomy</h2>
+        <h2>Illustrated guide to human sexual anatomy</h2>
 
         <p>
            The models you see on our site are intended to give you the idea of the shape, look and the vast
@@ -16,7 +16,10 @@
         <p>
            To start off with, we have a group of people: Young, old, thin, overweight, differently abled, different cultures:
         </p>
-        <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/group.png') }}">
+        <div class="pngcontainer1">
+           <img class="guide-image" id="group-overlay" src="{{ static_url_for('static', filename='img/illustrations/group-overlay.png') }}">
+           <img class="guide-image" id="group" src="{{ static_url_for('static', filename='img/illustrations/group.png') }}">
+        </div>
         <p>
            Did you notice some of the following? <a href="https://en.wikipedia.org/wiki/Stretch_marks">Stretch marks<a/>, 
            <a href="https://en.wikipedia.org/wiki/Lichen_sclerosus">skin conditions</a>, a tampon string, lots of body hair? 
@@ -109,3 +112,20 @@
     </div>
   </div>
 {% endblock%}
+
+
+{% block scripts %}
+<script type="module">
+
+
+$("#group").mouseenter(function() {
+        console.log("enter");
+        $("#group-overlay").css('z-index', '2');
+});
+$("#group-overlay").mouseleave(function() {
+        console.log("exit");
+        $("#group-overlay").css('z-index', '0');
+});
+
+</script>
+{% endblock %}
