@@ -1,4 +1,4 @@
-FROM nginx:1.17.8
+FROM nginx:1.19.1
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
@@ -13,6 +13,7 @@ RUN apt-get update \
          libpcre3-dev \
          libz-dev \
     && rm -rf /var/lib/apt/lists/*
+RUN curl https://www.npmjs.com/install.sh | sh
 
 RUN pip3 install setuptools
 
@@ -35,7 +36,7 @@ RUN rm -rf js gcss && \
     npm install && \
     npm i -g sass@1.26.3 && \
     npm i bootstrap@4.4.1 jquery@3.5.0 popper.js@^1.16.0
-RUN sass --load-path=./node_modules/bootstrap/scss \
+RUN sass --load-path=./js/node_modules/bootstrap/scss \
          --load-path=./ scss/custom.scss \
          /code/wearebeautiful.info/static/gcss/bootstrap.css
 
