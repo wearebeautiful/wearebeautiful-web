@@ -163,7 +163,7 @@ def by_attributes():
         events=disp_events, events_list=json.dumps(events_list))
 
 
-@bp.route('/illustrated-guide')
+@bp.route('/guide')
 @auth.login_required
-def illustrated_guide():
+def guide():
     return render_template("browse/illustrated-guide.html")
