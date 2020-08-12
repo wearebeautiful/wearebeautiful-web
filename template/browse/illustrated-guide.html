@@ -117,14 +117,11 @@
 {% block scripts %}
 <script type="module">
 
-
-$("#group").mouseenter(function() {
-        console.log("enter");
-        $("#group-overlay").css('z-index', '2');
+$("#group").click(function() {
+    $("#group-overlay").css('z-index', '2');
 });
-$("#group-overlay").mouseleave(function() {
-        console.log("exit");
-        $("#group-overlay").css('z-index', '0');
+$("#group-overlay").click(function() {
+    $("#group-overlay").css('z-index', '1');
 });
 
 </script>
