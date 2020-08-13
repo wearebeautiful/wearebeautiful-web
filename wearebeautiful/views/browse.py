@@ -79,6 +79,9 @@ def by_model():
 
 
     model_list = sorted(models.keys())
+    # Move the hand to the last item, feel wrong to have it be first
+    if model_list[0] == "000000":
+        model_list.append(model_list.pop(0))
 
     return render_template("browse/browse-by-model.html", models=models, model_list=model_list)
 
