@@ -243,6 +243,13 @@
         $('#color-well-3').on('click', function() { color_well_click("#color-well-3") });
         $('#screenshot').on('click', function() { screenshot() });
 
+        $(document).on('keydown', function(event) {
+            if (event.key == "Escape") {
+                if (focus_mode)
+                    toggle_focus_mode();
+            }
+        });
+
         function toggle_focus_mode() {
             focus_mode = !focus_mode;
 
