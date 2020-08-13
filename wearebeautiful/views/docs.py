@@ -18,3 +18,8 @@ def our_data():
 @auth.login_required
 def faq():
     return render_template("docs/faq.html")
+
+@bp.route('/educational-kit')
+@auth.login_required
+def educational_kit():
+    return render_template("docs/educational_kit.html")
