@@ -12,7 +12,18 @@
         <h4>Model codes</h4>
 
         <p>
-          All of our models are carefully coded with the URL of this site and a model code:
+          All of our models are carefully coded with the URL of this site and a model code that you can
+          decode using the diagram below. The code contains the ID number of the model, the body part shown,
+          the pose the person was in at the time of the scan, if they were arranged in some form, if
+          they were excited or not and finally the version of this this model:
+        </p>
+
+        <p>
+          <img src="{{ static_url_for('static', filename='img/model-decoder.png') }}" style="width: 100%">
+        </p>
+
+        <p>
+           Let's take one example code and break it into its parts:
         </p>
 
         <p style="font-size: 15pt; font-weight: bold">
@@ -50,7 +61,9 @@
                </p>
                <p>
                   <i>Excited</i> takes into account wether the model is sexually excited at the time the pictures were taken.
-                  This is less perceptible for vulva models, but clearly important for penis models.
+                  This data attribute is clearly important for a penis model, but it seems less important for vulva models.
+                  However, even vulvas change shape when they are excited, as you can see in this <a href="/model/426060-VLNP">
+                  compund vulva model</a>.
                </p>
             </td>
           </tr>
