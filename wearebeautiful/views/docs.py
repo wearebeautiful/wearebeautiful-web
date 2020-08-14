@@ -51,7 +51,7 @@ def make_model_kit(kit_version, model_codes, force=False):
         except ValueError:
             raise ValueError("Invalid model code specified in education-kits.json.")
             
-        solid_file = os.path.join(config.GIT_MODEL_DIR, "%s/%s/%s-solid.stl.gz" % (id, code, model_code))
+        solid_file = os.path.join(config.MODEL_DIR, "%s/%s/%s-solid.stl.gz" % (id, code, model_code))
         if not os.path.exists(solid_file):
             raise KeyError("Model file '%s' does not exist" % solid_file)
         dest_file = os.path.join(tmp_dir, "%s-solid.stl.gz" % model_code)
