@@ -41,13 +41,15 @@ def model_root():
 @bp.route('/statistics')
 @auth.login_required
 def statistics():
-
-
     model_stats = []
     for model in DBModel.select(DBModel.body_part, fn.COUNT(DBModel.id).alias('ct')).group_by(DBModel.body_part):
+        if model.body_part == 'anatomical':
+            continue
+
         model_stats.append((model.body_part, model.ct))
     model_stats = sorted(model_stats, key=itemgetter(1), reverse=True)
     total_models = DBModel.select().count()
+    total_models -= 1  # remove the anatomical from the count
 
     with open("static/stats/aggregated_stats.json", "r") as j:
         jsdoc = j.read()
