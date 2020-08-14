@@ -19,7 +19,7 @@ def by_part():
     body_parts = sorted(body_parts, reverse=True)
     body_parts.remove("anatomical")
 
-    models = DBModel.select().order_by(DBModel.body_part)
+    models = DBModel.select().order_by(DBModel.body_part, DBModel.model_id, DBModel.code, DBModel.version)
     sections = {}
     for model in models:
         if model.model_id in '284284':
