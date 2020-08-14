@@ -1,11 +1,11 @@
 import json
 import os
-from shutil import copyfile
+from shutil import copyfile, rmtree
 import subprocess
 from tempfile import mkdtemp
 from zipfile import ZipFile
 
-from flask import Flask, render_template, Blueprint
+from flask import Flask, render_template, Blueprint, send_file
 from wearebeautiful.auth import _auth as auth
 import config
 
@@ -30,8 +30,7 @@ def faq():
     return render_template("docs/faq.html")
 
 
-# TODO: before checking in, change force=False
-def make_model_kit(kit_version, model_codes, force=True):
+def make_model_kit(kit_version, model_codes, force=False):
 
     zip_file_name = os.path.join(config.KIT_TMP_DIR, "wearebeautiful-kit-" + kit_version + ".zip")
     print(zip_file_name)
@@ -40,7 +39,6 @@ def make_model_kit(kit_version, model_codes, force=True):
             os.unlink(zip_file_name)
         except Exception:
             pass
-        return zip_file_name
 
     if os.path.exists(zip_file_name):
         return zip_file_name
@@ -61,7 +59,8 @@ def make_model_kit(kit_version, model_codes, force=True):
         subprocess.run(['gunzip', dest_file])
         zip_files.append(dest_file[:-3])
 
-    subprocess.run(['zip', zip_file_name, *zip_files])
+    subprocess.run(['zip', '-q', zip_file_name, *zip_files])
+    rmtree(tmp_dir)
 
     return zip_file_name
 
@@ -69,18 +68,35 @@ def prepare_kits():
     with open(EDU_KIT_JSON, "r") as f:
         edu_kits = json.loads(f.read())
 
+    kits = []
     for i, kit in enumerate(edu_kits):
         zip_file = make_model_kit(kit['version'], kit['models'])
-        edu_kits[i]['filename'] = zip_file
+        entry = {}
+        entry['filename'] = zip_file
+        entry['version'] = kit['version']
 
-        kit['screenshots'] = []
+        models = []
         for model in kit['models']:
             id, code, version = model.split('-')
-            kit['screenshots'].append(config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%s-screenshot.jpg" %
-                                      (id, code, id, code, version))
+            m = {}
+            m['model'] = model
+            m['screenshot'] = config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%s-screenshot.jpg" % (id, code, id, code, version)
+            models.append(m)
+
+        entry['models'] = models
+        kits.append(entry)
             
-    print(edu_kits)
-    return edu_kits
+    return kits
+
+
+@bp.route('/kit/<version>')
+def send_model(version):
+    filename = "wearebeautiful-kit-%s.zip" % version
+    f = os.path.join(config.KIT_TMP_DIR, filename)
+    if not os.path.exists(f):
+        raise NotFound()
+
+    return send_file(f, attachment_filename=filename, as_attachment=True)
 
 
 @bp.route('/educational-kits')
@@ -92,5 +108,4 @@ def educational_kits():
         return render_template("docs/educational_kits.html", error=err)
 
     print(kits)
-
     return render_template("docs/educational_kits.html", kits=kits)

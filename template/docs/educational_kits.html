@@ -4,9 +4,35 @@
     <div class="col-12 text-layout">
         <h2>Educational Kits</h2>
 
+        {% if error %}
+           <div>
+              {{ error }}
+           </div>
+        {% endif %}
+
         <p>
-          Here you can download educational kits!
+          Our educational kits are our curated collections of models that we feel highlight the various
+          aspects of our human models. Each kit file contains the read-to-print STL model files:
         </p>
+
+        {% for kit in kits %}
+          <div>
+            <h4>{{ kit.version }}</h4>
+            <p>
+              <a href="/docs/kit/{{ kit.version }}">Download kit</a>
+            {% for model in kit.models %}
+              <div>
+                <p>
+                  {{ model.model }}
+                </p>
+                <a href="/model/{{ model.model }}">
+                  <img src="{{ model.screenshot }}" style="width: 200px">   
+                </a>
+              </div>
+            {% endfor %}
+            </p>
+          </div>
+        {% endfor %}
 
     </div>
   </div>

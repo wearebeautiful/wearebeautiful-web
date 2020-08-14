@@ -32,7 +32,6 @@ fa = FontAwesome(app)
 flask_static_digest.init_app(app)
 
 db_file = os.path.join(config.MODEL_DIR, DB_FILE)
-print(db_file)
 db.init(db_file)
 
 from wearebeautiful.views.index import bp as index_bp

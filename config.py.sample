@@ -2,6 +2,7 @@ SECRET_KEY = "add your key here"
 
 MODEL_DIR = "<path to model dir>"
 GIT_MODEL_DIR = "<path to git dir>"
+KIT_TMP_DIR = "/kits"
 SUBMIT_SCREENSHOTS = False
 
 USE_SITE_AUTH=False

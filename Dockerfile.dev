@@ -8,6 +8,7 @@ RUN apt-get update \
          python3-pip \
          npm \
          vim \
+         zip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip3 install setuptools wheel
@@ -23,7 +24,7 @@ RUN sass --load-path=./node_modules/bootstrap/scss \
          --load-path=./ scss/custom.scss \
          /gcss/bootstrap.css
 
-RUN mkdir -p /code/wearebeautiful.info
+RUN mkdir -p /code/wearebeautiful.info && mkdir /kits
 WORKDIR /code/wearebeautiful.info
 
 RUN apt-get purge -y build-essential && \
