@@ -2,6 +2,8 @@ import base64
 import os
 import random
 import json
+from zipfile import ZipFile
+
 from peewee import *
 from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound

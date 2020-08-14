@@ -1,6 +1,16 @@
+import json
+import os
+from shutil import copyfile
+import subprocess
+from tempfile import mkdtemp
+from zipfile import ZipFile
+
 from flask import Flask, render_template, Blueprint
 from wearebeautiful.auth import _auth as auth
 import config
+
+
+EDU_KIT_JSON = "docs/education-kits.json"
 
 bp = Blueprint('docs', __name__)
 
@@ -9,17 +19,78 @@ bp = Blueprint('docs', __name__)
 def printing_guide():
     return render_template("docs/printing-guide.html")
 
-@bp.route('/our-data')
+@bp.route('/model-codes')
 @auth.login_required
-def our_data():
-    return render_template("docs/our-data.html")
+def model_codes():
+    return render_template("docs/model-codes.html")
 
 @bp.route('/faq')
 @auth.login_required
 def faq():
     return render_template("docs/faq.html")
 
+
+# TODO: before checking in, change force=False
+def make_model_kit(kit_version, model_codes, force=True):
+
+    zip_file_name = os.path.join(config.KIT_TMP_DIR, "wearebeautiful-kit-" + kit_version + ".zip")
+    print(zip_file_name)
+    if force and os.path.exists(zip_file_name):
+        try:
+            os.unlink(zip_file_name)
+        except Exception:
+            pass
+        return zip_file_name
+
+    if os.path.exists(zip_file_name):
+        return zip_file_name
+
+    tmp_dir = mkdtemp()
+    zip_files = []
+    for model_code in model_codes:
+        try:
+            id, code, version = model_code.split('-')
+        except ValueError:
+            raise ValueError("Invalid model code specified in education-kits.json.")
+            
+        solid_file = os.path.join(config.GIT_MODEL_DIR, "%s/%s/%s-solid.stl.gz" % (id, code, model_code))
+        if not os.path.exists(solid_file):
+            raise KeyError("Model file '%s' does not exist" % solid_file)
+        dest_file = os.path.join(tmp_dir, "%s-solid.stl.gz" % model_code)
+        copyfile(solid_file, dest_file)
+        subprocess.run(['gunzip', dest_file])
+        zip_files.append(dest_file[:-3])
+
+    subprocess.run(['zip', zip_file_name, *zip_files])
+
+    return zip_file_name
+
+def prepare_kits():
+    with open(EDU_KIT_JSON, "r") as f:
+        edu_kits = json.loads(f.read())
+
+    for i, kit in enumerate(edu_kits):
+        zip_file = make_model_kit(kit['version'], kit['models'])
+        edu_kits[i]['filename'] = zip_file
+
+        kit['screenshots'] = []
+        for model in kit['models']:
+            id, code, version = model.split('-')
+            kit['screenshots'].append(config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%s-screenshot.jpg" %
+                                      (id, code, id, code, version))
+            
+    print(edu_kits)
+    return edu_kits
+
+
 @bp.route('/educational-kits')
 @auth.login_required
 def educational_kits():
-    return render_template("docs/educational_kits.html")
+    try:
+        kits = prepare_kits()
+    except (IOError, KeyError) as err:
+        return render_template("docs/educational_kits.html", error=err)
+
+    print(kits)
+
+    return render_template("docs/educational_kits.html", kits=kits)
