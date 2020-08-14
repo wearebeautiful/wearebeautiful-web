@@ -8,6 +8,7 @@ RUN apt-get update \
          python3 \
          python3-dev \
          python3-pip \
+         python3-wheel \
          uwsgi \
          uwsgi-plugin-python3 \
          libpcre3-dev \
@@ -18,7 +19,9 @@ RUN curl https://www.npmjs.com/install.sh | sh
 
 RUN pip3 install setuptools
 
-RUN mkdir -p /code/wearebeautiful.info && mkdir /kits
+RUN mkdir /kits && chown www-data:www-data /kits
+
+RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info
 COPY requirements.txt /code/wearebeautiful.info
 RUN pip3 install -r requirements.txt
