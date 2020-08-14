@@ -6,6 +6,7 @@ from tempfile import mkdtemp
 from zipfile import ZipFile
 
 from flask import Flask, render_template, Blueprint, send_file
+from werkzeug.exceptions import NotFound
 from wearebeautiful.auth import _auth as auth
 import config
 
@@ -61,6 +62,8 @@ def make_model_kit(kit_version, model_codes, force=False):
 
     subprocess.run(['zip', '-q', zip_file_name, *zip_files])
     rmtree(tmp_dir)
+
+    print("created", zip_file_name)
 
     return zip_file_name
 
