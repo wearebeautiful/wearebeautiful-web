@@ -60,8 +60,9 @@ def download_model(filename):
         return response
 
 
+    filename = os.path.join(current_app.config['MODEL_DIR'], filename)
     try:
-        with open(current_app.config['MODEL_DIR'], filename) as f:
+        with open(filename, "b") as f:
             data = f.read()
 
     except IOError as err:
