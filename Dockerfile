@@ -3,6 +3,7 @@ FROM nginx:1.19.1
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
          build-essential \
+         imagemagick \
          npm \
          nginx \
          python3 \

@@ -1,6 +1,7 @@
 import base64
 import gzip
 import os
+from subprocess import run, CalledProcessError
 import random
 import json
 from zipfile import ZipFile
@@ -14,6 +15,7 @@ from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
+FONT_FILE = "admin/font/d-din-exp.ttf"
 MAX_NUM_RELATED_MODELS = 3
 
 bp = Blueprint('model', __name__)
@@ -154,6 +156,26 @@ def model_screenshot_post(id, code, version):
     fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
     with open(fn, "wb") as f:
         f.write(data)
+
+    tagged = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-tagged-screenshot.jpg" % (id, code, version))
+
+    if version > 1:
+        model_code = "%s-%s-%s" % (id, code, version)
+    else:
+        model_code = "%s-%s" % (id, code)
+    try:
+        result = run(['convert',  
+            fn,
+            "-pointsize", "70", 
+            "-font", FONT_FILE, 
+            "-fill", "black", 
+            "-gravity", "southwest",
+            "-draw", 'text 10,20 "%s"' % (model_code), 
+            "-gravity", "southeast",
+            "-draw", 'text 10,20 "wearebeautiful.info"', 
+            tagged], check=True)
+    except CalledProcessError as err:
+        print(err.output)
 
     return ""
 
