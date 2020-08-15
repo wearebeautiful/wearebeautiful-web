@@ -106,7 +106,7 @@
             if ($("#" + id).hasClass("btn-info")) {
                 index = parseInt(id.substr(2));
                 for(i = 0; i < info_list[index].length; i++)
-                    for(j = 0; j < tags_list[index][1].length; j++)
+                    for(j = 0; j < info_list[index][1].length; j++)
                         models.push(info_list[index][1][j])
             }
         });

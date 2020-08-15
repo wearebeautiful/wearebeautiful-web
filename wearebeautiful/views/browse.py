@@ -133,7 +133,7 @@ def by_attributes():
             except KeyError:
                 info['comment'] = [ model.display_code ]
 
-        if model.excited:
+        if model.excited != "not excited":
             try:
                 info['excited'].append(model.display_code)
             except KeyError:
