@@ -1,11 +1,13 @@
 import base64
+import json
 import gzip
 import os
-from subprocess import run, CalledProcessError
 import random
-import json
+from subprocess import run, CalledProcessError
+import tempfile
 from zipfile import ZipFile
 
+from PIL import Image
 from peewee import *
 from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound
@@ -152,28 +154,47 @@ def model_screenshot_post(id, code, version):
     if not config.SUBMIT_SCREENSHOTS:
         raise NotFound()
 
-    data = base64.b64decode(request.get_data()[23:])
+    fh, tmp_img = tempfile.mkstemp()
+    os.close(fh)
+
     fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
-    with open(fn, "wb") as f:
+    tagged = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot-tagged.jpg" % (id, code, version))
+
+    data = base64.b64decode(request.get_data()[23:])
+    with open(tmp_img, "wb") as f:
         f.write(data)
 
-    tagged = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-tagged-screenshot.jpg" % (id, code, version))
+    try:
+        run(['convert',  
+            tmp_img,
+            "-resize", "800x800",
+            fn], check=True)
+    except CalledProcessError as err:
+        print(err.output)
 
     if version > 1:
         model_code = "%s-%s-%s" % (id, code, version)
     else:
         model_code = "%s-%s" % (id, code)
+
     try:
-        result = run(['convert',  
+        run(['convert',  
             fn,
-            "-pointsize", "70", 
+            "-gravity", "north",
+            "-background", "#cccccc",  #"#F2ECE5",
+            "-extent", "%dx%d" % (800, 850),
+            tmp_img], check=True)
+        run(['convert',  
+            tmp_img,
+            "-pointsize", "24", 
             "-font", FONT_FILE, 
             "-fill", "black", 
             "-gravity", "southwest",
-            "-draw", 'text 10,20 "%s"' % (model_code), 
+            "-draw", 'text 10,12 "%s"' % (model_code), 
             "-gravity", "southeast",
-            "-draw", 'text 10,20 "wearebeautiful.info"', 
+            "-draw", 'text 10,12 "wearebeautiful.info"', 
             tagged], check=True)
+        os.unlink(tmp_img)
     except CalledProcessError as err:
         print(err.output)
 
