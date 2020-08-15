@@ -20,10 +20,8 @@ bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
-    print("request model", filename)
     if current_app.debug and filename.endswith(".stl"):
         filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
-        print("request model changed to ", filename)
         if not os.path.exists(filename):
             raise NotFound()
 
@@ -62,8 +60,8 @@ def download_model(filename):
 
     filename = os.path.join(current_app.config['MODEL_DIR'], filename)
     try:
-        with open(filename, "b") as f:
-            data = f.read()
+        with open(filename, "rb") as f:
+            content = f.read()
 
     except IOError as err:
         raise NotFound("STL file not found.")
