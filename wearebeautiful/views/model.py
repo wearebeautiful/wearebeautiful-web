@@ -44,13 +44,10 @@ def send_model(filename):
 
 @bp.route('/d/<path:filename>')
 def download_model(filename):
-    print("request model", filename)
-    orig_filename = filename
     if filename.endswith(".stl"):
         filename += ".gz"
     if current_app.debug:
         filename = os.path.join(current_app.config['MODEL_DIR'], filename)
-        print("request model changed to ", filename)
         if not os.path.exists(filename):
             raise NotFound()
 
@@ -63,11 +60,18 @@ def download_model(filename):
         return response
 
 
-    f = os.path.join(current_app.config['MODEL_DIR'], filename)
-    if not os.path.exists(f):
-        raise NotFound()
+    try:
+        with open(current_app.config['MODEL_DIR'], filename) as f:
+            data = f.read()
 
-    return send_file(f, as_attachment=True, attachment_filename=orig_filename)
+    except IOError as err:
+        raise NotFound("STL file not found.")
+
+    response = Response(content, status=200)
+    response.headers['Content-Length'] = len(content)
+    response.headers['Content-Type'] = 'model/stl'
+    response.headers['Content-Encoding'] = 'gzip'
+    return response
 
 
 
