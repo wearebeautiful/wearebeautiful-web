@@ -157,6 +157,9 @@ def model_screenshot_post(id, code, version):
     fh, tmp_img = tempfile.mkstemp()
     os.close(fh)
 
+    fh, tmp_img2 = tempfile.mkstemp()
+    os.close(fh)
+
     fn = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
     tagged = os.path.join(config.MODEL_DIR, id, code, "%s-%s-%d-screenshot-tagged.jpg" % (id, code, version))
 
@@ -164,6 +167,7 @@ def model_screenshot_post(id, code, version):
     with open(tmp_img, "wb") as f:
         f.write(data)
 
+    # TODO: Improve error handling here
     try:
         run(['convert',  
             tmp_img,
@@ -181,20 +185,25 @@ def model_screenshot_post(id, code, version):
         run(['convert',  
             fn,
             "-gravity", "north",
-            "-background", "#cccccc",  #"#F2ECE5",
+            "-background", "#F2ECE5",
             "-extent", "%dx%d" % (800, 850),
             tmp_img], check=True)
         run(['convert',  
             tmp_img,
-            "-pointsize", "24", 
+            "-pointsize", "28", 
             "-font", FONT_FILE, 
             "-fill", "black", 
             "-gravity", "southwest",
             "-draw", 'text 10,12 "%s"' % (model_code), 
+            tmp_img2], check=True)
+        run(['convert',  
+            tmp_img2,
+            "static/img/watermark.png",
             "-gravity", "southeast",
-            "-draw", 'text 10,12 "wearebeautiful.info"', 
+            "-composite",
             tagged], check=True)
         os.unlink(tmp_img)
+        os.unlink(tmp_img2)
     except CalledProcessError as err:
         print(err.output)
 
