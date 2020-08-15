@@ -42,6 +42,34 @@ def send_model(filename):
 
     return send_file(f)
 
+@bp.route('/d/<path:filename>')
+def download_model(filename):
+    print("request model", filename)
+    orig_filename = filename
+    if filename.endswith(".stl"):
+        filename += ".gz"
+    if current_app.debug:
+        filename = os.path.join(current_app.config['MODEL_DIR'], filename)
+        print("request model changed to ", filename)
+        if not os.path.exists(filename):
+            raise NotFound()
+
+        with gzip.open(filename, 'rb') as f:
+            content = f.read()
+
+        response = Response(content, status=200)
+        response.headers['Content-Length'] = len(content)
+        response.headers['Content-Type'] = 'model/stl'
+        return response
+
+
+    f = os.path.join(current_app.config['MODEL_DIR'], filename)
+    if not os.path.exists(f):
+        raise NotFound()
+
+    return send_file(f, as_attachment=True, attachment_filename=orig_filename)
+
+
 
 @bp.route('/model-diversity')
 @auth.login_required
@@ -195,17 +223,17 @@ def prepare_model(model, screenshot, solid = False):
     model_file_low = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-low.stl" % (id, code, id, code, version)
     model_file_solid= config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-solid.stl" % (id, code, id, code, version)
 
-    solid_file = "%s-%s-%d-solid.stl.gz" % (id, code, version)
+    solid_file = "%s-%s-%d-solid.stl" % (id, code, version)
     solid_path = "/%s/%s/%s" % (id, code, solid_file)
-    surface_file = "%s-%s-%d-surface.stl.gz" % (id, code, version)
+    surface_file = "%s-%s-%d-surface.stl" % (id, code, version)
     surface_path = "/%s/%s/%s" % (id, code, surface_file)
 
-    solid_size = os.path.getsize(config.MODEL_DIR + solid_path)
-    surface_size = os.path.getsize(config.MODEL_DIR + surface_path)
+    solid_size = os.path.getsize(config.MODEL_DIR + solid_path + ".gz")
+    surface_size = os.path.getsize(config.MODEL_DIR + surface_path + ".gz")
 
     downloads = {
-        'solid' : (size(solid_size, system=alternative), config.STL_BASE_URL + "/model/m" + solid_path, solid_file),
-        'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/m" + surface_path, surface_file)
+        'solid' : (size(solid_size, system=alternative), config.STL_BASE_URL + "/model/d" + solid_path, solid_file),
+        'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/d" + surface_path, surface_file)
     }
 
     return render_template("browse/view.html", 
