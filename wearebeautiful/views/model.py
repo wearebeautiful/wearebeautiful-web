@@ -1,4 +1,5 @@
 import base64
+import gzip
 import os
 import random
 import json
@@ -7,7 +8,7 @@ from zipfile import ZipFile
 from peewee import *
 from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound
-from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
+from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file, Response
 from hurry.filesize import size, alternative
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
@@ -19,6 +20,22 @@ bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
 def send_model(filename):
+    print("request model", filename)
+    if current_app.debug and filename.endswith(".stl"):
+        filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
+        print("request model changed to ", filename)
+        if not os.path.exists(filename):
+            raise NotFound()
+
+        with gzip.open(filename, 'rb') as f:
+            content = f.read()
+
+        response = Response(content, status=200)
+        response.headers['Content-Length'] = len(content)
+        response.headers['Content-Type'] = 'model/stl'
+        return response
+
+
     f = os.path.join(current_app.config['MODEL_DIR'], filename)
     if not os.path.exists(f):
         raise NotFound()
@@ -107,10 +124,6 @@ def model_screenshot_post(id, code, version):
     with open(fn, "wb") as f:
         f.write(data)
 
-    fn = os.path.join(config.GIT_MODEL_DIR, id, code, "%s-%s-%d-screenshot.jpg" % (id, code, version))
-    with open(fn, "wb") as f:
-        f.write(data)
-
     return ""
 
 
@@ -182,14 +195,10 @@ def prepare_model(model, screenshot, solid = False):
     model_file_low = config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-surface-low.stl" % (id, code, id, code, version)
     model_file_solid= config.STL_BASE_URL + "/model/m/%s/%s/%s-%s-%d-solid.stl" % (id, code, id, code, version)
 
-    solid_file = "%s-%s-%d-solid.stl" % (id, code, version)
+    solid_file = "%s-%s-%d-solid.stl.gz" % (id, code, version)
     solid_path = "/%s/%s/%s" % (id, code, solid_file)
-    surface_file = "%s-%s-%d-surface.stl" % (id, code, version)
+    surface_file = "%s-%s-%d-surface.stl.gz" % (id, code, version)
     surface_path = "/%s/%s/%s" % (id, code, surface_file)
-
-    if not current_app.debug:
-        solid_path += ".gz"
-        surface_path += ".gz"
 
     solid_size = os.path.getsize(config.MODEL_DIR + solid_path)
     surface_size = os.path.getsize(config.MODEL_DIR + surface_path)

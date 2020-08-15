@@ -371,7 +371,7 @@
                 }, function ( err ) {
                     $("#spinner-overlay").removeClass("d-none")
                     $("#spinner").addClass("d-none");
-                    $("#progress").html(`<p>Cannot load surface. :(</p><p>${err.originalTarget.status}: ${err.originalTarget.statusText}</p>`);
+                    console.log("cannot load surface: " + err);
                 });
 
        		// Lights
