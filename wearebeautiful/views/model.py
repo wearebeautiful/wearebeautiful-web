@@ -18,6 +18,7 @@ from wearebeautiful.db_model import DBModel
 import config
 
 FONT_FILE = "admin/font/d-din-exp.ttf"
+BOLD_FONT_FILE = "admin/font/d-din-bold.ttf"
 MAX_NUM_RELATED_MODELS = 3
 
 bp = Blueprint('model', __name__)
@@ -195,6 +196,14 @@ def model_screenshot_post(id, code, version):
             "-fill", "black", 
             "-gravity", "southwest",
             "-draw", 'text 10,12 "%s"' % (model_code), 
+            "-pointsize", "28", 
+            "-fill", "#bbbbbb", 
+            "-gravity", "southeast",
+            "-rotate", "90",
+            "-font", BOLD_FONT_FILE, 
+            "-pointsize", "36", 
+            "-draw", 'text 5,0 "wearebeautiful.info"', 
+            "-rotate", "-90",
             tmp_img2], check=True)
         run(['convert',  
             tmp_img2,
