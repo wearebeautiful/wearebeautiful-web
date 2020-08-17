@@ -331,7 +331,7 @@
 
         function color_well_click(well) {
             var color = $(well).css("background-color");
-            mesh.material = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 30 } );
+            mesh.material = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 70 } );
             mesh.material.side = THREE.DoubleSide;
         }
 
@@ -436,11 +436,11 @@
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
 
-       		addShadowedLight( 2, 2, 2, 0xffffff, .35 );
-       		addShadowedLight( 2, 2, -2, 0xffffff, .35 );
-       		addShadowedLight( -2, 2, 2, 0xffffff, .35 );
-       		addShadowedLight( -2, 2, -2, 0xffffff, .35 );
-       		addShadowedLight( 0, -2, 0, 0xffffff, .3 );
+       		addShadowedLight( -2, -2, -2, 0xffffff, .40 );
+       		addShadowedLight( 2, 2, 2, 0xffffff, .40 );
+
+       		addShadowedLight( -2, -2, 2, 0xffffff, .15 );
+       		addShadowedLight( 2, 2, -2, 0xffffff, .15 );
 
        		// renderer
                 var flags = { antialias: true };
