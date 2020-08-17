@@ -93,6 +93,7 @@ def prepare_kits():
 
 
 @bp.route('/kit/<version>')
+@auth.login_required
 def send_model(version):
     filename = "wearebeautiful-kit-%s.zip" % version
     f = os.path.join(config.KIT_TMP_DIR, filename)

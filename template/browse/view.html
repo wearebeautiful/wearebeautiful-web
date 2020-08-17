@@ -209,15 +209,21 @@
 
                       <p>
                          The link to this page:</br>
-                         <div style="padding-left: 10px">
-                            <em><b>https://wearebeautiful.info/model/{{ model.display_code }}</b></em>
-                         </div>
+                         <input type="text" 
+                                readonly 
+                                value="https://wearebeautiful.info/model/{{ model.display_code }}"
+                                id="copy-page-url-input"
+                                style="width: 40%"
+                         ></input>
+                         <button type="button"
+                                 class="btn btn-primary"
+                                 id="copy-page-url-button">Copy URL</button>
                       </p>
 
                       <p>
                          <a class="twitter-share-button"
-                             href="https://twitter.com/intent/tweet?text={{ model.threed_model_description(True) }}"
-                             data-size="large">Tweet this model</a>
+                             href="https://twitter.com/intent/tweet?text={{ share_text }}"
+                             data-size="large">Tweet about this model</a>
                       </p>
 
                    </div>
@@ -294,6 +300,7 @@
         $('#color-well-2').on('click', function() { color_well_click("#color-well-2") });
         $('#color-well-3').on('click', function() { color_well_click("#color-well-3") });
         $('#screenshot').on('click', function() { screenshot() });
+        $('#copy-page-url-button').on('click', function() { copy_page_url() });
 
         $(document).on('keydown', function(event) {
             if (event.key == "Escape") {
@@ -506,14 +513,10 @@
                   data: img_data
                 });
          }
-
+         function copy_page_url() {
+                $("#copy-page-url-input").select();
+                document.execCommand("copy");
+                # TODO: Show copy confirmation tooltip
+         }
 </script>
-{% endblock %}
-{%- block meta -%}
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@quatschunfug">
-    <meta name="twitter:creator" content="@quatschunfug">
-    <meta name="twitter:title" content="We Are Beautiful: {{ model.display_code }}">
-    <meta name="twitter:description" content="{{ model.threed_model_description(True) }}">
-    <meta name="twitter:image" content="{{ url_for_tagged_screenshot_m(model) }}">
 {% endblock %}

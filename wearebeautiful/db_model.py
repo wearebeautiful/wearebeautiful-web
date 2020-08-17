@@ -60,11 +60,11 @@ class DBModel(Model):
 
         desc = "A %s model of " % self.body_part
         if self.sex in ('male', 'female'):
-            desc += "a %s " % self.sex
+            desc += "a %s" % self.sex
         elif self.sex == "intersex":
-            desc += "an intersex person "
+            desc += "an intersex person"
         else:
-            desc += "a person "
+            desc += "a person"
 
         if long:
             desc += " who is %s" % self.pose

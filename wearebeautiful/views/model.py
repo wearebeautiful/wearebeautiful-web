@@ -5,6 +5,7 @@ import os
 import random
 from subprocess import run, CalledProcessError
 import tempfile
+import urllib
 from zipfile import ZipFile
 
 from PIL import Image
@@ -24,6 +25,7 @@ MAX_NUM_RELATED_MODELS = 3
 bp = Blueprint('model', __name__)
 
 @bp.route('/m/<path:filename>')
+@auth.login_required
 def send_model(filename):
     if current_app.debug and filename.endswith(".stl"):
         filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
@@ -46,6 +48,7 @@ def send_model(filename):
     return send_file(f)
 
 @bp.route('/d/<path:filename>')
+@auth.login_required
 def download_model(filename):
     if filename.endswith(".stl"):
         filename += ".gz"
@@ -303,6 +306,9 @@ def prepare_model(model_code, screenshot, solid = False):
         'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/d" + surface_path, surface_file)
     }
 
+    share_text = "Check out this We Are Beautiful model:\n\n%s: %s. \n%s" % \
+        (model.display_code, model.threed_model_description(), request.url)
+
     return render_template("browse/view.html", 
         model = model, 
         model_file_med=model_file_med, 
@@ -311,4 +317,5 @@ def prepare_model(model_code, screenshot, solid = False):
         screenshot = int(screenshot),
         downloads = downloads,
         solid=(1 if solid else 0),
-        related = get_related_models(model))
+        related = get_related_models(model),
+        share_text=urllib.parse.quote(share_text))

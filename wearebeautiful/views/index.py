@@ -78,6 +78,7 @@ def index():
 
 
 @bp.route('/browse')
+@auth.login_required
 def browse():
     return redirect(url_for("browse.by_part"))
 
@@ -95,10 +96,12 @@ def about():
 
 
 @bp.route('/company')
+@auth.login_required
 def company():
     return render_template("about/company.html")
 
 @bp.route('/contact')
+@auth.login_required
 def contact():
     return render_template("about/contact.html")
 
@@ -119,5 +122,6 @@ def donate():
     return redirect(url_for("index.support"))
 
 @bp.route('/privacy')
+@auth.login_required
 def privacy():
     return render_template("about/privacy.html")
