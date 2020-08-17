@@ -195,20 +195,21 @@ def model_screenshot_post(id, code, version):
             "-font", FONT_FILE, 
             "-fill", "black", 
             "-gravity", "southwest",
-            "-draw", 'text 3,3 "%s"' % (model_code), 
+            "-draw", 'text 8,3 "%s"' % (model_code), 
             "-pointsize", "28", 
             "-fill", "#bbbbbb", 
             "-gravity", "southeast",
             "-rotate", "90",
             "-font", BOLD_FONT_FILE, 
             "-pointsize", "36", 
-            "-draw", 'text 5,0 "https://wearebeautiful.info"', 
+            "-draw", 'text 10,5 "https://wearebeautiful.info"', 
             "-rotate", "-90",
             tmp_img2], check=True)
         run(['convert',  
             tmp_img2,
             "static/img/watermark.png",
             "-gravity", "southeast",
+            "-geometry", "+5-0",
             "-composite",
             tagged], check=True)
         os.unlink(tmp_img)
@@ -247,26 +248,28 @@ def get_related_models(model):
     return { "desc" : desc, "models" : models[0:MAX_NUM_RELATED_MODELS] }
 
 
-def prepare_model(model, screenshot, solid = False):
+def prepare_model(model_code, screenshot, solid = False):
 
-    if model.isdigit() and len(model) == 6:
-        models = DBModel.select().where(DBModel.model_id == model)
+    if model_code.isdigit() and len(model_code) == 6:
+        models = DBModel.select() \
+                        .where(DBModel.model_id == model_code) \
+                        .order_by(DBModel.body_part, DBModel.model_id, DBModel.code, DBModel.version)
         model_list = [ ]
         for m in models:
             m.parse_data()
             model_list.append(m)
 
         if not model_list:
-            raise NotFound("Model %s does not exist." % model)
+            raise NotFound("Model %s does not exist." % model_code)
 
         if len(model_list) == 1:
             return redirect(url_for("model.model", model=model_list[0].model_id + '-' + model_list[0].code))
         else:
             model_list = [ m for m in models ]
-            return render_template("docs/model-disambig.html", model=model, model_list=model_list)
+            return render_template("docs/model-disambig.html", model=model_code, model_list=model_list)
 
     try:
-        parts = model.split('-')
+        parts = model_code.split('-')
         if len(parts) == 3:
             id, code, version = parts
         else:
@@ -277,7 +280,7 @@ def prepare_model(model, screenshot, solid = False):
 
     model = DBModel.get(DBModel.model_id == id, DBModel.code == code, DBModel.version == version)
     if not model:
-        raise NotFound("model %s does not exist." % model)
+        raise NotFound("model %s does not exist." % model_code)
 
     model.parse_data()
     id = model.model_id

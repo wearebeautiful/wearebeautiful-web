@@ -10,7 +10,7 @@
              <a href="#"><i id="open-focus" class="fas fa-expand focus-button"></i></a>
           </div>
           <div id="code-overlay">
-            {{ model.model_id }}-{{ model.code }}{% if model.version > 1 %}-{{ model.version }}{% endif %}
+            {{ model.display_code }}
           </div>
           <div id="spinner-overlay">
               <p><i class="fas fa-circle-notch fa-spin" id="spinner"></i></p>
@@ -43,7 +43,8 @@
              {% if model.comment %}
                <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
-             <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a>
+             <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a> |
+             <a href="#share" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">share</a>
           </p>
 
 
@@ -170,6 +171,57 @@
                         <td>STL file format, suited for 3D modeling</td>
                       </tr>
                    </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <a id="share"></a>
+              <div class="card-header" id="heading-share">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">
+                    Share this model
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse-share" class="collapse" aria-labelledby="heading-share" data-parent="#accordion">
+                <div class="card-body">
+
+                  <div class="float-right" class="width: 40%">
+                     <p class="text-center">
+                        <img class="screenshot" src="{{ url_for_tagged_screenshot_m(model) }}">
+                     </p>
+                  </div>
+
+                  <div class="width: 50%">
+                      <p>
+                        If you would like to share a link to this model, we encourage you to
+                        save ths model image to your computer/device and then go to the
+                        site where you wish to post the link and upload the image from your
+                        device.
+                      </p>
+
+                      <p>
+                        On a mobile device, long press on the image and then select the option to 
+                        save the image. On a computer, right click on the and select to save the 
+                        image to your computer.
+                      </p>
+
+                      <p>
+                         The link to this page:</br>
+                         <div style="padding-left: 10px">
+                            <em><b>https://wearebeautiful.info/model/{{ model.display_code }}</b></em>
+                         </div>
+                      </p>
+
+                      <p>
+                         <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?text={{ model.threed_model_description(True) }}"
+                             data-size="large">Tweet this model</a>
+                      </p>
+
+                   </div>
+
                 </div>
               </div>
             </div>
@@ -456,4 +508,12 @@
          }
 
 </script>
+{% endblock %}
+{%- block meta -%}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@quatschunfug">
+    <meta name="twitter:creator" content="@quatschunfug">
+    <meta name="twitter:title" content="We Are Beautiful: {{ model.display_code }}">
+    <meta name="twitter:description" content="{{ model.threed_model_description(True) }}">
+    <meta name="twitter:image" content="{{ url_for_tagged_screenshot_m(model) }}">
 {% endblock %}
