@@ -1,7 +1,8 @@
 #!/bin/bash
 
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-LOGDIR=/tmp/
+LOGDIR=/home/wab/logs
+LOGDIR_UID=101
 MODELS=/home/wab/wearebeautiful-models
 DOMAIN=wearebeautiful.info
 
@@ -14,6 +15,7 @@ docker run -d \
     -v $SRC_DIR/admin/sockets:/sockets:rw \
     wearebeautiful.info:prod uwsgi --ini /code/uwsgi.ini
 
+mkdir -p $LOGDIR && sudo chown $LOGDIR_UID:$LOGDIR_UID $LOGDIR
 docker run -d \
     --expose 8080 \
     --name wab-comp \
