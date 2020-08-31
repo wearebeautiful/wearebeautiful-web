@@ -40,10 +40,20 @@ docker run -d \
     --network=wab-network \
     wearebeautiful-logs
 
+echo "---- start telegraf"
+sed 's/%hostname%/penis/g' telegraf.conf.in > telegraf.conf
+docker run -d \
+    --name telegraf \
+    --network=wab-network \
+    -e HOST_PROC=/host/proc \
+    -v /proc:/host/proc:ro \
+    -v `pwd`/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+    --restart unless-stopped \
+    telegraf:1.13.4
+
+
 echo "---- start wearebeautiful-web"
-cd ../wearebeautiful-web
 ./start-containers.sh
-cd -
 
 echo "---- enable firewall ports for services"
 sudo ufw-docker allow nginx 80

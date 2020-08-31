@@ -1,14 +1,12 @@
 #!/bin/bash
 
+
 echo "---- wearebeautiful-logs"
 cd logging
 ./build.sh
 cd -
 
 echo "---- wearebeautiful-web"
-
-cd ../wearebeautiful-web
-./build.sh
-cd -
+docker build -t wearebeautiful.info:prod .
 
 echo "---- DONE"

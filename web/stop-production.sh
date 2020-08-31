@@ -4,10 +4,12 @@ echo "---- stop wearebeautiful-logs"
 docker stop wab-logs
 docker rm wab-logs
 
+echo "---- stop telegraf"
+docker stop telegraf
+docker rm telegraf
+
 echo "---- stop wearebeautiful-web"
-cd ../wearebeautiful-web
 ./stop-containers.sh
-cd -
 
 echo "---- stop proxy, le"
 docker stop nginx le 
