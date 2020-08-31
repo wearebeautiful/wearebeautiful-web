@@ -42,4 +42,4 @@ docker run -d \
     -v grafana-volume:/var/lib/grafana \
     grafana/grafana:7.1.5
 
-sudo ufw-docker allow grafana 3000
+sudo ufw allow 3000/tcp
