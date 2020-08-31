@@ -2,7 +2,7 @@
 {%- block content -%}
   <div class="row">
     <div class="col-12 browse-layout">
-      <h2>Browse by history</h2>
+      <h2>Browse by attributes</h2>
       <p>
          To view the models that have the following attributes, select one or 
          more of the buttons below to show the models:
@@ -13,7 +13,7 @@
         <div>
           {% for event, active in events %}
             <button type="button" id="e-{{ loop.index0 }}" class="btn btn-sm browse-btn 
-                {% if active %}btn-primary{% else -%}btn-outline-primary{% endif %}">
+                {% if active %}btn-dark{% else -%}btn-outline-dark{% endif %}">
                 {{ event }}
             </button>
           {% endfor %}
@@ -22,7 +22,7 @@
         <div>
           {% for tag, active in tags %}
             <button type="button" id="t-{{ loop.index0 }}" class="btn btn-sm browse-btn 
-                {% if active %}btn-secondary{% else -%}btn-outline-secondary{% endif %}">
+                {% if active %}btn-dark{% else -%}btn-outline-dark{% endif %}">
                 {{ tag }}
             </button>
           {% endfor %}
@@ -31,7 +31,7 @@
         <div>
           {% for i, active in info %}
             <button type="button" id="i-{{ loop.index0 }}" class="btn btn-sm browse-btn 
-                {% if active %}btn-secondary{% else -%}btn-outline-secondary{% endif %}">
+                {% if active %}btn-dark{% else -%}btn-outline-dark{% endif %}">
                 {{ i }}
             </button>
           {% endfor %}
@@ -64,23 +64,9 @@
         console.log(id);
         type = id[0];
         index = parseInt(id.substr(2))
-        if (type == 'e') {
-            $("#" + id).toggleClass("btn-outline-primary");
-            $("#" + id).toggleClass("btn-primary");
-            update_model_list();
-        } 
-        else  
-        if (type == 't') {
-            $("#" + id).toggleClass("btn-outline-secondary");
-            $("#" + id).toggleClass("btn-secondary");
-            update_model_list();
-        } 
-        else  
-        if (type == 'i') {
-            $("#" + id).toggleClass("btn-outline-info");
-            $("#" + id).toggleClass("btn-info");
-            update_model_list();
-        } 
+        $("#" + id).toggleClass("btn-outline-dark");
+        $("#" + id).toggleClass("btn-dark");
+        update_model_list();
     }
 
     function update_model_list() {
@@ -91,22 +77,23 @@
             var type = id[0];
             if (!type)
                 return
-            if ($("#" + id).hasClass("btn-primary")) {
+            console.log(id);
+            if ($("#" + id).hasClass("btn-dark") && id[0] == 'e') {
                 index = parseInt(id.substr(2));
                 for(i = 0; i < events_list[index].length; i++)
                     for(j = 0; j < events_list[index][1].length; j++)
                         models.push(events_list[index][1][j])
             }
-            if ($("#" + id).hasClass("btn-secondary")) {
+            if ($("#" + id).hasClass("btn-dark") && id[0] == 't') {
                 index = parseInt(id.substr(2));
                 for(i = 0; i < tags_list[index].length; i++)
                     for(j = 0; j < tags_list[index][1].length; j++)
                         models.push(tags_list[index][1][j])
             }
-            if ($("#" + id).hasClass("btn-info")) {
+            if ($("#" + id).hasClass("btn-dark") && id[0] == 'i') {
                 index = parseInt(id.substr(2));
                 for(i = 0; i < info_list[index].length; i++)
-                    for(j = 0; j < tags_list[index][1].length; j++)
+                    for(j = 0; j < info_list[index][1].length; j++)
                         models.push(info_list[index][1][j])
             }
         });

@@ -10,7 +10,7 @@
              <a href="#"><i id="open-focus" class="fas fa-expand focus-button"></i></a>
           </div>
           <div id="code-overlay">
-            {{ model.model_id }}-{{ model.code }}{% if model.version > 1 %}-{{ model.version }}{% endif %}
+            {{ model.display_code }}
           </div>
           <div id="spinner-overlay">
               <p><i class="fas fa-circle-notch fa-spin" id="spinner"></i></p>
@@ -43,12 +43,13 @@
              {% if model.comment %}
                <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
-             <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a>
+             <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a> |
+             <a href="#share" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">share</a>
           </p>
 
 
           <div class="model-desc">
-            {{ model.english_description(True) }}
+            {{ model.threed_model_description(True) }}
             {% if model.tags_list or model.history_list %}
               <span class="model-tags">
                 {% for event in model.history_list %}
@@ -78,7 +79,7 @@
               <div id="collapse-info" class="collapse show" aria-labelledby="heading-info" data-parent="#accordion">
                 <div class="card-body">
                   <div class="float-right">
-                     <a href="{{ url_for('docs.our_data') }}">Questions about our data/codes?</a>
+                     <a href="{{ url_for('docs.model_codes') }}">Questions about our data/codes?</a>
                   </div>
                   <h5>3D model information</h5>
                   <table class="table table-striped table-bordered table-sm">
@@ -90,6 +91,9 @@
                      <tr><td>released</td><td>{{ model.released }}</td></tr>
                   </table>
 
+                  <div class="float-right">
+                     <a href="{{ url_for('browse.guide') }}">Questions about this terminology?</a>
+                  </div>
                   <h5>human model information</h5>
                   <table class="table table-striped table-bordered table-sm">
                      <tr><td style="width: 50%">id</td><td>{{ model.model_id }}</td></tr>
@@ -159,14 +163,71 @@
                    </p>
                    <table class="table table-striped table-bordered table-sm">
                       <tr>
-                        <td><a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> ({{ downloads['solid'][0] }})</td>
+                        <td><a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> ({{ downloads['solid'][0] }} download size)</td>
                         <td>STL file format, ready for 3D printing</td>
                       </tr>
                       <tr>
-                        <td><a href="{{ downloads['surface'][1] }}">{{ downloads['surface'][2] }}</a> ({{ downloads['surface'][0] }})</td>
+                        <td><a href="{{ downloads['surface'][1] }}">{{ downloads['surface'][2] }}</a> ({{ downloads['surface'][0] }} download size)</td>
                         <td>STL file format, suited for 3D modeling</td>
                       </tr>
                    </table>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <a id="share"></a>
+              <div class="card-header" id="heading-share">
+                <h5 class="mb-0">
+                  <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">
+                    Share this model
+                  </button>
+                </h5>
+              </div>
+              <div id="collapse-share" class="collapse" aria-labelledby="heading-share" data-parent="#accordion">
+                <div class="card-body">
+
+                  <div class="float-right" class="width: 40%">
+                     <p class="text-center">
+                        <img class="screenshot" src="{{ url_for_tagged_screenshot_m(model) }}">
+                     </p>
+                  </div>
+
+                  <div class="width: 50%">
+                      <p>
+                        If you would like to share a link to this model, we encourage you to
+                        save ths model image to your computer/device and then go to the
+                        site where you wish to post the link and upload the image from your
+                        device.
+                      </p>
+
+                      <p>
+                        On a mobile device, long press on the image and then select the option to 
+                        save the image. On a computer, right click on the and select to save the 
+                        image to your computer.
+                      </p>
+
+                      <p>
+                         The link to this page:</br>
+                         <input type="text" 
+                                readonly 
+                                value="https://wearebeautiful.info/model/{{ model.display_code }}"
+                                id="copy-page-url-input"
+                                style="width: 40%"
+                         ></input>
+                         <button type="button"
+                                 class="btn btn-primary"
+                                 id="copy-page-url-button">Copy URL</button>
+                      </p>
+
+                      <p>
+                         <a class="twitter-share-button"
+                             href="https://twitter.com/intent/tweet?text={{ share_text }}"
+                             data-size="large">Tweet about this model</a>
+                      </p>
+
+                   </div>
+
                 </div>
               </div>
             </div>
@@ -195,20 +256,36 @@
 {% block scripts %}
 <script type="module">
 
-       	import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.115.0/build/three.module.js';
-        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/jsm/controls/OrbitControls.js';
-        import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.115.0/examples/jsm/loaders/STLLoader.js';
+       	import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.119.1/build/three.module.js';
+        import { OrbitControls } from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/controls/OrbitControls.js';
+        import { STLLoader } from 'https://cdn.jsdelivr.net/npm/three@0.119.1/examples/jsm/loaders/STLLoader.js';
 
        	var container, mesh = null;
        	var camera, scene, renderer, controls;
         var focus_mode = false;
         var window_height = 0, window_width = 0;
         var med_low_resolution_breakpoint = 992;
+        var rotate_speed = 3.0;
 
         $(document).ready(function() {
             init();
             animate();
         });
+
+        document.body.onkeydown = function(e) {
+            if (e.keyCode == 32){
+                controls.autoRotateSpeed = 0.0;
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        };
+        document.body.onkeyup = function(e) {
+            if (e.keyCode == 32){
+                controls.autoRotateSpeed = rotate_speed;
+                e.stopPropagation();
+                e.preventDefault();
+            }
+        };
 
         function get_aspect_ratio() {
             if ({{ screenshot }})
@@ -223,6 +300,14 @@
         $('#color-well-2').on('click', function() { color_well_click("#color-well-2") });
         $('#color-well-3').on('click', function() { color_well_click("#color-well-3") });
         $('#screenshot').on('click', function() { screenshot() });
+        $('#copy-page-url-button').on('click', function() { copy_page_url() });
+
+        $(document).on('keydown', function(event) {
+            if (event.key == "Escape") {
+                if (focus_mode)
+                    toggle_focus_mode();
+            }
+        });
 
         function toggle_focus_mode() {
             focus_mode = !focus_mode;
@@ -246,7 +331,7 @@
 
         function color_well_click(well) {
             var color = $(well).css("background-color");
-            mesh.material = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 30 } );
+            mesh.material = new THREE.MeshPhongMaterial( { color: color, specular: 0x111111, shininess: 70 } );
             mesh.material.side = THREE.DoubleSide;
         }
 
@@ -313,6 +398,7 @@
                 var loader = new STLLoader();
        		loader.load( model_file, function ( geometry ) {
 
+                        $("#spinner-overlay").addClass("d-none")
                         geometry.rotateZ(1.57079);
                         geometry.computeFaceNormals();
                         geometry.computeVertexNormals();
@@ -339,24 +425,22 @@
                         }
 
        		}, function ( prog ) {
-                    if (prog.loaded == prog.total)
-                        $("#spinner-overlay").addClass("d-none")
-                    else
+                    if (prog.total && prog.loaded < prog.total)
                         $("#progress").html(Math.ceil(100 * prog.loaded / prog.total) + "% loaded");
                 }, function ( err ) {
                     $("#spinner-overlay").removeClass("d-none")
                     $("#spinner").addClass("d-none");
-                    $("#progress").html(`<p>Cannot load surface. :(</p><p>${err.originalTarget.status}: ${err.originalTarget.statusText}</p>`);
+                    console.log("cannot load surface: " + err);
                 });
 
        		// Lights
        		scene.add( new THREE.HemisphereLight( 0x333333, 0x111111 ) );
 
-       		addShadowedLight( 2, 2, 2, 0xffffff, .35 );
-       		addShadowedLight( 2, 2, -2, 0xffffff, .35 );
-       		addShadowedLight( -2, 2, 2, 0xffffff, .35 );
-       		addShadowedLight( -2, 2, -2, 0xffffff, .35 );
-       		addShadowedLight( 0, -2, 0, 0xffffff, .3 );
+       		addShadowedLight( -2, -2, -2, 0xffffff, .40 );
+       		addShadowedLight( 2, 2, 2, 0xffffff, .40 );
+
+       		addShadowedLight( -2, -2, 2, 0xffffff, .15 );
+       		addShadowedLight( 2, 2, -2, 0xffffff, .15 );
 
        		// renderer
                 var flags = { antialias: true };
@@ -371,7 +455,7 @@
 
                 controls = new OrbitControls( camera, renderer.domElement );
                 if (!{{ screenshot }}) {
-                    controls.autoRotateSpeed = 3.0;
+                    controls.autoRotateSpeed = rotate_speed;
                     controls.autoRotate = true;
                     controls.enableDamping = true;
                     controls.dampingFactor = 0.05;
@@ -429,7 +513,10 @@
                   data: img_data
                 });
          }
-
-       </script>
+         function copy_page_url() {
+                $("#copy-page-url-input").select();
+                document.execCommand("copy");
+                // TODO: Show copy confirmation tooltip
+         }
 </script>
 {% endblock %}

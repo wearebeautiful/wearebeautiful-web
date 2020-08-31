@@ -17,10 +17,13 @@ def by_part():
     body_parts = DBModel.select(DBModel.body_part).distinct()
     body_parts = [ part.body_part for part in body_parts ]
     body_parts = sorted(body_parts, reverse=True)
+    body_parts.remove("anatomical")
 
-    models = DBModel.select().order_by(DBModel.body_part)
+    models = DBModel.select().order_by(DBModel.body_part, DBModel.model_id, DBModel.code, DBModel.version)
     sections = {}
     for model in models:
+        if model.model_id in '284284':
+            continue
         model.parse_data()
         if not model.body_part in sections:
             sections[model.body_part] = { 'name' : model.body_part, 'models' : [] }
@@ -39,6 +42,9 @@ def by_model():
     model_list = []
     model_tags = []
     for model in DBModel.select().order_by(DBModel.model_id, DBModel.code):
+        if model.model_id == '284284':
+            continue
+
         model.parse_data()
         model.common_tags_list = []
 
@@ -73,6 +79,9 @@ def by_model():
 
 
     model_list = sorted(models.keys())
+    # Move the hand to the last item, feel wrong to have it be first
+    if model_list[0] == "000000":
+        model_list.append(model_list.pop(0))
 
     return render_template("browse/browse-by-model.html", models=models, model_list=model_list)
 
@@ -86,6 +95,8 @@ def by_attributes():
 
     models = []
     for model in DBModel.select():
+        if model.model_id == '284284':
+            continue
         model.parse_data()
         models.append(model)
 
@@ -122,7 +133,7 @@ def by_attributes():
             except KeyError:
                 info['comment'] = [ model.display_code ]
 
-        if model.excited:
+        if model.excited != "not excited":
             try:
                 info['excited'].append(model.display_code)
             except KeyError:
@@ -155,7 +166,7 @@ def by_attributes():
         events=disp_events, events_list=json.dumps(events_list))
 
 
-@bp.route('/illustrated-guide')
+@bp.route('/guide')
 @auth.login_required
-def illustrated_guide():
+def guide():
     return render_template("browse/illustrated-guide.html")

@@ -70,6 +70,15 @@
         <p class="index-text">
            <a  href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>: Browse models based on the data about our models.
         </p>
+
+        <p class="index-text">
+          If you are unclear on any of the terminology presented on this site, we have an 
+          <a href="{{ url_for('browse.guide') }}">illustrated guide to human sexual anatomy</a> to help
+          guide you through the various concepts:
+          <a href="{{ url_for('browse.guide') }}">
+            <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/group-low-sat.png') }}">
+          </a>
+        </p>
      </div>
      <div class="col-md-4"> 
          <div class="text-center">

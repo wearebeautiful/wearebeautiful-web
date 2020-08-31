@@ -15,10 +15,14 @@ class DocsViewsTestCase(ServerTestCase):
         resp = self.client.get(url_for('docs.printing_guide'))
         self.assert200(resp)
 
-    def test_our_data(self):
-        resp = self.client.get(url_for('docs.our_data'))
+    def test_model_codes(self):
+        resp = self.client.get(url_for('docs.model_codes'))
         self.assert200(resp)
 
     def test_faq(self):
         resp = self.client.get(url_for('docs.faq'))
+        self.assert200(resp)
+
+    def test_educational_kits(self):
+        resp = self.client.get(url_for('docs.educational_kits'))
         self.assert200(resp)

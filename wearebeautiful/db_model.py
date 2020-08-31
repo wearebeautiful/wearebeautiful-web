@@ -56,15 +56,15 @@ class DBModel(Model):
             self.display_code = "%s-%s-%d" % (self.model_id, self.code, self.version)
 
 
-    def english_description(self, long=False):
+    def threed_model_description(self, long=False):
 
         desc = "A %s model of " % self.body_part
         if self.sex in ('male', 'female'):
-            desc += "a %s " % self.sex
+            desc += "a %s" % self.sex
         elif self.sex == "intersex":
-            desc += "an intersex person "
+            desc += "an intersex person"
         else:
-            desc += "a person "
+            desc += "a person"
 
         if long:
             desc += " who is %s" % self.pose
@@ -73,6 +73,21 @@ class DBModel(Model):
 
         if self.given_birth != "no":
             desc += " and has given %s birth" % self.given_birth
+
+        return desc
+
+
+    def human_model_description(self):
+
+        if self.sex in ('male', 'female'):
+            desc = "%s " % self.sex
+        elif self.sex == "intersex":
+            desc = "intersex person "
+        else:
+            desc = "person "
+
+        if self.given_birth != "no":
+            desc += " who has given %s birth" % self.given_birth
 
         return desc
 
@@ -105,7 +120,7 @@ class DBModel(Model):
             'link_list' : self.link_list,
             'given_birth' : self.given_birth,
             'display_code' : self.display_code,
-            'english_description' : self.english_description(),
+            'english_description' : self.threed_model_description(),
             'screenshot_url' : url_for_screenshot(self.model_id, self.code, self.version)
         }
 

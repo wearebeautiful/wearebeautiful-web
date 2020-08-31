@@ -2,17 +2,31 @@
 {%- block content -%}
   <div class="row">
     <div class="col-12 text-layout">
-        <h2>Our data explained</h2>
+        <h2>Model codes explained</h2>
 
         <p>
-           We've taken great care in keeping track of the right data, keeping the needed data private to
-           protect the identity of our models and making this data useful.
+           We've taken great care to keep track of the right data, keep the necessary data private to
+           protect the identity of our models and make the data useful.
         </p>
 
         <h4>Model codes</h4>
 
         <p>
-          All of our models are carefully coded with the URL of this site and a model code:
+          All of our models are carefully coded with the URL of this site and a model code that you can
+          decode using the diagram below. The code contains the ID number of the model, the body part shown,
+          and the pose the person was in at the time of the scan. It also shows if the model was arranged
+          (e.g. arms raised as opposed hanging naturally) and if they were excited (aroused) or not. 
+          The final number is the optional version of this model; if it is not shown by default 
+          it means the version number is 1. Some models may have repeated scans over time: A pregnant
+          woman at week 19 could be version 1 and the same woman at pregnancy week 40 could be version 2.
+        </p>
+
+        <p>
+          <img src="{{ static_url_for('static', filename='img/model-decoder.png') }}" style="width: 100%">
+        </p>
+
+        <p>
+           Let's take one example code and break it into its parts:
         </p>
 
         <p style="font-size: 15pt; font-weight: bold">
@@ -24,7 +38,7 @@
             <td>
                <p>
                  identifies the human model. You can assume that the models <a href="/model/453703-VLNN">453703-VLNN</a> 
-                 and <a href="/model/453703-BSNN">453703-BSNN</a> come from the same human.
+                 and <a href="/model/453703-BSNN">453703-BSNN</a> come from the same person.
                </p>
             </td>
           </tr>
@@ -37,27 +51,29 @@
                   to understand, arrangement and excited need some explanation.
                </p>
                <p>
-                  <i>Arrangement</i> concerns wether the model has been arranged in any way. Vulva models are a great example, as 
+                  <i>Arrangement</i> concerns whether the model has been arranged in any way. Vulva models are a great example, as 
                   some vulvas emerge from  underwear they may be folded or their shape influenced by being constrained 
-                  in underwear. Not arranging a vulva in any way is considered <i>natural</i>. If a vulva is arranged, 
+                  in underwear. Not arranging a vulva in any way is considered <i>natural</i>. If a vulva has been positioned, 
                   perhaps to be symmetrical, it is considered <i>arranged</i>. Compare this <a href="/model/757038-VUNN">naturally 
-                  arranged vulva</a> with the same <a href="/model/757038-VLSN">vulva that was arranged to be spread apart</a>. 
+                  presented vulva</a> with the same <a href="/model/757038-VLSN">vulva that was arranged to be spread apart</a>. 
                </p>
                <p>
-                  For some models, like penises, a model may also have the foreskin retracted, in which case the arrangement is 
+                  For models of penises, a model may also have the foreskin retracted, in which case the arrangement is 
                   <i>retracted</i>. Compare this <a href="/model/200102-PLAN">not-retracted penis</a> to this 
                   <a href="/model/554268-PLRN">retracted penis</a>.
                </p>
                <p>
-                  <i>Excited</i> takes into account wether the model is sexually excited at the time the pictures were taken.
-                  This is less perceptible for vulva models, but clearly important for penis models.
+                  <i>Excited</i> denotes if the model is sexually excited at the time the pictures were taken.
+                  This data attribute is obvious for a penis model, but it seems less obvious for vulva models.
+                  However, vulvas also change shape when they are excited, as you can see in this <a href="/model/426060-VLNP">
+                  compound vulva model</a>.
                </p>
             </td>
           </tr>
           <tr>
             <td class="text-center"><b>1</b></td>
             <td>
-              The optional -1 on this model identifies the version of this model. Most of our models will only 
+              The optional -1 on a model identifies the version of the model. Most of our models will only 
               ever have one version, but this pregnant female already has a few so you can see how her body
               changes during the course of her pregancy: 
               <a href="/model/591522-FSAN">week 19</a>,
@@ -68,28 +84,6 @@
             </td>
           </tr>
         </table>
-
-        <h4>The three data layers</h4>
-
-        <p>
-          We've collected three data layers:
-        </p>
-
-        <ol>
-          <li>
-              This inner layer is the identity, age verification and signature that indicates consent
-              to participate in this project. This data only exists on paper under lock and key and is <b>not
-              online, at all</b>.
-          </li>
-          <li>
-              The middle layer of data contains age, country of origin and self declared ethniticty of each model. 
-              This data is only shown to the public in aggregate to show the diversity of our models. This data
-              is not public data, but we may consider releasing it to researchers at qualified research institutions.
-          </li>
-          <li>
-              The outer layer of data contains all the public data you find on this site.
-          </li>
-        </ol>
 
     </div>
   </div>

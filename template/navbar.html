@@ -17,26 +17,27 @@
         
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Browse
+            Models
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="{{ url_for('browse.by_part') }}">browse by body part</a>
             <a class="dropdown-item" href="{{ url_for('browse.by_model') }}">browse by model</a>
             <a class="dropdown-item" href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>
-            <a class="dropdown-item" href="{{ url_for('browse.illustrated_guide') }}">illustrated guide to human sexual anatomy</a>
           </div>
         </li>
 
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            Models
+            Education
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{{ url_for('browse.guide') }}">guide to sexual anatomy</a>
+            <a class="dropdown-item" href="{{ url_for('docs.model_codes') }}">model codes explained</a>
             <a class="dropdown-item" href="{{ url_for('model.diversity') }}">model diversity</a>
             <a class="dropdown-item" href="{{ url_for('model.statistics') }}">model statistics</a>
+            <a class="dropdown-item" href="{{ url_for('docs.educational_kits') }}">educational kits</a>
             <a class="dropdown-item" href="{{ url_for('docs.faq') }}">frequently asked questions</a>
-            <a class="dropdown-item" href="{{ url_for('docs.our_data') }}">about our data</a>
             <a class="dropdown-item" href="{{ url_for('docs.printing_guide') }}">printing guide</a>
           </div>
         </li>
