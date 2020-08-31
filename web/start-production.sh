@@ -2,6 +2,7 @@
 
 WAB_DOMAIN=wearebeautiful.info
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+HOSTNAME=`hostname`
 
 echo "---- start nginx proxy, le"
 
@@ -44,7 +45,7 @@ docker run -d \
     wearebeautiful-logs
 
 echo "---- start telegraf"
-sed 's/%hostname%/penis/g' telegraf.conf.in > telegraf.conf
+sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
 docker run -d \
     --name telegraf \
     --network=wab-network \

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+HOSTNAME=`hostname`
+
 echo "---- create network"
 docker network create wab-network
 
@@ -23,7 +25,7 @@ sudo ufw allow from 95.216.117.155 to any port 8086
 
 
 echo "---- start telegraf"
-sed 's/%hostname%/penis/g' telegraf.conf.in > telegraf.conf
+sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
 docker run -d \
     --name telegraf \
     --network=wab-network \
