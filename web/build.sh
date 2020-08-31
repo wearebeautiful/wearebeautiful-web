@@ -2,7 +2,7 @@
 
 
 echo "---- wearebeautiful-logs"
-cd logging
+cd ../logging
 ./build.sh
 cd -
 

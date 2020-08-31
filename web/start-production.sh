@@ -28,6 +28,9 @@ docker run -d \
    --network=wab-network \
    jrcs/letsencrypt-nginx-proxy-companion
 
+echo "---- start wearebeautiful-web"
+./start-containers.sh
+
 echo "---- start wearebeautiful-logs"
 docker run -d \
     --name wab-logs \
@@ -52,10 +55,7 @@ docker run -d \
     telegraf:1.13.4
 
 
-echo "---- start wearebeautiful-web"
-./start-containers.sh
-
 echo "---- enable firewall ports for services"
-sudo ufw-docker allow nginx 80
+sudo ufw-docker allow nginx 443
 
 echo "---- done"
