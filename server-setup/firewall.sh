@@ -5,3 +5,4 @@ sed -i 's/^#& stop/\& stop/' /etc/rsyslog.d/20-ufw.conf && systemctl restart rsy
 
 ufw enable
 ufw allow ssh
+ufw status verbose
