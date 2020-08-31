@@ -17,6 +17,11 @@ docker run -d \
     -v influx-volume:/var/lib/influxdb \
     influxdb:1.7.10
 
+# Allow this and other servers to connect to port 8086
+sudo ufw allow from 135.181.45.162 to any port 8086
+sudo ufw allow from 95.216.117.155 to any port 8086
+
+
 echo "---- start telegraf"
 sed 's/%hostname%/penis/g' telegraf.conf.in > telegraf.conf
 docker run -d \
@@ -36,4 +41,5 @@ docker run -d \
     --restart unless-stopped \
     -v grafana-volume:/var/lib/grafana \
     grafana/grafana:7.1.5
-ufw-docker allow grafana 3000
+
+sudo ufw-docker allow grafana 3000
