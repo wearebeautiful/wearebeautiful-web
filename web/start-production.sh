@@ -56,6 +56,7 @@ docker run -d \
 
 
 echo "---- enable firewall ports for services"
+sudo ufw allow 80/tcp
 sudo ufw allow 443/tcp
 
 echo "---- done"
