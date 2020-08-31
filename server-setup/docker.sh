@@ -40,10 +40,5 @@ apt-get install -y docker-ce docker-ce-cli containerd.io
 # http://www.acervera.com/blog/2016/03/05/ufw_plus_docker
 if [ -e /etc/default/ufw ]; then
     sudo sed -i 's/^DEFAULT_FORWARD_POLICY=.*$/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
-    ufw allow in on docker0 from 172.17.0.0/16 to any
-    ufw allow out on docker0 from any to 172.17.0.0/16
-    ufw allow in on docker0 from 172.18.0.0/16 to any
-    ufw allow out on docker0 from any to 172.18.0.0/16
-
     echo "Please reboot, ufw rules were modified"
 fi
