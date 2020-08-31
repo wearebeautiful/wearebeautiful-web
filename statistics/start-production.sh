@@ -19,8 +19,7 @@ docker run -d \
     -v influx-volume:/var/lib/influxdb \
     influxdb:1.7.10
 
-# Allow this and other servers to connect to port 8086
-sudo ufw allow from 135.181.45.162 to any port 8086
+# Allow vulva to connect to port 8086
 sudo ufw allow from 95.216.117.155 to any port 8086
 
 
