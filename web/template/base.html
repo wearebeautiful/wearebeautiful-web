@@ -27,8 +27,19 @@
   <div id="container" class="{% if not container %}container-lg{% else %}{{ container }}{% endif %}">
     {% block content %}
     {% endblock%}
-  </div>
-  <div id="footer" style="height: 2rem;">
+    <div id="footer" class="row {% if footer_hidden %}invisible{% endif %}">
+       <div class="col-md-5 text-center">
+          We Are Beautiful is a project of <a href="/contact">Quatsch und Unfug OÜ</a>.
+       </div>
+       <div class="col-md-3 text-center">
+          <a href="/about">About</a> | 
+          <a href="/contact">Contact</a> |
+          <a href="/support">Support us!</a>
+       </div>
+       <div class="col-md-4 text-center">
+          No copyrights on any content! (<a href="https://creativecommons.org/share-your-work/public-domain/cc0/">CC0</a>)
+       </div>
+    </div>
   </div>
 
   {% block js %}

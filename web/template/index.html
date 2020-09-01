@@ -1,5 +1,6 @@
 {%- extends 'base.html' -%}
 {% set navbar_hidden = True %}
+{% set footer_hidden = True %}
 {%- block content -%}
 <div class="row">
 
@@ -157,6 +158,7 @@ $(document).ready(function() {
 function show_me_bits_clicked() {
    $("#index-nsfw").slideDown(200);
    $("#navbar").toggleClass("invisible");
+   $("#footer").toggleClass("invisible");
    $("#index-red-pill").slideUp(200);
 }
 </script>
