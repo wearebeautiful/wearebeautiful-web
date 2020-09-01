@@ -1,14 +1,26 @@
-SECRET_KEY = "add your key here"
-
-MODEL_DIR = "<path to git dir>"
+#
+# Directories
+#
+MODEL_DIR = "/wearebeautiful-models"
 KIT_TMP_DIR = "/kits"
+
+# Options
 SUBMIT_SCREENSHOTS = False
 
-USE_SITE_AUTH=False
-SITE_USERNAME="test"
-SITE_PASSWORD="test"
 
-# Without trailing /
+# 
+# Production Settings -- leave on defaults for dev setup.
+#
+
+# content-type / host mapping
+# Each path should be without trailing /
 STATIC_BASE_URL = ""
 IMAGE_BASE_URL = ""
 STL_BASE_URL = ""
+
+
+# TO BE DELETED BEFORE RELEASE
+SECRET_KEY = "add your key here"
+USE_SITE_AUTH=False
+SITE_USERNAME="test"
+SITE_PASSWORD="test"
