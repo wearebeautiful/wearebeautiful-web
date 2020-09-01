@@ -6,12 +6,12 @@ from tempfile import mkdtemp
 from zipfile import ZipFile
 
 from flask import Flask, render_template, Blueprint, send_file
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, InternalServerError
 from wearebeautiful.auth import _auth as auth
 import config
 
 
-EDU_KIT_JSON = "docs/education-kits.json"
+EDU_KIT_JSON = "template/docs/education-kits.json"
 
 bp = Blueprint('docs', __name__)
 
@@ -109,7 +109,7 @@ def educational_kits():
     try:
         kits = prepare_kits()
     except (IOError, KeyError) as err:
-        return render_template("docs/educational_kits.html", error=err)
+        raise InternalServerError(err)
 
     print(kits)
     return render_template("docs/educational_kits.html", kits=kits)
