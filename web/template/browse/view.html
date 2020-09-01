@@ -39,12 +39,12 @@
                <a href="/model/{{ model.display_code }}/solid">View solid</a> | 
              {% endif %}
              Jump to:
-             <a href="#model-info" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
+             <a href="#model-info" id="info-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
              {% if model.comment %}
-               <a href="#comment" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
+               <a href="#comment" id="comment-link" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
-             <a href="#download" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a> |
-             <a href="#share" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">share</a>
+             <a href="#download" id="download-link" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a> |
+             <a href="#share" id="share-link" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">share</a>
           </p>
 
 
@@ -301,6 +301,18 @@
         $('#color-well-3').on('click', function() { color_well_click("#color-well-3") });
         $('#screenshot').on('click', function() { screenshot() });
         $('#copy-page-url-button').on('click', function() { copy_page_url() });
+        $("#share-link").on('click', function() {
+            $('html,body').animate({scrollTop: $("#share-link").offset().top},'slow');
+        });
+        $("#download-link").on('click', function() {
+            $('html,body').animate({scrollTop: $("#download-link").offset().top},'slow');
+        });
+        $("#info-link").on('click', function() {
+            $('html,body').animate({scrollTop: $("#info-link").offset().top},'slow');
+        });
+        $("#comment-link").on('click', function() {
+            $('html,body').animate({scrollTop: $("#comment-link").offset().top},'slow');
+        });
 
         $(document).on('keydown', function(event) {
             if (event.key == "Escape") {

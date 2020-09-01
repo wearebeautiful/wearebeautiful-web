@@ -1,4 +1,5 @@
 import os
+import sys
 from flask import Flask, render_template, flash, url_for, current_app, redirect
 from flask_httpauth import HTTPBasicAuth
 from flask_fontawesome import FontAwesome
@@ -32,6 +33,10 @@ fa = FontAwesome(app)
 flask_static_digest.init_app(app)
 
 db_file = os.path.join(config.MODEL_DIR, DB_FILE)
+if not os.path.exists(db_file):
+    print("Cannot find models db: %s" % db_file)
+    sys.exit(-1)
+
 db.init(db_file)
 
 from wearebeautiful.views.index import bp as index_bp
