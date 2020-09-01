@@ -71,7 +71,7 @@
               <div class="card-header" id="heading-info">
                 <h5 class="mb-0">
                   <button class="btn btn-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="true" aria-controls="collapseOne">
-                    model information
+                    Model information
                   </button>
                 </h5>
               </div>
@@ -110,9 +110,25 @@
                      <tr><td>body type</td><td>{{ model.body_type }}<t/d></tr>
                      <tr><td>given birth</td><td>{{ model.given_birth }}</td></tr>
                      {% if model.history %}
-                        <tr><td>body history</td><td>{{ model.history }}</td></tr>
+                        <tr>
+                            <td>body history</td>
+                            <td>
+                              {% for event in model.history_list %}
+                                <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a></a>
+                              {% endfor %}
+                            </td>
+                         </tr>
                      {% endif %}
-                     <tr><td>tags</td><td>{{ model.tags or "-" }}</td></tr>
+                     {% if model.tags %}
+                         <tr>
+                            <td>tags</td>
+                            <td>
+                                {% for tag in model.tags_list %}
+                                  <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary">{{ tag }}</span></a>
+                                {% endfor %}
+                            </td>
+                         </tr>
+                     {% endif %}
                      {% if model.links %}
                        <tr>
                          <td><p>Related content</p></td>
