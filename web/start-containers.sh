@@ -10,7 +10,7 @@ docker run -d \
     --expose 3031 \
     --name wab-web \
     --network=wab-network \
-    -v $MODELS:/archive \
+    -v $MODELS:/wearebeautiful-models \
     -v $SRC_DIR/admin/uwsgi/uwsgi.ini:/code/uwsgi.ini:ro \
     -v $SRC_DIR/admin/sockets:/sockets:rw \
     wearebeautiful.info:prod uwsgi --ini /code/uwsgi.ini

@@ -34,8 +34,7 @@ flask_static_digest.init_app(app)
 
 db_file = os.path.join(config.MODEL_DIR, DB_FILE)
 if not os.path.exists(db_file):
-    print("Cannot find models db: %s" % db_file)
-    sys.exit(-1)
+    print("WARNING: Cannot find models db: %s" % db_file)
 
 db.init(db_file)
 
