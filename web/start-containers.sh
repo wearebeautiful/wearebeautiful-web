@@ -6,6 +6,7 @@ LOGDIR_UID=101
 MODELS=/home/wab/wearebeautiful-models
 DOMAIN=wearebeautiful.info
 
+echo "---- start wearebeautiful web"
 docker run -d \
     --expose 3031 \
     --name wab-web \
@@ -15,11 +16,15 @@ docker run -d \
     -v $SRC_DIR/admin/sockets:/sockets:rw \
     wearebeautiful.info:prod uwsgi --ini /code/uwsgi.ini
 
+echo "---- create cache volume"
+docker volume create --driver local --name wab-cache-volume
+
+echo "---- start wearebeautiful comp"
 mkdir -p $LOGDIR && sudo chown $LOGDIR_UID:$LOGDIR_UID $LOGDIR
 docker run -d \
     --expose 8080 \
     --name wab-comp \
-    -v wab-cache:/cache \
+    -v wab-cache-volume:/cache \
     -v $MODELS:/models:ro \
     -v $SRC_DIR/admin/nginx/wab-comp.conf:/etc/nginx/nginx.conf:rw \
     -v $LOGDIR:/var/log/nginx:rw \
