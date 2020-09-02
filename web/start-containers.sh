@@ -13,7 +13,6 @@ docker run -d \
     --network=wab-network \
     -v $MODELS:/wearebeautiful-models \
     -v $SRC_DIR/admin/uwsgi/uwsgi.ini:/code/uwsgi.ini:ro \
-    -v $SRC_DIR/admin/sockets:/sockets:rw \
     wearebeautiful.info:prod uwsgi --ini /code/uwsgi.ini
 
 echo "---- create cache volume"
@@ -28,7 +27,6 @@ docker run -d \
     -v $MODELS:/models:ro \
     -v $SRC_DIR/admin/nginx/wab-comp.conf:/etc/nginx/nginx.conf:rw \
     -v $LOGDIR:/var/log/nginx:rw \
-    -v $SRC_DIR/admin/sockets:/sockets:rw \
     --network=wab-network \
     --env "LETSENCRYPT_HOST=$DOMAIN" \
     --env "LETSENCRYPT_EMAIL=rob@wearebeautiful.info" \
