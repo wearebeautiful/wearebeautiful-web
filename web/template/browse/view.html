@@ -202,50 +202,60 @@
               </div>
               <div id="collapse-share" class="collapse" aria-labelledby="heading-share" data-parent="#accordion">
                 <div class="card-body">
+                   <div class="row">
+                      <div class="col-md-7">
+                          <p>
+                            If you would like to share a link to this model, we encourage you to
+                            save this model image to your computer/device and then go to the
+                            site where you wish to post the link and upload the image from your
+                            device.
+                          </p>
 
-                  <div class="float-right" class="width: 40%">
-                     <p class="text-center">
-                        <img class="screenshot" src="{{ url_for_tagged_screenshot_m(model) }}">
-                     </p>
-                  </div>
+                          <p>
+                            On a mobile device, long press on the image and then select the option to 
+                            save the image. On a computer, right click on the and select to save the 
+                            image to your computer.
+                          </p>
 
-                  <div class="width: 50%">
-                      <p>
-                        If you would like to share a link to this model, we encourage you to
-                        save ths model image to your computer/device and then go to the
-                        site where you wish to post the link and upload the image from your
-                        device.
-                      </p>
+                          <p>
+                             The link to this page:</br>
+                             <input type="text" 
+                                    readonly 
+                                    value="https://wearebeautiful.info/model/{{ model.display_code }}"
+                                    id="copy-page-url-input"
+                                    style="width: 90%"
+                             ></input>
+                             <button type="button"
+                                     class="btn btn-primary"
+                                     id="copy-page-url-button"><i class="fas fa-clipboard"></i></button>
+                          </p>
+                          <p>
+                             The link to this screenshot:</br>
+                             <input type="text" 
+                                    readonly 
+                                    value="https://wearebeautiful.info{{ url_for_tagged_screenshot_m(model) }}"
+                                    id="copy-screenshot-url-input"
+                                    style="width: 90%"
+                             ></input>
+                             <button type="button"
+                                     class="btn btn-primary"
+                                     id="copy-screenshot-url-button"><i class="fas fa-clipboard"></i></button>
+                          </p>
 
-                      <p>
-                        On a mobile device, long press on the image and then select the option to 
-                        save the image. On a computer, right click on the and select to save the 
-                        image to your computer.
-                      </p>
+                          <p>
+                             <a class="twitter-share-button"
+                                 href="https://twitter.com/intent/tweet?text={{ share_text }}"
+                                 data-size="large">Tweet about this model</a>
+                          </p>
 
-                      <p>
-                         The link to this page:</br>
-                         <input type="text" 
-                                readonly 
-                                value="https://wearebeautiful.info/model/{{ model.display_code }}"
-                                id="copy-page-url-input"
-                                style="width: 40%"
-                         ></input>
-                         <button type="button"
-                                 class="btn btn-primary"
-                                 id="copy-page-url-button">Copy URL</button>
-                      </p>
-
-                      <p>
-                         <a class="twitter-share-button"
-                             href="https://twitter.com/intent/tweet?text={{ share_text }}"
-                             data-size="large">Tweet about this model</a>
-                      </p>
-
+                      </div>
+                      <div class="col-md-5">
+                        <p class="text-center">
+                           <img class="screenshot" src="{{ url_for_tagged_screenshot_m(model) }}">
+                        </p>
+                      </div>
                    </div>
-
                 </div>
-              </div>
             </div>
 
           </div>
@@ -317,6 +327,7 @@
         $('#color-well-3').on('click', function() { color_well_click("#color-well-3") });
         $('#screenshot').on('click', function() { screenshot() });
         $('#copy-page-url-button').on('click', function() { copy_page_url() });
+        $('#copy-screenshot-url-button').on('click', function() { copy_screenshot_url() });
         $("#share-link").on('click', function() {
             $('html,body').animate({scrollTop: $("#share-link").offset().top},'slow');
         });
@@ -543,6 +554,11 @@
          }
          function copy_page_url() {
                 $("#copy-page-url-input").select();
+                document.execCommand("copy");
+                // TODO: Show copy confirmation tooltip
+         }
+         function copy_screenshot_url() {
+                $("#copy-screenshot-url-input").select();
                 document.execCommand("copy");
                 // TODO: Show copy confirmation tooltip
          }
