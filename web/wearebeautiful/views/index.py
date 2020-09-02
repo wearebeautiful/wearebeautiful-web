@@ -15,6 +15,10 @@ bp = Blueprint('index', __name__)
 def soon():
     return render_template("about/coming-soon.html", bare=True)
 
+@bp.route('/robots.txt')
+def robots():
+    return render_template("robots.txt")
+
 def load_slide_models(slide_model_ids):
     slide_models = []
     for slide in slide_model_ids:
