@@ -2,7 +2,6 @@ import os
 import sys
 from flask import Flask, render_template, flash, url_for, current_app, redirect
 from flask_httpauth import HTTPBasicAuth
-from flask_fontawesome import FontAwesome
 from flask_static_digest import FlaskStaticDigest
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -29,7 +28,6 @@ app.config['FONTAWESOME_SERVE_LOCAL'] = False
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
-fa = FontAwesome(app)
 flask_static_digest.init_app(app)
 
 db_file = os.path.join(config.MODEL_DIR, DB_FILE)
