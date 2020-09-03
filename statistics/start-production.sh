@@ -8,10 +8,6 @@ docker network create wab-network
 echo "---- create grafana volume"
 docker volume create --driver local --name grafana-volume
 
-# Allow vulva & penis to connect to port 8086
-sudo ufw allow from 95.216.117.155 to any port 8086
-sudo ufw allow from 135.181.86.222 to any port 8086
-
 echo "---- start telegraf"
 sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
 docker run -d \
@@ -32,4 +28,4 @@ docker run -d \
     -v grafana-volume:/var/lib/grafana \
     grafana/grafana:7.1.5
 
-sudo ufw allow 3000/tcp
+sudo ufw-docker allow grafana 3000
