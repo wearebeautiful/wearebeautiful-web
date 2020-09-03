@@ -106,7 +106,7 @@ venv.bak/
 config.py
 *.swp
 *.db
-static/js
-static/gcss
 node_modules
 telegraf.conf
+web/static/gcss
+web/static/js
