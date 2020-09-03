@@ -21,6 +21,7 @@ RUN curl https://www.npmjs.com/install.sh | sh
 RUN pip3 install setuptools
 
 RUN mkdir /kits && chown www-data:www-data /kits
+RUN mkdir -p /etc/nginx/html
 
 RUN mkdir -p /code/wearebeautiful.info
 WORKDIR /code/wearebeautiful.info

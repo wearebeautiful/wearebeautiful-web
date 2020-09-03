@@ -5,7 +5,6 @@ mkdir -p /etc/docker/
 cat <<EOF >daemon.json
 {
     "dns": ["8.8.8.8", "8.8.4.4"],
-    "iptables": false,
     "log-driver": "json-file",
     "log-opts": {
       "max-size": "10m",
@@ -36,9 +35,3 @@ add-apt-repository \
 apt-get update
 
 apt-get install -y docker-ce docker-ce-cli containerd.io
-
-# http://www.acervera.com/blog/2016/03/05/ufw_plus_docker
-if [ -e /etc/default/ufw ]; then
-    sudo sed -i 's/^DEFAULT_FORWARD_POLICY=.*$/DEFAULT_FORWARD_POLICY="ACCEPT"/' /etc/default/ufw
-    echo "Please reboot, ufw rules were modified"
-fi

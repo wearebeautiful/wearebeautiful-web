@@ -9,8 +9,6 @@ apt-get update
 apt-get upgrade -y
 apt-get install -y build-essential git fail2ban ufw vim python3-dev python3-pip
 
-cp rc.local /etc
-
 ./hostname.sh $HOSTNAME
 ./sysctl.sh
 ./docker.sh

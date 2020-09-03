@@ -5,23 +5,12 @@ HOSTNAME=`hostname`
 echo "---- create network"
 docker network create wab-network
 
-echo "---- create influx volume"
-docker volume create --driver local --name influx-volume
 echo "---- create grafana volume"
 docker volume create --driver local --name grafana-volume
 
-echo "---- start influxdb"
-docker run -d \
-    -p "8086:8086" \
-    --name influxdb \
-    --restart unless-stopped \
-    --network=wab-network \
-    -v influx-volume:/var/lib/influxdb \
-    influxdb:1.7.10
-
-# Allow vulva to connect to port 8086
+# Allow vulva & penis to connect to port 8086
 sudo ufw allow from 95.216.117.155 to any port 8086
-
+sudo ufw allow from 135.181.86.222 to any port 8086
 
 echo "---- start telegraf"
 sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
