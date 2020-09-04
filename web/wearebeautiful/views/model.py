@@ -306,8 +306,8 @@ def prepare_model(model_code, screenshot, solid = False):
         'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/d" + surface_path, surface_file)
     }
 
-    share_text = "Check out this We Are Beautiful model:\n\n%s: %s. \n%s" % \
-        (model.display_code, model.threed_model_description(), request.url)
+    share_text = "Check out this 3D model of a human from We Are Beautiful (@quatschunfug):\n\n%s: %s. \n\n%s" % \
+        (model.display_code, model.threed_model_description(), "https://wearebeautiful.info" + request.path)
 
     return render_template("browse/view.html", 
         model = model, 

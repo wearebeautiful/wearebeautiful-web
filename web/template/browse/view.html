@@ -34,9 +34,9 @@
         <div id="distract-mode" class="d-none">
           <p class="jump-to text-right">
              {% if solid %}
-               <a href="/model/{{ model.display_code }}">View surface</a> | 
+               <a href="/model/{{ model.display_code }}">View surface</a> |
              {% else %}
-               <a href="/model/{{ model.display_code }}/solid">View solid</a> | 
+               <a href="/model/{{ model.display_code }}/solid">View solid</a> |
              {% endif %}
              Jump to:
              <a href="#model-info" id="info-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
@@ -212,15 +212,15 @@
                           </p>
 
                           <p>
-                            On a mobile device, long press on the image and then select the option to 
-                            save the image. On a computer, right click on the and select to save the 
+                            On a mobile device, long press on the image and then select the option to
+                            save the image. On a computer, right click on the and select to save the
                             image to your computer.
                           </p>
 
                           <p>
                              The link to this page:</br>
-                             <input type="text" 
-                                    readonly 
+                             <input type="text"
+                                    readonly
                                     value="https://wearebeautiful.info/model/{{ model.display_code }}"
                                     id="copy-page-url-input"
                                     style="width: 90%"
@@ -231,8 +231,8 @@
                           </p>
                           <p>
                              The link to this screenshot:</br>
-                             <input type="text" 
-                                    readonly 
+                             <input type="text"
+                                    readonly
                                     value="https://wearebeautiful.info{{ url_for_tagged_screenshot_m(model) }}"
                                     id="copy-screenshot-url-input"
                                     style="width: 90%"
@@ -242,11 +242,37 @@
                                      id="copy-screenshot-url-button"><i class="fas fa-clipboard"></i></button>
                           </p>
 
-                          <div style="margin-top: 1rem">
-                             <a href="https://twitter.com/intent/tweet?text={{ share_text }}" alt="Sassy!"><i class="fab fa-twitter share-btn"></i></a>
-                             <a href="https://facebook.com"><i class="fab fa-facebook share-btn"></i></a>
-                             <a href="https://instagram.com"><i class="fab fa-instagram share-btn"></i></a>
-                             <a href="https://getpocket.com/edit?url=https://wearebeautiful.info/model/{{ model.display_code }}"><i class="fab fa-get-pocket share-btn"></i></a>
+                          <div class="d-flex justify-content-around" style="margin-top: 1rem; width: 80%">
+                             <button type="button"
+                                     style="width: 45px"
+                                     class="btn btn-secondary btn-sm"
+                                     onclick="window.location.href='https://twitter.com/intent/tweet?text={{ share_text }}';">
+                               <i class="fab fa-twitter share-btn"></i>
+                             </button>
+                             <button type="button"
+                                     style="width: 45px"
+                                     class="btn btn-secondary btn-sm"
+                                     onclick="window.location.href='https://getpocket.com/edit?url=https://wearebeautiful.info/model/{{ model.display_code }}';">
+                               <i class="fab fa-get-pocket share-btn"></i>
+                             </button>
+                             <button type="button"
+                                     class="btn btn-secondary btn-sm"
+                                     style="width: 45px"
+                                     data-container="body"
+                                     data-toggle="popover"
+                                     data-placement="top"
+                                     data-content="We are unable to create a Facebook post from here. Copy the screenshot/link from this page and then go to Facebook to make a post.">
+                                <i class="fab fa-facebook share-btn"></i>
+                             </button>
+                             <button type="button"
+                                     class="btn btn-secondary btn-sm"
+                                     style="width: 45px"
+                                     data-container="body"
+                                     data-toggle="popover"
+                                     data-placement="top"
+                                     data-content="Sadly we unable to send you to Instagram from here. Load this page on your mobile, copy the screenshot or link and then open the Instagram app to make a post.">
+                                <i class="fab fa-instagram share-btn"></i>
+                             </button>
                           </div>
 
                       </div>
@@ -297,6 +323,9 @@
         $(document).ready(function() {
             init();
             animate();
+            $(function () {
+                $('[data-toggle="popover"]').popover()
+            })
         });
 
         document.body.onkeydown = function(e) {
@@ -397,7 +426,7 @@
       	        renderer.setSize(window_width, window_height);
 
             if (camera) {
-                camera.aspect = window_width / window_height; 
+                camera.aspect = window_width / window_height;
                 camera.updateProjectionMatrix();
             }
         }
@@ -529,7 +558,6 @@
        	}
 
        	function onWindowResize() {
-             
                 resize_window();
        	}
 
