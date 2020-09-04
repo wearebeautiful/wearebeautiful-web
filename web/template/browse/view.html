@@ -1,4 +1,5 @@
 {%- extends 'base.html' -%}
+{% set footer_hidden = True %}
 {%- block content -%}
 <div class="row" id="top-row">
 
@@ -284,7 +285,6 @@
                    </div>
                 </div>
             </div>
-
           </div>
 
           {% if related.models %}
@@ -300,7 +300,7 @@
           {% endif %}
 
         </div>
-
+      </div>
     </div>
 
 </div>
@@ -326,6 +326,7 @@
             $(function () {
                 $('[data-toggle="popover"]').popover()
             })
+            $("#footer").toggleClass("invisible");
         });
 
         document.body.onkeydown = function(e) {
