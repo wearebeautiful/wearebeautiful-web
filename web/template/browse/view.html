@@ -556,12 +556,12 @@
          function copy_page_url() {
                 $("#copy-page-url-input").select();
                 document.execCommand("copy");
-                // TODO: Show copy confirmation tooltip
+                $("#copy-page-url-button").html('<i class="far fa-thumbs-up"></i>');
          }
          function copy_screenshot_url() {
                 $("#copy-screenshot-url-input").select();
                 document.execCommand("copy");
-                // TODO: Show copy confirmation tooltip
+                $("#copy-screenshot-url-button").html('<i class="far fa-thumbs-up"></i>');
          }
 </script>
 {% endblock %}
