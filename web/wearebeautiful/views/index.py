@@ -38,7 +38,7 @@ def load_slide_models(slide_model_ids):
 def index():
     model_count = DBModel.select().count()
     models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
-                    .order_by(DBModel.id.desc()) \
+                    .order_by(DBModel.created.desc()) \
                     .limit(3)
 
     with open("static/stats/aggregated_stats.json", "r") as j:
