@@ -10,11 +10,15 @@ users = {
     config.SITE_USERNAME :  generate_password_hash(config.SITE_PASSWORD),
 }
 
-with open(os.path.join(config.MODEL_DIR, "wab-passwds.json"), "r") as f:
-    passwds = json.loads(f.read())
+try:
+    with open(os.path.join(config.MODEL_DIR, "wab-passwds.json"), "r") as f:
+        passwds = json.loads(f.read())
 
-for user, passwd in passwds:
-    users[user] = generate_password_hash(passwd)
+    for user, passwd in passwds:
+        users[user] = generate_password_hash(passwd)
+except IOError:
+    print("Could not load passwords skipping.")
+
 
 def init_auth():
     global _auth
