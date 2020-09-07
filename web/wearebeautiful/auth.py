@@ -1,3 +1,6 @@
+import json 
+import os
+
 from flask_httpauth import HTTPBasicAuth
 from werkzeug.security import generate_password_hash, check_password_hash
 import config
@@ -6,6 +9,12 @@ _auth = None
 users = {
     config.SITE_USERNAME :  generate_password_hash(config.SITE_PASSWORD),
 }
+
+with open(os.path.join(config.MODEL_DIR, "wab-passwds.json"), "r") as f:
+    passwds = json.loads(f.read())
+
+for user, passwd in passwds:
+    users[user] = generate_password_hash(passwd)
 
 def init_auth():
     global _auth
