@@ -34,3 +34,7 @@ class DocsViewsTestCase(ServerTestCase):
     def test_statistics(self):
         resp = self.client.get(url_for('docs.statistics'))
         self.assert200(resp)
+
+    def test_guide(self):
+        resp = self.client.get(url_for('docs.guide'))
+        self.assert200(resp)

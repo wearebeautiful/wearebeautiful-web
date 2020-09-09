@@ -10,7 +10,6 @@ from zipfile import ZipFile
 
 from PIL import Image
 from peewee import *
-from operator import itemgetter
 from werkzeug.exceptions import BadRequest, NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file, Response
 from hurry.filesize import size, alternative

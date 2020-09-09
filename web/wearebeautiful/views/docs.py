@@ -4,10 +4,13 @@ from shutil import copyfile, rmtree
 import subprocess
 from tempfile import mkdtemp
 from zipfile import ZipFile
+from operator import itemgetter
 
 from flask import Flask, render_template, Blueprint, send_file
 from werkzeug.exceptions import NotFound, InternalServerError
+from peewee import *
 from wearebeautiful.auth import _auth as auth
+from wearebeautiful.db_model import DBModel
 import config
 
 
@@ -129,11 +132,12 @@ def diversity():
 @auth.login_required
 def statistics():
     model_stats = []
-    for model in DBModel.select(DBModel.body_part, fn.COUNT(DBModel.id).alias('ct')).group_by(DBModel.body_part):
+    for model in DBModel.select(DBModel.body_part,fn.COUNT(DBModel.id).alias('ct')).group_by(DBModel.body_part):
         if model.body_part == 'anatomical':
             continue
 
         model_stats.append((model.body_part, model.ct))
+
     model_stats = sorted(model_stats, key=itemgetter(1), reverse=True)
     total_models = DBModel.select().count()
     total_models -= 1  # remove the anatomical from the count

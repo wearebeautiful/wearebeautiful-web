@@ -53,7 +53,7 @@
         <p class="index-text">
            We have {{ model_count }} models of vulvas, penises, breasts, full body and partial body scans.
            All of our models are between {{ min_age }} and {{ max_age}} years old and span a wide range 
-           of <a href="{{ url_for('model.diversity') }}">ages, body types and countries of origin</a>. We've 
+           of <a href="{{ url_for('docs.diversity') }}">ages, body types and countries of origin</a>. We've 
            carefully curated all the metadata of our models and are
            releasing the public information while <a href="{{ url_for('index.privacy') }}">carefully protecting</a> the
            private information. We never reveal the identity of our models and this information does not exist online at all.
@@ -77,9 +77,9 @@
 
         <p class="index-text">
           If you are unclear on any of the terminology presented on this site, we have an 
-          <a href="{{ url_for('browse.guide') }}">illustrated guide to human sexual anatomy</a> to help
+          <a href="{{ url_for('docs.guide') }}">illustrated guide to human sexual anatomy</a> to help
           guide you through the various concepts:
-          <a href="{{ url_for('browse.guide') }}">
+          <a href="{{ url_for('docs.guide') }}">
             <img class="guide-image" src="{{ static_url_for('static', filename='img/illustrations/group-low-sat.png') }}">
           </a>
         </p>

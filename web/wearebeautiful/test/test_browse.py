@@ -26,7 +26,3 @@ class BrowseViewsTestCase(ServerTestCase):
     def test_by_date(self):
         resp = self.client.get(url_for('browse.by_date'))
         self.assert200(resp)
-
-    def test_guide(self):
-        resp = self.client.get(url_for('browse.guide'))
-        self.assert200(resp)
