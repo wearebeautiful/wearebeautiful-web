@@ -98,7 +98,7 @@ class DBModel(Model):
             'model_id' : self.model_id,
             'version' : self.version,
             'code' : self.code,
-            'created' : self.created.strftime("%Y-%m"),
+            'created' : self.created,
             'released' : self.released.strftime("%Y-%m-%d"),
             'gender' : self.gender,
             'gender_comment' : self.gender_comment,

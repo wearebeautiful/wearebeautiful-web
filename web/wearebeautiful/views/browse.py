@@ -170,3 +170,19 @@ def by_attributes():
 @auth.login_required
 def guide():
     return render_template("browse/illustrated-guide.html")
+
+
+@bp.route('/by-date')
+@auth.login_required
+def by_date():
+    model_count = DBModel.select().count()
+    models = DBModel.select() \
+                    .order_by(DBModel.created.desc()) 
+    model_list = []
+    for model in models:
+        if model.model_id in '284284':
+            continue
+        model.parse_data()
+        model_list.append(model)
+
+    return render_template("browse/browse-by-date.html", models=model_list)
