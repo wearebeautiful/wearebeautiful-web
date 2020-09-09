@@ -233,8 +233,9 @@ def prepare_model(model_code, screenshot, solid = False):
     except ValueError as err:
         raise NotFound("Invalid model id/code.")
 
-    model = DBModel.get(DBModel.model_id == id, DBModel.code == code, DBModel.version == version)
-    if not model:
+    try:
+        model = DBModel.get(DBModel.model_id == id, DBModel.code == code, DBModel.version == version)
+    except Exception:
         raise NotFound("model %s does not exist." % model_code)
 
     model.parse_data()
