@@ -4,7 +4,7 @@ SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LOGDIR=/home/wab/logs
 LOGDIR_UID=101
 MODELS=/home/wab/wearebeautiful-models
-DOMAIN=wearebeautiful.info
+DOMAIN=downsampled.wearebeautiful.info
 
 echo "---- start wearebeautiful web"
 docker run -d \
