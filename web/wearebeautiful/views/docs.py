@@ -30,6 +30,10 @@ def model_codes():
 def faq():
     return render_template("docs/faq.html")
 
+@bp.route('/guide')
+@auth.login_required
+def guide():
+    return render_template("docs/illustrated-guide.html")
 
 def make_model_kit(kit_version, model_codes, force=False):
 
@@ -113,3 +117,49 @@ def educational_kits():
 
     print(kits)
     return render_template("docs/educational_kits.html", kits=kits)
+
+
+@bp.route('/model-diversity')
+@auth.login_required
+def diversity():
+    return render_template("docs/model-diversity.html")
+
+
+@bp.route('/statistics')
+@auth.login_required
+def statistics():
+    model_stats = []
+    for model in DBModel.select(DBModel.body_part, fn.COUNT(DBModel.id).alias('ct')).group_by(DBModel.body_part):
+        if model.body_part == 'anatomical':
+            continue
+
+        model_stats.append((model.body_part, model.ct))
+    model_stats = sorted(model_stats, key=itemgetter(1), reverse=True)
+    total_models = DBModel.select().count()
+    total_models -= 1  # remove the anatomical from the count
+
+    with open("static/stats/aggregated_stats.json", "r") as j:
+        jsdoc = j.read()
+
+    stats = json.loads(jsdoc)
+
+    ages = []
+    for age in stats["ages"]:
+        ages.append(( age, stats["ages"][age] ))
+
+    countries = []
+    for country in stats["countries"]:
+        countries.append(( country, int(stats["countries"][country]) ))
+    countries = sorted(countries, key=itemgetter(1), reverse=True)
+
+    ethnicities = []
+    for ethnicity in stats["ethnicities"]:
+        ethnicities.append(( ethnicity, stats["ethnicities"][ethnicity] ))
+    ethnicities = sorted(ethnicities, key=itemgetter(1), reverse=True)
+
+    return render_template("docs/statistics.html", 
+        model_stats=model_stats,
+        total_models=total_models,
+        ages=ages,
+        countries=countries,
+        ethnicities=ethnicities)

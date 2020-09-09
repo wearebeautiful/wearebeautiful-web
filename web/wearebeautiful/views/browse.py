@@ -164,9 +164,3 @@ def by_attributes():
         info=disp_info, info_list=json.dumps(info_list), 
         tags=disp_tags, tags_list=json.dumps(tags_list),
         events=disp_events, events_list=json.dumps(events_list))
-
-
-@bp.route('/guide')
-@auth.login_required
-def guide():
-    return render_template("browse/illustrated-guide.html")
