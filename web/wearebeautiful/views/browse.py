@@ -164,25 +164,3 @@ def by_attributes():
         info=disp_info, info_list=json.dumps(info_list), 
         tags=disp_tags, tags_list=json.dumps(tags_list),
         events=disp_events, events_list=json.dumps(events_list))
-
-
-@bp.route('/guide')
-@auth.login_required
-def guide():
-    return render_template("browse/illustrated-guide.html")
-
-
-@bp.route('/by-date')
-@auth.login_required
-def by_date():
-    model_count = DBModel.select().count()
-    models = DBModel.select() \
-                    .order_by(DBModel.created.desc()) 
-    model_list = []
-    for model in models:
-        if model.model_id in '284284':
-            continue
-        model.parse_data()
-        model_list.append(model)
-
-    return render_template("browse/browse-by-date.html", models=model_list)

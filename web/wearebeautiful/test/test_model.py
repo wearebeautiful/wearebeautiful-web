@@ -11,16 +11,8 @@ class ModelViewsTestCase(ServerTestCase):
     def setUp(self):
         ServerTestCase.setUp(self)
 
-    def test_model_diversity(self):
-        resp = self.client.get(url_for('model.diversity'))
-        self.assert200(resp)
-
     def test_model_root(self):
         resp = self.client.get(url_for('model.model_root'))
-        self.assert200(resp)
-
-    def test_statistics(self):
-        resp = self.client.get(url_for('model.statistics'))
         self.assert200(resp)
 
     def test_model(self):

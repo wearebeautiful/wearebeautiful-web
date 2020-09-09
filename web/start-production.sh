@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WAB_DOMAIN=wearebeautiful.info
+WAB_DOMAIN=downsampled.wearebeautiful.info
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 HOSTNAME=`hostname`
 
