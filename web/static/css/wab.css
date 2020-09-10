@@ -74,6 +74,28 @@ h2 {
     color: #888;
 }
 
+.kit-name {
+    font-weight: bold;
+    font-size: 18pt;
+    margin-top: 2rem;
+}
+
+.kit-tagline {
+    font-style: italic;
+    font-size: 14pt;
+    color: #888;
+    margin-bottom: .75rem;
+}
+
+.kit-desc {
+    font-size: 12pt;
+    margin-bottom: .75rem;
+}
+
+.kit-buttons {
+    margin-top: .75rem;
+}
+
 .quote {
     font-style: italic;
     margin-left: 25px;

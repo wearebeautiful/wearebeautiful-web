@@ -1,0 +1,23 @@
+[
+    {
+        "name"    : "A First Introduction",
+        "tagline" : "Introductory Exhibit",
+        "desc"    : "A vulva, a penis, a standing man and a standing woman",
+        "version" : "v-2020-09-01",
+        "models"  : [ "554268-FSAN-1", "426060-FSAN-1", "883440-VLNN-1", "352392-PSNN-1" ]
+    },
+    {
+        "name"    : "Vulva Exhibit",
+        "tagline" : "Mayhem's Vulva Bonanza",
+        "desc"    : "A more detailed view at vulvas, including compoung model of an excited/not-excited vulva",
+        "version" : "v-2020-09-10",
+        "models"  : [ "453703-VLNN-1", "476551-VLNN-1", "746625-VLNP-2", "662767-VLAN-1", "526534-VLRN-1" ]
+    },
+    {
+        "name"    : "Penis Exhibit",
+        "tagline" : "A package of packages",
+        "desc"    : "A collection of penises, with a circumcised penis and an erect penis",
+        "version" : "v-2020-09-10",
+        "models"  : [ "200102-PLNN-1", "200102-PSNX-1", "352392-PLNN-1", "287482-PSRN-1" ]
+    }
+]

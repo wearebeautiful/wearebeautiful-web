@@ -23,10 +23,6 @@ class DocsViewsTestCase(ServerTestCase):
         resp = self.client.get(url_for('docs.faq'))
         self.assert200(resp)
 
-    def test_educational_kits(self):
-        resp = self.client.get(url_for('docs.educational_kits'))
-        self.assert200(resp)
-
     def test_model_diversity(self):
         resp = self.client.get(url_for('docs.diversity'))
         self.assert200(resp)
