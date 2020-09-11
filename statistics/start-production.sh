@@ -8,6 +8,18 @@ docker network create wab-network
 echo "---- create grafana volume"
 docker volume create --driver local --name grafana-volume
 
+echo "---- create influx volume"
+docker volume create --driver local --name influx-volume
+
+echo "---- start influxdb"
+docker run -d \
+    -p "8086:8086" \
+    --name influxdb \
+    --restart unless-stopped \
+    --network=host \
+    -v influx-volume:/var/lib/influxdb \
+    influxdb:1.8.2
+
 echo "---- start telegraf"
 sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
 docker run -d \
