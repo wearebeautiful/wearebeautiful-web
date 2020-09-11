@@ -9,11 +9,11 @@
     {% endblock %}
 
     {% block styles %}
-    <link rel="stylesheet" href="{{ static_url_for('static', filename='gcss/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ static_url_for('static', filename='css/wab.css') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ static_url_for('static', filename='img/favicon-16x16.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ static_url_for('static', filename='img/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="96x96" href="{{ static_url_for('static', filename='img/favicon-96x96.png') }}">
+    <link rel="stylesheet" href="{{ static_url('gcss/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ static_url('css/wab.css') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ static_url('img/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ static_url('img/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ static_url('img/favicon-96x96.png') }}">
     {% endblock %}
 
     <title>{% block title %}We are beautiful!{% endblock %}</title>

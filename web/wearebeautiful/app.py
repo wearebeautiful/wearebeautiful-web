@@ -14,7 +14,6 @@ import wearebeautiful.utils as utils
 import config
 
 
-STATIC_PATH = "/static"
 STATIC_FOLDER = "../static"
 TEMPLATE_FOLDER = "../template"
 
@@ -22,12 +21,12 @@ auth = init_auth()
 flask_static_digest = FlaskStaticDigest()
 
 app = Flask(__name__,
-            static_url_path = STATIC_PATH,
             static_folder = STATIC_FOLDER, 
             template_folder = TEMPLATE_FOLDER)
 app.secret_key = config.SECRET_KEY
 app.config.from_object('config')
 app.config['FONTAWESOME_SERVE_LOCAL'] = False
+app.config['FLASK_STATIC_DIGEST'] = flask_static_digest
 
 app.wsgi_app = ProxyFix(app.wsgi_app)
 
