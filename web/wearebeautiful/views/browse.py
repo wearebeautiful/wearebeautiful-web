@@ -7,7 +7,9 @@ from werkzeug.exceptions import BadRequest, NotFound, InternalServerError
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
+from wearebeautiful.utils import url_for_tagged_screenshot
 import config
+
 
 MODEL_KIT_JSON = "template/exhibits/exhibits.json"
 
@@ -237,7 +239,7 @@ def prepare_kits():
             id, code, version = model.split('-')
             m = {}
             m['model'] = model
-            m['screenshot'] = config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%s-screenshot.jpg" % (id, code, id, code, version)
+            m['screenshot'] = url_for_tagged_screenshot(id, code, int(version))
             models.append(m)
 
         entry['models'] = models

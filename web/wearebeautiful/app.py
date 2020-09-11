@@ -1,15 +1,18 @@
+import json
 import os
 import sys
+
 from flask import Flask, render_template, flash, url_for, current_app, redirect
 from flask_httpauth import HTTPBasicAuth
 from flask_static_digest import FlaskStaticDigest
 from werkzeug.middleware.proxy_fix import ProxyFix
 from werkzeug.security import generate_password_hash, check_password_hash
-import config
-import json
+
 from wearebeautiful.db_model import db, DB_FILE
 from wearebeautiful.auth import init_auth
-from wearebeautiful.utils import static_url, url_for_screenshot_m, url_for_screenshot
+import wearebeautiful.utils as utils
+import config
+
 
 STATIC_PATH = "/static"
 STATIC_FOLDER = "../static"
@@ -45,23 +48,11 @@ app.register_blueprint(model_bp, url_prefix='/model')
 app.register_blueprint(browse_bp, url_prefix='/browse')
 app.register_blueprint(docs_bp, url_prefix='/docs')
 
-
-def static_url(filename):
-    return config.STATIC_BASE_URL + "/static" + filename
-
-def url_for_screenshot_m(model):
-    return config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%d-screenshot.jpg" % (model.model_id, model.code, model.model_id, model.code, model.version)
-
-def url_for_screenshot(id, code, version):
-    return config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%d-screenshot.jpg" % (id, code, id, code, version)
-
-def url_for_tagged_screenshot_m(model):
-    return config.IMAGE_BASE_URL + "/model/m/%s/%s/%s-%s-%d-screenshot-tagged.jpg" % (model.model_id, model.code, model.model_id, model.code, model.version)
-
-app.jinja_env.globals.update(static_url=static_url)
-app.jinja_env.globals.update(url_for_screenshot=url_for_screenshot)
-app.jinja_env.globals.update(url_for_screenshot_m=url_for_screenshot_m)
-app.jinja_env.globals.update(url_for_tagged_screenshot_m=url_for_tagged_screenshot_m)
+app.jinja_env.globals.update(static_url=utils.static_url)
+app.jinja_env.globals.update(url_for_screenshot=utils.url_for_screenshot)
+app.jinja_env.globals.update(url_for_screenshot_m=utils.url_for_screenshot_m)
+app.jinja_env.globals.update(url_for_tagged_screenshot=utils.url_for_tagged_screenshot)
+app.jinja_env.globals.update(url_for_tagged_screenshot_m=utils.url_for_tagged_screenshot_m)
 
 @app.errorhandler(404)
 def page_not_found(message):
