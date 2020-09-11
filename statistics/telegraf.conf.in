@@ -4,6 +4,7 @@
   # rack = "1a"
   ## Environment variables can be used as tags, and throughout the config file
   # user = "$USER"
+  host="vulva"
 
 
 # Configuration for telegraf agent
@@ -18,7 +19,7 @@
   precision = ""
   debug = false
   quiet = false
-  hostname = "%hostname%"
+  hostname = ""
   omit_hostname = false
 
 
@@ -26,7 +27,7 @@
 
 # Configuration for influxdb server to send metrics to
 [[outputs.influxdb]]
-  urls = ["http://localhost:8086"]
+  urls = ["http://stats.wearebeautiful.info:8086"]
   database = "telegraf_metrics"
 
   ## Retention policy to write to. Empty string writes to the default rp.
