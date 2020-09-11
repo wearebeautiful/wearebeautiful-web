@@ -12,6 +12,9 @@ SUBMIT_SCREENSHOTS = False
 # Production Settings -- leave on defaults for dev setup.
 #
 
+# Site domain -- which domain to serve the site from.
+SITE_DOMAIN = "wearebeautiful.info"
+
 # content-type / host mapping
 # Each path should be without trailing /
 STATIC_BASE_URL = ""

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-WAB_DOMAIN=downsampled.wearebeautiful.info
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 HOSTNAME=`hostname`
+WAB_DOMAIN=`echo "import config; print(config.SITE_DOMAIN)" | python3`
 
 echo "---- start nginx proxy, le"
 
