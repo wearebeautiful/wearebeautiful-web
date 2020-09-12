@@ -44,6 +44,9 @@ docker run -d \
     --network=wab-network \
     wearebeautiful-logs
 
+sudo ufw-docker delete allow wab-logs 8000
+sudo ufw-docker delete allow wab-logs 8001
+
 echo "---- start telegraf"
 sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
 docker run -d \
