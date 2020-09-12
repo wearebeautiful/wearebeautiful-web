@@ -48,15 +48,18 @@ sudo ufw-docker delete allow wab-logs 8000
 sudo ufw-docker delete allow wab-logs 8001
 
 echo "---- start telegraf"
-sed 's/%hostname%/'$HOSTNAME'/g' telegraf.conf.in > telegraf.conf
 docker run -d \
+    -p "9273:9273" \
     --name telegraf \
     --network=wab-network \
     -e HOST_PROC=/host/proc \
     -v /proc:/host/proc:ro \
     -v `pwd`/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+    -v /home/wab/logs:/logs:ro \
     --restart unless-stopped \
-    telegraf:1.13.4
+    telegraf:1.15.2
+
+# docker exec -it telegraf telegraf --config /etc/telegraf/telegraf.conf --test
 
 
 echo "---- enable firewall ports for services"
