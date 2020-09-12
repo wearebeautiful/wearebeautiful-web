@@ -52,6 +52,7 @@ docker run -d \
     -p "9273:9273" \
     --name telegraf \
     --network=wab-network \
+    --hostname=`hostname` \
     -e HOST_PROC=/host/proc \
     -v /proc:/host/proc:ro \
     -v `pwd`/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
