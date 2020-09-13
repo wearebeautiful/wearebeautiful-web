@@ -5,6 +5,7 @@ import subprocess
 from tempfile import mkdtemp
 from wearebeautiful.db_model import DBModel
 from wearebeautiful.utils import url_for_tagged_screenshot, url_for_screenshot
+from wearebeautiful.model_code_info import BODY_PART, EXCITED, ARRANGEMENT, POSE
 import config
 
 
@@ -68,9 +69,16 @@ def load_kit_list():
         for model in kit['models']:
             id, code, version = model.split('-')
             m = {}
+            m['id'] = id
             m['model'] = model
+            m['code'] = code
+            m['version'] = version
             m['screenshot'] = url_for_screenshot(id, code, int(version))
             m['tagged_screenshot'] = url_for_tagged_screenshot(id, code, int(version))
+            m['body_part'] = BODY_PART[code[0]]
+            m['pose'] = POSE[code[1]]
+            m['arrangement'] = ARRANGEMENT[code[2]]
+            m['excited'] = EXCITED[code[3]]
             models.append(m)
 
         entry['models'] = models
