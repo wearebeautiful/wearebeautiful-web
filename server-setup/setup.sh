@@ -28,6 +28,7 @@ mkdir /home/wab/goaccess
 mkdir /home/wab/goaccess-html
 
 install -m 440 sudoers /etc/sudoers.d/90-wab
+echo "Domains=wearebeautiful.info" >> /etc/systemd/resolved.conf
 
 # install authorized_keys for users
 mkdir /home/robert/.ssh
