@@ -148,6 +148,12 @@ h2 {
     border-radius: 15px;
 }
 
+.exhibit-screenshot {
+    width: 90%;
+    border-radius: 15px;
+    padding-top: 5px;
+}
+
 .scale {
     transform: scaleY(1.05);
     padding-top: 5px; 
@@ -155,12 +161,6 @@ h2 {
 
 .model-link {
     text-decoration: none;
-}
-
-.screenshot {
-    width: 90%;
-    object-fit: cover;
-    max-width: 500px;
 }
 
 .index-cell {
@@ -310,7 +310,7 @@ h2 {
 }
 
 #footer {
-    margin-top: 2rem;
+    margin-top: 5rem;
     margin-bottom: .5rem;
     font-size: 10pt;
     color: #888;

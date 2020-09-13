@@ -11,10 +11,6 @@ class BrowseViewsTestCase(ServerTestCase):
     def setUp(self):
         ServerTestCase.setUp(self)
 
-    def test_exhibits(self):
-        resp = self.client.get(url_for('browse.exhibits'))
-        self.assert200(resp)
-
     def test_by_part(self):
         resp = self.client.get(url_for('browse.by_part'))
         self.assert200(resp)

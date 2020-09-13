@@ -2,11 +2,11 @@
 # Directories
 #
 MODEL_DIR = "/wearebeautiful-models"
-KIT_TMP_DIR = "/kits"
+KIT_DIR = "/kits"
 
 # Options
-SUBMIT_SCREENSHOTS = False
-
+SUBMIT_SCREENSHOTS = True
+CREATE_KITS_ON_STARTUP = True
 
 # 
 # Production Settings -- leave on defaults for dev setup.

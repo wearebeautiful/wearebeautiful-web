@@ -4,7 +4,10 @@ SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 LOGDIR=/home/wab/logs
 LOGDIR_UID=101
 MODELS=/home/wab/wearebeautiful-models
+KITS=/home/wab/kit-cache
 WAB_DOMAIN=`echo "import config; print(config.SITE_DOMAIN)" | python3`
+
+mkdir -p $KITS
 
 echo "---- start wearebeautiful web"
 docker run -d \
@@ -12,6 +15,7 @@ docker run -d \
     --name wab-web \
     --network=wab-network \
     -v $MODELS:/wearebeautiful-models \
+    -v $KITS:/kits \
     -v $SRC_DIR/admin/uwsgi/uwsgi.ini:/code/uwsgi.ini:ro \
     wearebeautiful.info:prod uwsgi --ini /code/uwsgi.ini
 
@@ -32,3 +36,6 @@ docker run -d \
     --env "LETSENCRYPT_EMAIL=rob@wearebeautiful.info" \
     --env "VIRTUAL_HOST=$WAB_DOMAIN" \
     wearebeautiful.info:prod
+
+echo "---- create kits"
+docker exec -it wab-web python3 make_kits.py

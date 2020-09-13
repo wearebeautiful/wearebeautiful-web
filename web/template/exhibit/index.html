@@ -1,7 +1,7 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
   <div class="row">
-    <div class="col-12 text-layout">
+    <div class="col-12 browse-layout">
         <h2>Model exhibits</h2>
 
         {% if error %}
@@ -29,23 +29,30 @@
             <div class="kit-tagline">{{ kit.tagline }}</div>
             <div class="kit-desc">{{ kit.desc }}</div>
             <div class="row">
-              {% for model in kit.models[:3] %}
-                <div class="col-sm-4 text-center">
-                  <div>
-                    {{ model.model }}
-                  </div>
+              {% for model in kit.models[:4] %}
+                <div class="col-sm-3 text-center">
                   <a href="/model/{{ model.model }}">
-                    <img src="{{ model.screenshot }}" style="width: 200px">   
+                    <img src="{{ model.screenshot }}" class="exhibit-screenshot">   
                   </a>
                 </div>
               {% endfor %}
             </div>
             <div class="row kit-buttons">
-              <div class="col-sm-6 text-center">
-                <button type="button" class="btn btn-large btn-secondary" style="width: 60%" href="/browse/kit/{{ kit.version }}">View Exhibit</button>
+              <div class="col-sm-6 text-center" style="padding-top: 5px">
+                <a type="button" 
+                   class="btn btn-large btn-outline-primary" 
+                   style="width: 60%" 
+                   href="/exhibit/{{ kit.slug }}">
+                  View Exhibit
+                </a>
               </div>
-              <div class="col-sm-6 text-center">
-                <button type="button" class="btn btn-large btn-secondary" style="width: 60%" href="/browse/kit/{{ kit.version }}">Download kit</button>
+              <div class="col-sm-6 text-center" style="padding-top: 5px">
+                <a type="button" 
+                   class="btn btn-large btn-outline-primary" 
+                   style="width: 60%" 
+                   href="/exhibit/kit/{{ kit.slug }}">
+                  Download kit
+                </a>
               </div>
             </div>
           </div>

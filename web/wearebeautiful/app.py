@@ -38,14 +38,17 @@ if not os.path.exists(db_file):
 
 db.init(db_file)
 
+
 from wearebeautiful.views.index import bp as index_bp
 from wearebeautiful.views.model import bp as model_bp
 from wearebeautiful.views.browse import bp as browse_bp
 from wearebeautiful.views.docs import bp as docs_bp
+from wearebeautiful.views.exhibit import bp as exhibit_bp
 app.register_blueprint(index_bp)
 app.register_blueprint(model_bp, url_prefix='/model')
 app.register_blueprint(browse_bp, url_prefix='/browse')
 app.register_blueprint(docs_bp, url_prefix='/docs')
+app.register_blueprint(exhibit_bp, url_prefix='/exhibit')
 
 app.jinja_env.globals.update(static_url=utils.static_url)
 app.jinja_env.globals.update(url_for_screenshot=utils.url_for_screenshot)
