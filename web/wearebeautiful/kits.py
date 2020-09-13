@@ -3,6 +3,7 @@ import json
 from shutil import copyfile, rmtree
 import subprocess
 from tempfile import mkdtemp
+import zipfile
 from wearebeautiful.db_model import DBModel
 from wearebeautiful.utils import url_for_tagged_screenshot, url_for_screenshot
 from wearebeautiful.model_code_info import BODY_PART, EXCITED, ARRANGEMENT, POSE
@@ -32,7 +33,7 @@ def make_model_kit(kit_data, force=False):
     print("  %s" % zip_file_name)
 
     tmp_dir = mkdtemp()
-    zip_files = []
+    zip_files = [ os.path.join(config.MODEL_DIR, "COPYING") ]
     for model in kit_data['models']:
         model_code = model['model']
         try:
@@ -47,8 +48,11 @@ def make_model_kit(kit_data, force=False):
         copyfile(solid_file, dest_file)
         subprocess.run(['gunzip', dest_file])
         zip_files.append(dest_file[:-3])
+        zip_files.append(os.path.join(config.MODEL_DIR, "%s/%s/%s-screenshot-tagged.jpg" % (id, code, model_code)))
 
-    subprocess.run(['zip', '-q', zip_file_name, *zip_files])
+    with zipfile.ZipFile(zip_file_name, mode='w') as zf:
+        for filename in zip_files:
+            zf.write(filename, arcname=os.path.basename(filename))
     rmtree(tmp_dir)
 
     return zip_file_name

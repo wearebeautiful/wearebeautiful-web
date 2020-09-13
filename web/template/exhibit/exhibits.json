@@ -3,9 +3,9 @@
         "name"    : "A First Introduction",
         "tagline" : "Introductory Exhibit",
         "slug"    : "introduction",
-        "desc"    : "A vulva, a penis, a standing man and a standing woman",
+        "desc"    : "An exhibit with two full body models and close-ups of their penis and vulva.",
         "version" : "2020-09-01",
-        "models"  : [ "554268-FSAN-1", "426060-FSAN-1", "883440-VLNN-1", "352392-PSNN-1" ]
+        "models"  : [ "554268-FSAN-1", "426060-FSAN-1", "554268-PLNN-1", "426060-VLNN-1" ]
     },
     {
         "name"    : "Vulva Exhibit",

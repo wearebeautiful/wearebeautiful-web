@@ -60,6 +60,14 @@ app.jinja_env.globals.update(url_for_tagged_screenshot_m=utils.url_for_tagged_sc
 def page_not_found(message):
     return render_template('errors/404.html', message=message), 404
 
+@app.errorhandler(401)
+def unauthorized(message):
+    return render_template('errors/401.html', message=message), 401
+
 @app.errorhandler(403)
-def page_not_found(message):
-    return render_template('errors/403.html', message=message), 403
+def forbidden(message):
+    return render_template('errors/401.html', message=message), 403
+
+@app.errorhandler(500)
+def internal_server_error(message):
+    return render_template('errors/500.html', message=message), 500

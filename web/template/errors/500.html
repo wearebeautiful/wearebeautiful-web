@@ -1,11 +1,14 @@
 {%- extends 'base.html' -%}
 {%- block content -%}
 <div class="row">
-  <div class="col-12">
-    <h1>Page not found</h1>
+  <div cass="col-12">
+    <h1>Internal server error</h1>
     <p style="padding-top: 2rem; font-size: 15pt">
-       Oh dear, we cannot find that page anywhere, we really tried!
+       Whoops, we appear to have cocked something up. Sorry 'about that!
     </p>
+    <div class="alert alert-danger" role="alert" style="padding-top: .2rem; font-size: 15pt">
+       {{ message }}
+    </div>
     <p style="padding-top: 3rem;">
        <a href="{{ url_for('index.browse') }}">Care to browse our models, instead?</a>
     </p>

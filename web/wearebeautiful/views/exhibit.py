@@ -1,8 +1,8 @@
 import os
-from werkzeug.exceptions import NotFound
+from werkzeug.exceptions import NotFound, InternalServerError
 from flask import render_template,  url_for, Blueprint, send_file
 from wearebeautiful.auth import _auth as auth
-from wearebeautiful.kits import load_kit_list
+from wearebeautiful.kits import load_kit_list, make_kit_filename
 
 
 bp = Blueprint('exhibit', __name__)
@@ -15,25 +15,49 @@ def index():
     return render_template("exhibit/index.html", kits=kits)
 
 
-@bp.route('/kit/<slug>')
+@bp.route('/<slug>/download')
 @auth.login_required
-def send_model(slug):
+def dafadfsend_kit(slug):
     filename = make_kit_filename(slug)
     if not os.path.exists(filename):
         raise NotFound("Kit '%s' not found." % slug)
 
-    return send_file(filename, attachment_filename=filename, as_attachment=True)
+    return send_file(filename, attachment_filename=os.path.basename(filename), as_attachment=True)
 
 
 @bp.route('/<slug>')
 @auth.login_required
 def exhibit(slug):
     kits = load_kit_list()
-    for kit in kits:
-        if kit['slug'] == slug:
-            kit_data = kit
+    for k in kits:
+        if k['slug'] == slug:
+            kit = k
             break
     else:
         raise NotFound("Exhibit '%s' not found." % slug)
 
-    return render_template("exhibit/base.html", kit=kit_data)
+    template = render_template("exhibit/exhibit-%s.html" % slug)
+    if not template.startswith("<!--"):
+        raise InternalServerError("exhibit template for '%s' does not start with a comment.")
+
+    template_lines = template.split("\n")
+    template_lines.pop(0)
+
+    sections = []
+    text = ""
+    for line in template_lines:
+        if line.startswith("<!--"):
+           sections.append(text)
+           text = ""
+           continue
+        text += line
+
+    sections.append(text)
+
+
+    print(sections)
+
+    for model, section in zip(kit['models'], sections):
+        model['content'] = section
+
+    return render_template("exhibit/base.html", kit=kit)
