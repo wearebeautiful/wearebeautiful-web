@@ -2,7 +2,7 @@ import os
 import json
 from peewee import *
 from werkzeug.exceptions import NotFound
-from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request
+from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 from wearebeautiful.utils import url_for_screenshot_m
@@ -18,6 +18,10 @@ def soon():
 @bp.route('/robots.txt')
 def robots():
     return render_template("robots.txt")
+
+@bp.route('/favicon.ico')
+def favicon():
+    return send_file("../static/img/favicon-32x32.png")
 
 def load_slide_models(slide_model_ids):
     slide_models = []
