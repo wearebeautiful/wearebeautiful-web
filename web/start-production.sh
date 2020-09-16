@@ -67,4 +67,7 @@ echo "---- enable firewall ports for services"
 sudo ufw-docker allow nginx 443
 sudo ufw-docker allow nginx 80
 
+echo "---- clear cache"
+docker exec -it wab-comp admin/clear_cache.sh
+
 echo "---- done"
