@@ -54,10 +54,9 @@ def exhibit(slug):
 
     sections.append(text)
 
-
-    print(sections)
-
     for model, section in zip(kit['models'], sections):
         model['content'] = section
 
-    return render_template("exhibit/base.html", kit=kit)
+    footer = "\n".join(sections[len(kit['models']):])
+
+    return render_template("exhibit/base.html", kit=kit, footer=footer)

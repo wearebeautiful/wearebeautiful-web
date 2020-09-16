@@ -6,7 +6,6 @@ KIT_DIR = "/kits"
 
 # Options
 SUBMIT_SCREENSHOTS = True
-CREATE_KITS_ON_STARTUP = True
 
 # 
 # Production Settings -- leave on defaults for dev setup.

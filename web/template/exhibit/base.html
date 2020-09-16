@@ -49,6 +49,14 @@
           </div>
         {% endfor %}
 
+        {% if footer %}
+          <div class="row">
+            <div class="col-sm-12" style="margin-top: 2rem">
+              {{ footer|safe }}
+            </div>
+          </div>
+        {% endif %}
+
     </div>
   </div>
 {% endblock%}

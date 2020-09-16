@@ -50,6 +50,7 @@ def make_model_kit(kit_data, force=False):
         zip_files.append(dest_file[:-3])
         zip_files.append(os.path.join(config.MODEL_DIR, "%s/%s/%s-screenshot-tagged.jpg" % (id, code, model_code)))
 
+
     with zipfile.ZipFile(zip_file_name, mode='w') as zf:
         for filename in zip_files:
             zf.write(filename, arcname=os.path.basename(filename))
@@ -71,7 +72,13 @@ def load_kit_list():
 
         models = []
         for model in kit['models']:
-            id, code, version = model.split('-')
+            try:
+                id, code, version = model.split('-')
+            except ValueError:
+                id, code = model.split('-')
+                version = 1
+                model += "-1"
+                
             m = {}
             m['id'] = id
             m['model'] = model

@@ -4,13 +4,12 @@ from wearebeautiful.kits import prepare_kits
 import config
 
 def make_kits(force):
-    if config.CREATE_KITS_ON_STARTUP or force:
-        print("Create exhibits kits")
-        try:
-            kits = prepare_kits(force)
-        except (IOError, KeyError) as err:
-            print("Cannot start server, making exhibit kits failed:", str(err))
-            sys.exit(-1)
+    print("Create exhibits kits")
+    try:
+        kits = prepare_kits(force)
+    except (IOError, KeyError) as err:
+        print("Cannot start server, making exhibit kits failed:", str(err))
+        sys.exit(-1)
 
 if __name__ == "__main__":
     force = False
