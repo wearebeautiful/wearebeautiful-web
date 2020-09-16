@@ -450,7 +450,7 @@
 
         function color_well_click(well) {
             var color = $(well).css("background-color");
-            mesh.material = new THREE.MeshStandardMaterial( { color: color, roughness: .5, metalness: .1 } );
+            mesh.material = new THREE.MeshStandardMaterial( { color: color, roughness: .6, metalness: .1 } );
             mesh.material.side = THREE.DoubleSide;
         }
 
@@ -502,7 +502,7 @@
        		scene.background = new THREE.Color( color );
 
                 color = $("#color-well-1").css("background-color");
-                var material = new THREE.MeshStandardMaterial( { color: color, roughness: .5, metalness: .1 } );
+                var material = new THREE.MeshStandardMaterial( { color: color, roughness: .6, metalness: .1 } );
                 material.side = THREE.DoubleSide;
 
                 var model_file;
