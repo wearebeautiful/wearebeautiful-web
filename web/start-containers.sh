@@ -37,5 +37,8 @@ docker run -d \
     --env "VIRTUAL_HOST=$WAB_DOMAIN" \
     wearebeautiful.info:prod
 
+#   Use this CMD to get a full debug log
+#    wearebeautiful.info:prod nginx-debug -g 'daemon off;'
+
 echo "---- create kits"
 docker exec -it wab-web python3 make_kits.py
