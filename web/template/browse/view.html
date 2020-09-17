@@ -55,7 +55,7 @@
                     {% endfor %}
                </h6>
                {% if model.comment %}
-                  <p class="card-text">{{ model.comment }}</p>
+                  <p class="card-text">{{ model.comment|safe}}</p>
                {% else %}
                   <p class="card-text text-muted">( this model has no comment )</p>
                {% endif %}
@@ -216,6 +216,7 @@
                      </p>
                    </div>
 
+                   <button class="btn btn-primary btn-large" type="button" id="upload-model">Upload model</button>
                 </div>
               </div>
             </div>
@@ -614,7 +615,7 @@
 
                 $.ajax({
                   type: "POST",
-                  url: "http://localhost/model/{{ model.model_id }}-{{ model.code }}-{{ model.version }}/screenshot",
+                  url: "{{ base_url }}/model/{{ model.model_id }}-{{ model.code }}-{{ model.version }}/screenshot",
                   data: img_data
                 });
          }
@@ -629,26 +630,13 @@
                 $("#copy-screenshot-url-button").html('<i class="far fa-thumbs-up"></i>');
          }
          function upload_model_to_craftcloud() {
-                $.ajax({
-                  type: "POST",
-                  url: "https://api.craftcloud3d.com/configuration",
-                  data: {
-                      items: [
-                        {
-                          modelUrl: "{{ downloads['solid'][1] }}",
-                          quantity: 1,
-                          unit: 'mm'
-                        }
-                      ]
-                  },
-                  dataType: 'json',
-                  headers: { 'use-model-urls': 'true' },
-                  success: upload_model_to_craftcloud_done,
-                });
-        }
-        function upload_model_to_craftcloud_done(response_text)
-        {
-            console.log("upload complete: " + response_text);
-        }
+                $.get("{{ base_url }}/model/{{ model.display_code }}/upload", null, 
+                      upload_model_to_craftcloud_done
+                );
+         }
+         function upload_model_to_craftcloud_done(response_text)
+         {
+             window.location.href = "https://app.craftcloud3d.com/configuration/" + response_text;
+         }
 </script>
 {% endblock %}

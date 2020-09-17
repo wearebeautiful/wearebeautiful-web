@@ -3,6 +3,7 @@ import json
 import gzip
 import os
 import random
+import requests
 from subprocess import run, CalledProcessError
 import tempfile
 import urllib
@@ -10,7 +11,7 @@ from zipfile import ZipFile
 
 from PIL import Image
 from peewee import *
-from werkzeug.exceptions import BadRequest, NotFound
+from werkzeug.exceptions import BadRequest, NotFound, ServiceUnavailable
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file, Response, make_response
 from hurry.filesize import size, alternative
 from wearebeautiful.auth import _auth as auth
@@ -116,8 +117,12 @@ def upload_model(model):
             }
         ]
     }
-    print(data)
-    return Response("foo!", status=200)
+    r = requests.post('https://api.craftcloud3d.com/configuration', json=data, headers={ "use-model-urls": "true" })
+    if not r.ok:
+        print("Calling craftcloud failed: %s '%s'" % (r.status_code, r.text))
+        raise ServiceUnavailable("Could not upload model to craft cloud servers. Please try again later.")
+
+    return Response(r.json()['configurationId'], status=200)
 
 
 @bp.route('/')
@@ -302,6 +307,10 @@ def prepare_model(model_code, screenshot, solid = False):
     share_text = "Check out this 3D model of a human from We Are Beautiful (@quatschunfug):\n\n%s: %s. \n\n%s" % \
         (model.display_code, model.threed_model_description(), "https://wearebeautiful.info" + request.path)
 
+    if current_app.debug:
+        base_url = "http://localhost"
+    else:
+        base_url = "http://" + config.SITE_DOMAIN
 
     temp = render_template("browse/view.html", 
         model = model, 
@@ -312,6 +321,7 @@ def prepare_model(model_code, screenshot, solid = False):
         downloads = downloads,
         solid=(1 if solid else 0),
         related = get_related_models(model),
+        base_url=base_url,
         share_text=urllib.parse.quote(share_text))
 
     r = make_response(temp)

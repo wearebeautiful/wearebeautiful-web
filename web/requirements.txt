@@ -13,3 +13,4 @@ peewee==3.13.1
 py-dateutil==2.2
 hurry.filesize==0.9
 Pillow==7.2.0 
+requests==2.24.0
