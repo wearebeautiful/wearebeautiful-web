@@ -40,19 +40,28 @@ def send_model(filename):
         return response
 
 
-    f = os.path.join(current_app.config['MODEL_DIR'], filename)
-    if not os.path.exists(f):
-        raise NotFound()
+    if not filename.endswith(".stl"):
+        return send_file(os.path.join(current_app.config['MODEL_DIR'], filename))
 
-    return send_file(f)
+    gz_filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
+    try:
+        with open(gz_filename, "rb") as f:
+            content = f.read()
+    except IOError as err:
+        raise NotFound("file '%s' not found." % filename)
 
-@bp.route('/d/<path:filename>')
+    response = Response(content, status=200)
+    response.headers['Content-Length'] = len(content)
+    response.headers['Content-Type'] = 'model/stl'
+    response.headers['Content-Encoding'] = 'gzip'
+    return response
+
+
+@bp.route('/m/<path:filename>/u')
 @auth.login_required
-def download_model(filename):
-    if filename.endswith(".stl"):
-        filename += ".gz"
-    if current_app.debug:
-        filename = os.path.join(current_app.config['MODEL_DIR'], filename)
+def send_model_uncompressed(filename):
+    if current_app.debug and filename.endswith(".stl"):
+        filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
         if not os.path.exists(filename):
             raise NotFound()
 
@@ -65,18 +74,19 @@ def download_model(filename):
         return response
 
 
-    filename = os.path.join(current_app.config['MODEL_DIR'], filename)
-    try:
-        with open(filename, "rb") as f:
-            content = f.read()
+    if not filename.endswith(".stl"):
+        return send_file(os.path.join(current_app.config['MODEL_DIR'], filename))
 
+    gz_filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
+    try:
+        with gzip.open(gz_filename, 'rb') as f:
+            content = f.read()
     except IOError as err:
-        raise NotFound("STL file not found.")
+        raise NotFound("file '%s' not found." % filename)
 
     response = Response(content, status=200)
     response.headers['Content-Length'] = len(content)
     response.headers['Content-Type'] = 'model/stl'
-    response.headers['Content-Encoding'] = 'gzip'
     return response
 
 
@@ -255,8 +265,8 @@ def prepare_model(model_code, screenshot, solid = False):
     surface_size = os.path.getsize(config.MODEL_DIR + surface_path + ".gz")
 
     downloads = {
-        'solid' : (size(solid_size, system=alternative), config.STL_BASE_URL + "/model/d" + solid_path, solid_file),
-        'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/d" + surface_path, surface_file)
+        'solid' : (size(solid_size, system=alternative), config.STL_BASE_URL + "/model/m" + solid_path, solid_file),
+        'surface' : (size(surface_size, system=alternative), config.STL_BASE_URL + "/model/m" + surface_path, surface_file)
     }
 
     share_text = "Check out this 3D model of a human from We Are Beautiful (@quatschunfug):\n\n%s: %s. \n\n%s" % \
