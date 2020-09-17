@@ -120,7 +120,7 @@ def upload_model(model):
     r = requests.post('https://api.craftcloud3d.com/configuration', json=data, headers={ "use-model-urls": "true" })
     if not r.ok:
         print("Calling craftcloud failed: %s '%s'" % (r.status_code, r.text))
-        raise ServiceUnavailable("Could not upload model to craft cloud servers. Please try again later.")
+        return make_response("Could not upload model to craft cloud servers. Please try again later."), 503
 
     return Response(r.json()['configurationId'], status=200)
 
