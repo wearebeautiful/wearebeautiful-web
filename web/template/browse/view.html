@@ -34,13 +34,8 @@
 
         <div id="distract-mode" class="d-none">
           <p class="jump-to text-right">
-             {% if solid %}
-               <a href="/model/{{ model.display_code }}">View surface</a> |
-             {% else %}
-               <a href="/model/{{ model.display_code }}/solid">View solid</a> |
-             {% endif %}
              Jump to:
-             <a href="#model-info" id="info-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
+             <a href="#model-info" id="info-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">details</a> |
              {% if model.comment %}
                <a href="#comment" id="comment-link" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
             {% endif %}
@@ -49,7 +44,7 @@
           </p>
 
 
-          <div class="model-desc">
+          <div class="model-desc" style="padding: 5px">
             {{ model.threed_model_description(True) }}
             {% if model.tags_list or model.history_list %}
               <span class="model-tags">
@@ -174,61 +169,69 @@
               </div>
               <div id="collapse-download" class="collapse" aria-labelledby="heading-download" data-parent="#accordion">
                 <div class="card-body">
-                   <h4>Download model or surface</h4>
-                   <p>
-                      For informaton on how to 3D print or order 3D prints of these models, please read our <a href="/docs/printing-guide">
-                      model printing guidelines</a>. To download the models, select a file below:
-                   </p>
-                   <table class="table table-striped table-bordered table-sm">
-                      <tr>
-                        <td><a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> ({{ downloads['solid'][0] }} download size)</td>
-                        <td>STL file format, ready for 3D printing</td>
-                      </tr>
-                      <tr>
-                        <td><a href="{{ downloads['surface'][1] }}">{{ downloads['surface'][2] }}</a> ({{ downloads['surface'][0] }} download size)</td>
-                        <td>STL file format, suited for 3D modeling</td>
-                      </tr>
-                   </table>
-                   <h4>Order a 3D print of a model</h4>
-                   <p>
-                      If you do not have access to a 3D printer or know anyone who does, you can also have these models custom
-                      printed and mailed to you. If you'd like to order a print, follow these steps:
-                   </p>
-                   <ol>
-                     <li>
-                       Download the solid model file <a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> and
-                       save it to your computer/device.
-                     </li>
-                     <li>
-                       Go to <a href="https://app.craftcloud3d.com/">CraftCloud</a> and upload the model you downloaded in step #1.
-                     </li>
-                     <li>
-                       Select a size for your model -- the price of the print is directly related to the cost the print. Simple
-                       vulva and penis models with the longest axis being about 10cm long make for a nice model to hold and
-                       examine. Be careful with the size -- scaling models up get expensive <em>fast</em>.
-                     </li>
-                     <li>
-                       Select PLA as the material -- it is perfect for these models and the cheapest option. Of course
-                       you can choose any other material you like -- even gold is an option.
-                     </li> 
-                     <li>
-                       Select the default 20% infill, which is more than enough to make a strong print.
-                     </li>
-                     <li>
-                       Select a color of your choice and then finish the process to purchase your print.
-                     </li>
-                   </ol>
+                    <div class="float-right">
+                     {% if solid %}
+                       <a href="/model/{{ model.display_code }}">View surface</a>
+                     {% else %}
+                       <a href="/model/{{ model.display_code }}/solid">Preview solid model</a>
+                     {% endif %}
+                   </div>
+                   <div>
+                     <h4>Download model or surface</h4>
+                     <p>
+                        For informaton on how to 3D print or order 3D prints of these models, please read our <a href="/docs/printing-guide">
+                        model printing guidelines</a>. To download the models, select a file below:
+                     </p>
+                     <table class="table table-striped table-bordered table-sm">
+                        <tr>
+                          <td><a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> ({{ downloads['solid'][0] }} download size)</td>
+                          <td>STL file format, ready for 3D printing</td>
+                        </tr>
+                        <tr>
+                          <td><a href="{{ downloads['surface'][1] }}">{{ downloads['surface'][2] }}</a> ({{ downloads['surface'][0] }} download size)</td>
+                          <td>STL file format, suited for 3D modeling</td>
+                        </tr>
+                     </table>
+                     <h4>Order a 3D print of a model</h4>
+                     <p>
+                        If you do not have access to a 3D printer or know anyone who does, you can also have these models custom
+                        printed and mailed to you. If you'd like to order a print, follow these steps:
+                     </p>
+                     <ol>
+                       <li>
+                         Download the solid model file <a href="{{ downloads['solid'][1] }}">{{ downloads['solid'][2] }}</a> and
+                         save it to your computer/device.
+                       </li>
+                       <li>
+                         Go to <a href="https://app.craftcloud3d.com/">CraftCloud</a> and upload the model you downloaded in step #1.
+                       </li>
+                       <li>
+                         Select a size for your model -- the price of the print is directly related to the cost the print. Simple
+                         vulva and penis models with the longest axis being about 10cm long make for a nice model to hold and
+                         examine. Be careful with the size -- scaling models up get expensive <em>fast</em>.
+                       </li>
+                       <li>
+                         Select PLA as the material -- it is perfect for these models and the cheapest option. Of course
+                         you can choose any other material you like -- even gold is an option.
+                       </li> 
+                       <li>
+                         Select the default 20% infill, which is more than enough to make a strong print.
+                       </li>
+                       <li>
+                         Select a color of your choice and then finish the process to purchase your print.
+                       </li>
+                     </ol>
 
-                   <p> 
-                     The cost for simple penis or vulva prints (10cm, PLA) will likely €20-€30 ($25-$35), which isn't bad if you 
-                     don't have access to a printer. Other models, sizes and materials will increase the cost quite a bit.
-                   </p>
+                     <p> 
+                       The cost for simple penis or vulva prints (10cm, PLA) will likely €20-€30 ($25-$35), which isn't bad if you 
+                       don't have access to a printer. Other models, sizes and materials will increase the cost quite a bit.
+                     </p>
 
-                   <p>
-                     Note: We are not affiliated with CraftCloud and we do not earn any money referrring you to them. (We just
-                     think their prices and their web site are a good match for our users.)
-                   </p>
-
+                     <p>
+                       Note: We are not affiliated with CraftCloud and we do not earn any money referrring you to them. (We just
+                       think their prices and their web site are a good match for our users.)
+                     </p>
+                   </div>
                 </div>
               </div>
             </div>
@@ -327,12 +330,11 @@
                 </div>
             </div>
           </div>
-
           {% if related.models %}
-            <h4 style="padding-top: 25px">{{ related.desc }}</h4>
+            <h4 style="padding-top: 25px; padding-left: 5px; padding-right: 5px">{{ related.desc }}</h4>
             <div id="related" class="row">
                {% for m in related.models %}
-                 <div class="col-4">
+                 <div class="col-4 text-center">
                      <p style="margin-bottom: 1px"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
                      <a href="/model/{{ m.model_id }}-{{ m.code }}-{{ m.version }}"><img src="{{ url_for_screenshot_m(m) }}" class="screenshot"></a>
                  </div>
