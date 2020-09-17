@@ -90,6 +90,36 @@ def send_model_uncompressed(filename):
     return response
 
 
+@bp.route('/<model>/upload')
+@auth.login_required
+def upload_model(model):
+
+    try:
+        id, code, version = model.split("-")
+    except ValueError:
+        id, code = model.split("-")
+        version = "1"
+        
+    solid_file = "%s-%s-%s-solid.stl" % (id, code, version)
+    solid_path = "/%s/%s/%s" % (id, code, solid_file)
+
+    if config.STL_BASE_URL:
+        url = config.config.STL_BASE_URL + "/model/m" + solid_path
+    else:
+        url = "https://" + config.SITE_DOMAIN + "/model/m" + solid_path
+    data = {
+        "items": [
+            {
+               "modelUrl": url,
+               "quantity": 1,
+               "unit": "mm"
+            }
+        ]
+    }
+    print(data)
+    return Response("foo!", status=200)
+
+
 @bp.route('/')
 @auth.login_required
 def model_root():
