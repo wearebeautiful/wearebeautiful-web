@@ -310,7 +310,7 @@ def prepare_model(model_code, screenshot, solid = False):
     if current_app.debug:
         base_url = "http://localhost"
     else:
-        base_url = "http://" + config.SITE_DOMAIN
+        base_url = "https://" + config.SITE_DOMAIN
 
     temp = render_template("browse/view.html", 
         model = model, 
