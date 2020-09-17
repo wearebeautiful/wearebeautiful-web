@@ -35,30 +35,31 @@
         <div id="distract-mode" class="d-none">
           <p class="jump-to text-right">
              Jump to:
-             <a href="#model-info" id="info-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">details</a> |
-             {% if model.comment %}
-               <a href="#comment" id="comment-link" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">model comment</a> |
-            {% endif %}
+             <a href="#model-info" id="info-link" data-toggle="collapse" data-target="#collapse-info" aria-expanded="false" aria-controls="collapse-info">model information</a> |
              <a href="#download" id="download-link" data-toggle="collapse" data-target="#collapse-download" aria-expanded="false" aria-controls="collapse-download">download</a> |
              <a href="#share" id="share-link" data-toggle="collapse" data-target="#collapse-share" aria-expanded="false" aria-controls="collapse-share">share</a>
           </p>
 
-
-          <div class="model-desc" style="padding: 5px">
-            {{ model.threed_model_description(True) }}
-            {% if model.tags_list or model.history_list %}
-              <span class="model-tags">
-                {% for event in model.history_list %}
-                  <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a></a>
-                {% endfor %}
-                {% for tag in model.tags_list %}
-                  <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary">{{ tag }}</span></a>
-                {% endfor %}
-                {% for info in model.info_list %}
-                  <a href="{{ url_for("browse.by_attributes", a=info) }}"><span class="badge badge-info">{{ info }}</span></a>
-                {% endfor %}
-              </span>
-            {% endif %}
+         <div class="card" style="margin-bottom: 1rem">
+             <div class="card-body">
+               <h5 class="card-title">{{ model.threed_model_description(True) }}</h5>
+               <h6 class="card-subtitle mb-2 text-muted">
+                    {% for event in model.history_list %}
+                      <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a></a>
+                    {% endfor %}
+                    {% for tag in model.tags_list %}
+                      <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary">{{ tag }}</span></a>
+                    {% endfor %}
+                    {% for info in model.info_list %}
+                      <a href="{{ url_for("browse.by_attributes", a=info) }}"><span class="badge badge-info">{{ info }}</span></a>
+                    {% endfor %}
+               </h6>
+               {% if model.comment %}
+                  <p class="card-text">{{ model.comment }}</p>
+               {% else %}
+                  <p class="card-text text-muted">( this model has no comment )</p>
+               {% endif %}
+             </div>
           </div>
 
           <div id="accordion">
@@ -140,24 +141,6 @@
               </div>
             </div>
 
-            {% if model.comment %}
-              <div class="card">
-                <a id="comment"></a>
-                <div class="card-header" id="heading-comment">
-                  <h5 class="mb-0">
-                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapse-comment" aria-expanded="false" aria-controls="collapse-comment">
-                      Model comment
-                    </button>
-                  </h5>
-                </div>
-                <div id="collapse-comment" class="collapse" aria-labelledby="heading-comment" data-parent="#accordion">
-                  <div class="card-body">
-                    {{ model.comment }}
-                  </div>
-                </div>
-              </div>
-            {% endif %}
-
             <div class="card">
               <a id="download"></a>
               <div class="card-header" id="heading-download">
@@ -232,6 +215,7 @@
                        think their prices and their web site are a good match for our users.)
                      </p>
                    </div>
+
                 </div>
               </div>
             </div>
@@ -410,6 +394,7 @@
         $('#screenshot').on('click', function() { screenshot() });
         $('#copy-page-url-button').on('click', function() { copy_page_url() });
         $('#copy-screenshot-url-button').on('click', function() { copy_screenshot_url() });
+        $("#upload-model").on('click', upload_model_to_craftcloud);
         $("#share-link").on('click', function() {
             $('html,body').animate({scrollTop: $("#share-link").offset().top},'slow');
         });
@@ -643,5 +628,27 @@
                 document.execCommand("copy");
                 $("#copy-screenshot-url-button").html('<i class="far fa-thumbs-up"></i>');
          }
+         function upload_model_to_craftcloud() {
+                $.ajax({
+                  type: "POST",
+                  url: "https://api.craftcloud3d.com/configuration",
+                  data: {
+                      items: [
+                        {
+                          modelUrl: "{{ downloads['solid'][1] }}",
+                          quantity: 1,
+                          unit: 'mm'
+                        }
+                      ]
+                  },
+                  dataType: 'json',
+                  headers: { 'use-model-urls': 'true' },
+                  success: upload_model_to_craftcloud_done,
+                });
+        }
+        function upload_model_to_craftcloud_done(response_text)
+        {
+            console.log("upload complete: " + response_text);
+        }
 </script>
 {% endblock %}
