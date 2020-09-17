@@ -229,6 +229,7 @@
                      think their prices and their web site are a good match for our users.)
                    </p>
 
+                   <button class="btn btn-primary btn-large" type="button" id="upload-model">Upload moddel</button>
                 </div>
               </div>
             </div>
@@ -408,6 +409,7 @@
         $('#screenshot').on('click', function() { screenshot() });
         $('#copy-page-url-button').on('click', function() { copy_page_url() });
         $('#copy-screenshot-url-button').on('click', function() { copy_screenshot_url() });
+        $("#upload-model").on('click', upload_model_to_craftcloud);
         $("#share-link").on('click', function() {
             $('html,body').animate({scrollTop: $("#share-link").offset().top},'slow');
         });
@@ -641,5 +643,27 @@
                 document.execCommand("copy");
                 $("#copy-screenshot-url-button").html('<i class="far fa-thumbs-up"></i>');
          }
+         function upload_model_to_craftcloud() {
+                $.ajax({
+                  type: "POST",
+                  url: "https://api.craftcloud3d.com/configuration",
+                  data: {
+                      items: [
+                        {
+                          modelUrl: "{{ downloads['solid'][1] }}",
+                          quantity: 1,
+                          unit: 'mm'
+                        }
+                      ]
+                  },
+                  dataType: 'json',
+                  headers: { 'use-model-urls': 'true' },
+                  success: upload_model_to_craftcloud_done,
+                });
+        }
+        function upload_model_to_craftcloud_done(response_text)
+        {
+            console.log("upload complete: " + response_text);
+        }
 </script>
 {% endblock %}

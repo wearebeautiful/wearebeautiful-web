@@ -11,7 +11,7 @@ from zipfile import ZipFile
 from PIL import Image
 from peewee import *
 from werkzeug.exceptions import BadRequest, NotFound
-from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file, Response
+from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file, Response, make_response
 from hurry.filesize import size, alternative
 from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
@@ -272,7 +272,8 @@ def prepare_model(model_code, screenshot, solid = False):
     share_text = "Check out this 3D model of a human from We Are Beautiful (@quatschunfug):\n\n%s: %s. \n\n%s" % \
         (model.display_code, model.threed_model_description(), "https://wearebeautiful.info" + request.path)
 
-    return render_template("browse/view.html", 
+
+    temp = render_template("browse/view.html", 
         model = model, 
         model_file_med=model_file_med, 
         model_file_low=model_file_low, 
@@ -282,3 +283,8 @@ def prepare_model(model_code, screenshot, solid = False):
         solid=(1 if solid else 0),
         related = get_related_models(model),
         share_text=urllib.parse.quote(share_text))
+
+    r = make_response(temp)
+    r.headers.set('Access-Control-Allow-Origin', 'api.craftcloud3d.com')
+    r.headers.set('Access-Control-Allow-Headers', 'use-model-urls')
+    return r
