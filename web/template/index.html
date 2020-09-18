@@ -5,7 +5,7 @@
 <div class="row">
 
     <div class="col-12">
-      <div id="logo-div" class="text-center"> 
+      <div id="logo-div" class="text-center">
         <p>
           <img class="index-logo" src="{{ static_url('img/wearebeautiful.svg') }}">
         <p>
@@ -18,15 +18,15 @@
 
 </div>
 <div class="row">
-    <div class="col-md-8"> 
+    <div class="col-md-8">
       <div class="index-text">
         <p>
            We create 3D models of human genitals with the aim to:
         </p>
         <ul>
-           <li><b>break taboos</b></li> 
-           <li><b>educate at a global level</b></li> 
-           <li><b>improve the body self-image for all of users</b></li>
+           <li><b>break taboos</b></li>
+           <li><b>educate at a global level</b></li>
+           <li><b>improve body self-image for all users</b></li>
         </ul>
         <p>
            We aim to enable educators to do the same by making the
@@ -42,37 +42,37 @@
            is often used to poorly fill these gaps.</b>
         </p>
         <p>
-           However, pornography also doesn't have a lot of diversity, and we feel that many people have no 
-           idea whether their own genitals look <i>normal</i>. We hope to show that there is no <i>normal</i> 
+           However, pornography doesn't have a lot of diversity, and we feel that many people have no
+           idea whether their own genitals look <i>normal</i>. We hope to show that there is no <i>normal</i>
            and that we are all beautiful.
         </p>
       </div>
-    </div> 
+    </div>
     <div class="col-md-4 text-center">
       <img class="index-image" src="{{ url_for_screenshot('000000', 'HSNN', 1) }}">
       <img class="index-image" src="{{ url_for_screenshot('694420', 'HTAX', 1) }}">
     </div>
 </div>
 <div class="row text-layout mt-4" id="index-red-pill">
-    <div class="col-md-12 text-center"> 
+    <div class="col-md-12 text-center">
        <button id="bits-button" type="button" class="btn btn-primary btn-lg" style="width: 75%">
           I agree to view models of human genitals!
        </button>
-    </div> 
+    </div>
 </div>
 <div id="index-nsfw">
   <div class="row">
-     <div class="col-md-8 index-text"> 
+     <div class="col-md-8 index-text">
         <p>
            We have {{ model_count }} models of vulvas, penises, breasts, full body and partial body scans.
-           All of our models are between {{ min_age }} and {{ max_age}} years old and span a wide range 
-           of <a href="{{ url_for('docs.diversity') }}">ages, body types and countries of origin</a>. We've 
+           All of our models are between {{ min_age }} and {{ max_age}} years old and span a wide range
+           of <a href="{{ url_for('docs.diversity') }}">ages, body types and countries of origin</a>. We've
            carefully curated all the metadata of our models and are
            releasing the public information while <a href="{{ url_for('index.privacy') }}">carefully protecting</a> the
            private information. We never reveal the identity of our models and this information does not exist online at all.
         </p>
         <p>
-           We suggest that you to start with our <a href="/exhibit">exhibits</a> for the best introduction to this site, or 
+           We suggest that you to start with our <a href="/exhibit">exhibits</a> for the best introduction to this site, or
            browse our models online, download the 3D solids for printing or order a print online. You may also
            download the surfaces and use them in your own 3D modeling projects.
         </p>
@@ -84,7 +84,7 @@
              <a href="{{ url_for('browse.by_part') }}">browse by body part</a>: All models organized by body part.
           </p>
           <p>
-             <a href="{{ url_for('browse.by_model') }}">browse by model</a>: All models organized by the human model.
+             <a href="{{ url_for('browse.by_model') }}">browse by model</a>: All models organized by human model.
           </p>
           <p>
              <a  href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>: Browse models based on their attributes.
@@ -97,7 +97,7 @@
            We hope that you will find our site educational!
         </p>
      </div>
-     <div class="col-md-4"> 
+     <div class="col-md-4">
          <div class="text-center">
             <h4><a href="/exhibit">Exhibits</a></h4>
          </div>
@@ -144,14 +144,14 @@
            </a>
          </div>
 
-     </div> 
+     </div>
   </div>
 
   <div class="row space-above-md">
-     <div class="col-md-12 index-text"> 
+     <div class="col-md-12 index-text">
        <h4 class="mt-5 mb-4">Our illustrated guide to human sexal anatomy</h4>
        <p>
-         If any of the terminology presented on this site is confusing to you, we have an 
+         If any of the terminology presented on this site is confusing to you, we have an
          <a href="{{ url_for('docs.guide') }}">illustrated guide to human sexual anatomy</a> to help
          guide you through the various concepts:
        </p>
@@ -159,12 +159,12 @@
          <a href="{{ url_for('docs.guide') }}">
            <img class="guide-image" src="{{ static_url('img/illustrations/group-low-sat.png') }}">
          </a>
-       </div> 
-     </div> 
+       </div>
+     </div>
   </div>
 
   <div class="row">
-     <div class="col-md-12 index-text"> 
+     <div class="col-md-12 index-text">
          <h4 class="mt-4 mb-4">Most recently released models</h4>
          <div id="recent-models" class="row text-center">
             {% for m in recent_models %}
@@ -174,7 +174,7 @@
               </div>
             {% endfor %}
          </div>
-     </div> 
+     </div>
   </div>
 
 </div>
