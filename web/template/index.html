@@ -72,7 +72,8 @@
            private information. We never reveal the identity of our models and this information does not exist online at all.
         </p>
         <p>
-           We invite you to browse our models online, download the 3D solids for printing or order a print online. You may also
+           We suggest that you to start with our <a href="/exhibit">exhibits</a> for the best introduction to this site, or 
+           browse our models online, download the 3D solids for printing or order a print online. You may also
            download the surfaces and use them in your own 3D modeling projects.
         </p>
         <p>
@@ -86,16 +87,19 @@
              <a href="{{ url_for('browse.by_model') }}">browse by model</a>: All models organized by the human model.
           </p>
           <p>
-             <a  href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>: Browse models based on the data about our models.
+             <a  href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>: Browse models based on their attributes.
           </p>
           <p>
              <a  href="{{ url_for('browse.by_date') }}">browse by date</a>: Browse models based on their creation date.
           </p>
         </div>
+        <p>
+           We hope that you will find our site educational!
+        </p>
      </div>
      <div class="col-md-4"> 
          <div class="text-center">
-            <h4>Sample models</h4>
+            <h4><a href="/exhibit">Exhibits</a></h4>
          </div>
          <div id="image-carousel" class="carousel slide" data-ride="carousel">
            <div class="carousel-inner">
@@ -118,7 +122,7 @@
          </div>
 
          <div class="text-center">
-            <h4 style="padding-top: 25px">Staff picks</h4>
+            <h4 class="mt-4"><a href="/browse/by-attributes?a=compound-model">Compound models</a></h4>
          </div>
          <div id="picks-carousel" class="carousel slide" data-ride="carousel">
            <div class="carousel-inner">

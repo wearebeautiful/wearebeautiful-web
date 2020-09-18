@@ -61,18 +61,18 @@ def index():
         model_list.append(m)
 
     sample_model_ids = [
-        ("476551", "VLNN", 1),
-        ("554268", "PLRN", 1),
-        ("320912", "FSAN", 1),
-        ("833579", "LSNN", 1)
+        ("554268", "FSAN", "1"),
+        ("628398", "FSAN", "1"),
+        ("694420", "PLNN", "1"),
+        ("191644", "VLAN", "1")
     ]
     sample_models = load_slide_models(sample_model_ids)
 
     picks_model_ids = [
-        ("591522", "FSAN", 1),
-        ("591522", "FSAN", 2),
-        ("591522", "FSAN", 4),
-        ("591522", "FSAN", 5),
+        ("746625", "VLNP", "1"),
+        ("352392", "PLNN", "1"),
+        ("426060", "VLNP", "2"),
+        ("591522", "FSAN", "5")
     ]
     picks_models = load_slide_models(picks_model_ids)
 
