@@ -4,34 +4,47 @@
 {%- block content -%}
 <div class="row">
 
-    <div class="col-12 text-center"> 
-      <p>
-        <img class="index-logo" src="{{ static_url('img/wearebeautiful.svg') }}">
-      <p>
-      <div class="tagline">
-        Come for the bits, stay for the education.
+    <div class="col-12">
+      <div id="logo-div" class="text-center"> 
+        <p>
+          <img class="index-logo" src="{{ static_url('img/wearebeautiful.svg') }}">
+        <p>
+        <div class="tagline">
+          Come for the bits, stay for the education.
+        </div>
       </div>
+      <h2 style="display: none;" class="mb-4" id="heading">Welcome to We Are Beautiful!</h2>
     </div>
 
 </div>
-<div class="row" style="margin-bottom: 2rem;">
+<div class="row">
     <div class="col-md-8"> 
-      <div>
-        <p class="index-text">
-           We create 3D models of human genitals with the aim of breaking taboos, educating at a global level, 
-           and improving our users’ body self image. We aim to enable educators to do the same by making the
-           3D models freely available for viewing online and for downloading/printing under the CC0 license.
+      <div class="index-text">
+        <p>
+           We create 3D models of human genitals with the aim to:
         </p>
-        <p class="index-text">
+        <ul>
+           <li><b>break taboos</b></li> 
+           <li><b>educate at a global level</b></li> 
+           <li><b>improve the body self-image for all of users</b></li>
+        </ul>
+        <p>
+           We aim to enable educators to do the same by making the
+           3D models freely available for viewing online and for downloading and printing under the CC0 license.
+        </p>
+        <p>
            Our photographer takes photos of volunteers and processes these photos to produce 3D models of their
            genitals and other body parts. These 3D models are freely available for viewing on this site and for
            downloading so that you may print them on your own 3D printer.
         </p>
-        <p class="index-text">
-           There is a lack of educational material that shows the diversity of our bodies and pornography
-           is often used to poorly fill these gaps. However, pornography also doesn't have a lot of diversity,
-           and we feel that many people have no idea whether their own genitals look <i>normal</i>. We hope to 
-           show that there is no <i>normal</i> and that we are all beautiful.
+        <p>
+           <b>There is a lack of educational material that shows the diversity of our bodies and pornography
+           is often used to poorly fill these gaps.</b>
+        </p>
+        <p>
+           However, pornography also doesn't have a lot of diversity, and we feel that many people have no 
+           idea whether their own genitals look <i>normal</i>. We hope to show that there is no <i>normal</i> 
+           and that we are all beautiful.
         </p>
       </div>
     </div> 
@@ -40,17 +53,17 @@
       <img class="index-image" src="{{ url_for_screenshot('694420', 'HTAX', 1) }}">
     </div>
 </div>
-<div class="row text-layout"" id="index-red-pill">
+<div class="row text-layout mt-4" id="index-red-pill">
     <div class="col-md-12 text-center"> 
-       <button id="bits-button" type="button" class="btn btn-danger btn-lg" style="width: 75%">
+       <button id="bits-button" type="button" class="btn btn-primary btn-lg" style="width: 75%">
           I agree to view models of human genitals!
        </button>
     </div> 
 </div>
 <div id="index-nsfw">
   <div class="row">
-     <div class="col-md-8"> 
-        <p class="index-text">
+     <div class="col-md-8 index-text"> 
+        <p>
            We have {{ model_count }} models of vulvas, penises, breasts, full body and partial body scans.
            All of our models are between {{ min_age }} and {{ max_age}} years old and span a wide range 
            of <a href="{{ url_for('docs.diversity') }}">ages, body types and countries of origin</a>. We've 
@@ -58,31 +71,27 @@
            releasing the public information while <a href="{{ url_for('index.privacy') }}">carefully protecting</a> the
            private information. We never reveal the identity of our models and this information does not exist online at all.
         </p>
-        <p class="index-text">
+        <p>
            We invite you to browse our models online, download the 3D solids for printing or order a print online. You may also
-           download the surfaces and use them in your own 3D modeling projects. Start browsing now:
+           download the surfaces and use them in your own 3D modeling projects.
         </p>
-        <p class="index-text">
-           <a href="{{ url_for('browse.by_part') }}">browse by body part</a>: All models organized by body part.
+        <p>
+           Start browsing now:
         </p>
-        <p class="index-text">
-           <a href="{{ url_for('browse.by_model') }}">browse by model</a>: All models organized by the human model.
-        </p>
-        <p class="index-text">
-           <a  href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>: Browse models based on the data about our models.
-        </p>
-        <p class="index-text">
-           <a  href="{{ url_for('browse.by_date') }}">browse by date</a>: Browse models based on their creation date.
-        </p>
-
-        <p class="index-text">
-          If you are unclear on any of the terminology presented on this site, we have an 
-          <a href="{{ url_for('docs.guide') }}">illustrated guide to human sexual anatomy</a> to help
-          guide you through the various concepts:
-          <a href="{{ url_for('docs.guide') }}">
-            <img class="guide-image" src="{{ static_url('img/illustrations/group-low-sat.png') }}">
-          </a>
-        </p>
+        <div class="ml-4">
+          <p>
+             <a href="{{ url_for('browse.by_part') }}">browse by body part</a>: All models organized by body part.
+          </p>
+          <p>
+             <a href="{{ url_for('browse.by_model') }}">browse by model</a>: All models organized by the human model.
+          </p>
+          <p>
+             <a  href="{{ url_for('browse.by_attributes') }}">browse by attributes</a>: Browse models based on the data about our models.
+          </p>
+          <p>
+             <a  href="{{ url_for('browse.by_date') }}">browse by date</a>: Browse models based on their creation date.
+          </p>
+        </div>
      </div>
      <div class="col-md-4"> 
          <div class="text-center">
@@ -132,16 +141,31 @@
          </div>
 
      </div> 
+  </div>
 
+  <div class="row space-above-md">
+     <div class="col-md-12 index-text"> 
+       <h4 class="mt-5 mb-4">Our illustrated guide to human sexal anatomy</h4>
+       <p>
+         If any of the terminology presented on this site is confusing to you, we have an 
+         <a href="{{ url_for('docs.guide') }}">illustrated guide to human sexual anatomy</a> to help
+         guide you through the various concepts:
+       </p>
+       <div class="text-center">
+         <a href="{{ url_for('docs.guide') }}">
+           <img class="guide-image" src="{{ static_url('img/illustrations/group-low-sat.png') }}">
+         </a>
+       </div> 
+     </div> 
   </div>
 
   <div class="row">
      <div class="col-md-12 index-text"> 
-         <h4 style="padding-top: 25px">Most recently released models</h4>
-         <div id="recent-models" class="row">
+         <h4 class="mt-4 mb-4">Most recently released models</h4>
+         <div id="recent-models" class="row text-center">
             {% for m in recent_models %}
               <div class="col-md-4">
-                  <p style="margin-bottom: 1px"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
+                  <p class="mb-2"><a href="/model/{{ m.display_code }}">{{ m.display_code }}</a></p>
                   <a href="/model/{{ m.model_id }}-{{ m.code }}-{{ m.version }}"><img src="{{ url_for_screenshot_m(m) }}" class="screenshot"></a>
               </div>
             {% endfor %}
@@ -163,6 +187,8 @@ function show_me_bits_clicked() {
    $("#navbar").toggleClass("invisible");
    $("#footer").toggleClass("invisible");
    $("#index-red-pill").slideUp(200);
+   $("#logo-div").slideUp(200);
+   $("#heading").slideDown(200);
 }
 </script>
 {% endblock %}
