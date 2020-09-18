@@ -4,7 +4,7 @@ import datetime
 import os
 import sys
 
-DAYS_TO_KEEP_LOGS = 4
+DAYS_TO_KEEP_LOGS = 7
 
 def remove_old_logs(log_dir):
 

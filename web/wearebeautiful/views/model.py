@@ -24,8 +24,8 @@ MAX_NUM_RELATED_MODELS = 3
 
 bp = Blueprint('model', __name__)
 
+#@auth.login_required
 @bp.route('/m/<path:filename>')
-@auth.login_required
 def send_model(filename):
     if current_app.debug and filename.endswith(".stl"):
         filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
@@ -58,8 +58,8 @@ def send_model(filename):
     return response
 
 
+#@auth.login_required
 @bp.route('/m/<path:filename>/u')
-@auth.login_required
 def send_model_uncompressed(filename):
     if current_app.debug and filename.endswith(".stl"):
         filename = os.path.join(current_app.config['MODEL_DIR'], filename + ".gz")
