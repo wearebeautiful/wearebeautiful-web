@@ -102,7 +102,6 @@ def team():
 def about():
     return render_template("about/about.html")
 
-
 @bp.route('/company')
 @auth.login_required
 def company():
@@ -133,3 +132,8 @@ def donate():
 @auth.login_required
 def privacy():
     return render_template("about/privacy.html")
+
+@bp.route('/opensource')
+@auth.login_required
+def opensource():
+    return render_template("about/opensource.html")
