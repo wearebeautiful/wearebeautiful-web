@@ -65,12 +65,12 @@ def statistics():
     countries = []
     for country in stats["countries"]:
         countries.append(( country, int(stats["countries"][country]) ))
-    countries = sorted(countries, key=itemgetter(1), reverse=True)
+    countries = sorted(countries, key=itemgetter(1,0), reverse=True)
 
     ethnicities = []
     for ethnicity in stats["ethnicities"]:
         ethnicities.append(( ethnicity, stats["ethnicities"][ethnicity] ))
-    ethnicities = sorted(ethnicities, key=itemgetter(1), reverse=True)
+    ethnicities = sorted(ethnicities, key=itemgetter(1,0), reverse=True)
 
     return render_template("docs/statistics.html", 
         model_stats=model_stats,
