@@ -5,8 +5,13 @@
         "slug"    : "introduction",
         "desc"    : "Our first exhibit is an exploration of the various types of models that we feature on this site. It includes two full body models, two genital close-ups, a breast model, a lower body model and a set of buttocks.",
         "version" : "2020-09-16",
-        "models"  : [ "554268-FSAN-1", "628398-FSAN", "694420-PLNN-1", "191644-VLAN-1", 
-                      "238112-BSNN-1", "507391-OSNN-1", "833579-LSNN"  ]
+        "models"  : [ "554268-FSAN-1", 
+                      "628398-FSAN", 
+                      "694420-PLNN-1", 
+                      "191644-VLAN-1", 
+                      "238112-BSNN-1", 
+                      "507391-OSNN-1", 
+                      "833579-LSNN"  ]
     },
     {
         "name"    : "Vulva Exhibit",
@@ -14,8 +19,14 @@
         "slug"    : "vulvas",
         "desc"    : "A more detailed view at vulvas, including compoung model of an excited/not-excited vulva",
         "version" : "2020-09-10",
-        "models"  : [ "453703-VLNN-1", "476551-VLNN-1", "526534-VLRN-1", "662767-VLAN-1",
-                     "746625-VLNP-2", "489561-VLNN-1", "790518-VLNN-1", "149357-VLNN-1" ]
+        "models"  : [ "453703-VLNN-1", 
+                      "476551-VLNN-1", 
+                      "489561-VLNN-1", 
+                      "526534-VLRN-1", 
+                      "662767-VLAN-1",
+                      "746625-VLNP-2", 
+                      "790518-VLNN-1", 
+                      "149357-VLNN-1" ]
     },
     {
         "name"    : "Penis Exhibit",
