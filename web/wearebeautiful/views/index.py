@@ -10,9 +10,9 @@ import config
 bp = Blueprint('index', __name__)
 
 
-@bp.route('/')
+@bp.route('/index')
 def soon():
-    return render_template("about/coming-soon.html", bare=True)
+    return redirect("/")
 
 @bp.route('/robots.txt')
 def robots():
@@ -36,7 +36,7 @@ def load_slide_models(slide_model_ids):
 
     return slide_models
 
-@bp.route('/index')
+@bp.route('/')
 def index():
     model_count = DBModel.select().count()
     models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
