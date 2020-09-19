@@ -1,7 +1,6 @@
 import os
 from werkzeug.exceptions import NotFound, InternalServerError
 from flask import render_template,  url_for, Blueprint, send_file
-from wearebeautiful.auth import _auth as auth
 from wearebeautiful.kits import load_kit_list, make_kit_filename
 
 
@@ -9,14 +8,12 @@ bp = Blueprint('exhibit', __name__)
 
 
 @bp.route('/')
-@auth.login_required
 def index():
     kits = load_kit_list()
     return render_template("exhibit/index.html", kits=kits)
 
 
 @bp.route('/<slug>/download')
-@auth.login_required
 def dafadfsend_kit(slug):
     filename = make_kit_filename(slug)
     if not os.path.exists(filename):
@@ -26,7 +23,6 @@ def dafadfsend_kit(slug):
 
 
 @bp.route('/<slug>')
-@auth.login_required
 def exhibit(slug):
     kits = load_kit_list()
     for k in kits:

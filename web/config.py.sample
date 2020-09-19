@@ -19,10 +19,3 @@ SITE_DOMAIN = "wearebeautiful.info"
 STATIC_BASE_URL = ""
 IMAGE_BASE_URL = ""
 STL_BASE_URL = ""
-
-
-# TO BE DELETED BEFORE RELEASE
-SECRET_KEY = "add your key here"
-USE_SITE_AUTH=False
-SITE_USERNAME="test"
-SITE_PASSWORD="test"

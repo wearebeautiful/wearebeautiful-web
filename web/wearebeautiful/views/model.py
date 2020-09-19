@@ -14,7 +14,6 @@ from peewee import *
 from werkzeug.exceptions import BadRequest, NotFound, ServiceUnavailable
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file, Response, make_response
 from hurry.filesize import size, alternative
-from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
@@ -24,7 +23,6 @@ MAX_NUM_RELATED_MODELS = 3
 
 bp = Blueprint('model', __name__)
 
-#@auth.login_required
 @bp.route('/m/<path:filename>')
 def send_model(filename):
     if current_app.debug and filename.endswith(".stl"):
@@ -58,7 +56,6 @@ def send_model(filename):
     return response
 
 
-#@auth.login_required
 @bp.route('/m/<path:filename>/u')
 def send_model_uncompressed(filename):
     if current_app.debug and filename.endswith(".stl"):
@@ -92,7 +89,6 @@ def send_model_uncompressed(filename):
 
 
 @bp.route('/<model>/upload')
-@auth.login_required
 def upload_model(model):
 
     try:
@@ -126,31 +122,26 @@ def upload_model(model):
 
 
 @bp.route('/')
-@auth.login_required
 def model_root():
     return render_template("error.html")
 
 
 @bp.route('/<model>')
-@auth.login_required
 def model(model):
     return prepare_model(model, current_app.config["SUBMIT_SCREENSHOTS"])
 
 
 @bp.route('/<model>/solid')
-@auth.login_required
 def model_solid(model):
     return prepare_model(model, current_app.config["SUBMIT_SCREENSHOTS"], True)
 
 
 @bp.route('/<model>/screenshot')
-@auth.login_required
 def model_screenshot_get(model):
     return prepare_model(model, True)
 
 
 @bp.route('/<id>-<code>-<int:version>/screenshot', methods = ['POST'])
-@auth.login_required
 def model_screenshot_post(id, code, version):
     if not config.SUBMIT_SCREENSHOTS:
         raise NotFound()

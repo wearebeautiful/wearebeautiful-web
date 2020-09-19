@@ -3,7 +3,6 @@ import json
 from peewee import *
 from werkzeug.exceptions import NotFound
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
-from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 from wearebeautiful.utils import url_for_screenshot_m
 import config
@@ -38,7 +37,6 @@ def load_slide_models(slide_model_ids):
     return slide_models
 
 @bp.route('/index')
-@auth.login_required
 def index():
     model_count = DBModel.select().count()
     models = DBModel.select(DBModel.model_id, DBModel.code, DBModel.body_part, DBModel.version) \
@@ -86,29 +84,24 @@ def index():
 
 
 @bp.route('/browse')
-@auth.login_required
 def browse():
     return redirect(url_for("browse.by_part"))
 
 
 @bp.route('/team')
-@auth.login_required
 def team():
     return render_template("about/team.html")
 
 
 @bp.route('/about')
-@auth.login_required
 def about():
     return render_template("about/about.html")
 
 @bp.route('/company')
-@auth.login_required
 def company():
     return render_template("about/company.html")
 
 @bp.route('/contact')
-@auth.login_required
 def contact():
     return render_template("about/contact.html")
 
@@ -129,11 +122,9 @@ def donate():
     return redirect(url_for("index.support"))
 
 @bp.route('/privacy')
-@auth.login_required
 def privacy():
     return render_template("about/privacy.html")
 
 @bp.route('/opensource')
-@auth.login_required
 def opensource():
     return render_template("about/opensource.html")

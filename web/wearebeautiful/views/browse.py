@@ -5,7 +5,6 @@ import subprocess
 from tempfile import mkdtemp
 from werkzeug.exceptions import BadRequest, NotFound, InternalServerError
 from flask import Flask, render_template, flash, url_for, current_app, redirect, Blueprint, request, send_file
-from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
@@ -14,7 +13,6 @@ bp = Blueprint('browse', __name__)
 
 
 @bp.route('/by-part')
-@auth.login_required
 def by_part():
 
     body_parts = DBModel.select(DBModel.body_part).distinct()
@@ -36,7 +34,6 @@ def by_part():
 
 
 @bp.route('/by-model')
-@auth.login_required
 def by_model():
 
     models = {}
@@ -90,7 +87,6 @@ def by_model():
 
 
 @bp.route('/by-attributes')
-@auth.login_required
 def by_attributes():
 
     keywords = (request.args.get('a') or "").split(",")
@@ -170,7 +166,6 @@ def by_attributes():
 
 
 @bp.route('/by-date')
-@auth.login_required
 def by_date():
     model_count = DBModel.select().count()
     models = DBModel.select() \

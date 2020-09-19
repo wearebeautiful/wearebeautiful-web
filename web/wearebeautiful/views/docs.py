@@ -4,7 +4,6 @@ from operator import itemgetter
 
 from flask import Flask, render_template, Blueprint, send_file
 from peewee import *
-from wearebeautiful.auth import _auth as auth
 from wearebeautiful.db_model import DBModel
 import config
 
@@ -12,35 +11,29 @@ import config
 bp = Blueprint('docs', __name__)
 
 @bp.route('/printing-guide')
-@auth.login_required
 def printing_guide():
     return render_template("docs/printing-guide.html")
 
 @bp.route('/model-codes')
-@auth.login_required
 def model_codes():
     return render_template("docs/model-codes.html")
 
 @bp.route('/faq')
-@auth.login_required
 def faq():
     return render_template("docs/faq.html")
 
 @bp.route('/guide')
-@auth.login_required
 def guide():
     return render_template("docs/illustrated-guide.html")
 
 
 
 @bp.route('/model-diversity')
-@auth.login_required
 def diversity():
     return render_template("docs/model-diversity.html")
 
 
 @bp.route('/statistics')
-@auth.login_required
 def statistics():
     model_stats = []
     for model in DBModel.select(DBModel.body_part,fn.COUNT(DBModel.id).alias('ct')).group_by(DBModel.body_part):
