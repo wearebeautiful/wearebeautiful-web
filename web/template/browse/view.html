@@ -45,7 +45,7 @@
                <h5 class="card-title">{{ model.threed_model_description(True) }}</h5>
                <h6 class="card-subtitle mb-2 text-muted">
                     {% for event in model.history_list %}
-                      <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a></a>
+                      <a href="{{ url_for("browse.by_attributes", a=event) }}"><span class="badge badge-primary">{{ event }}</span></a>
                     {% endfor %}
                     {% for tag in model.tags_list %}
                       <a href="{{ url_for("browse.by_attributes", a=tag) }}"><span class="badge badge-secondary">{{ tag }}</span></a>
@@ -104,7 +104,7 @@
                         <p>Comment: {{ model.sex_comment }}</p>
                      {% endif %}
                      </td></tr>
-                     <tr><td>body type</td><td>{{ model.body_type }}<t/d></tr>
+                     <tr><td>body type</td><td>{{ model.body_type }}</td></tr>
                      <tr><td>given birth</td><td>{{ model.given_birth }}</td></tr>
                      {% if model.history %}
                         <tr>
@@ -175,6 +175,7 @@
                            </span>
                          </td>
                        </tr>
+                       <tr>
                          <td style="padding-right: 2rem">STL file format, suited for 3D modeling</td>
                          <td style="padding-right: 2rem"><a href="{{ downloads['surface'][1] }}">{{ downloads['surface'][2] }}</a>
                          <td>
@@ -284,7 +285,7 @@
                                     value="https://wearebeautiful.info/model/{{ model.display_code }}"
                                     id="copy-page-url-input"
                                     style="width: 90%"
-                             ></input>
+                             >
                              <button type="button"
                                      class="btn btn-primary"
                                      id="copy-page-url-button"><i class="fas fa-clipboard"></i></button>
@@ -296,7 +297,7 @@
                                     value="https://wearebeautiful.info{{ url_for_tagged_screenshot_m(model) }}"
                                     id="copy-screenshot-url-input"
                                     style="width: 90%"
-                             ></input>
+                             >
                              <button type="button"
                                      class="btn btn-primary"
                                      id="copy-screenshot-url-button"><i class="fas fa-clipboard"></i></button>
